@@ -362,7 +362,7 @@ export const AREAS: Area[] = [
       },
     ],
     contacto: {
-      emails: ['biblioteca@frba.utn.edu.ar', 'biblioteca@sae.frba.utn.edu.ar'],
+      emails: ['biblioteca@frba.utn.edu.ar'],
       telefonos: [
         { label: 'Biblioteca Medrano', numero: '011 4867 7572' },
         { label: 'Biblioteca Campus', numero: '011 4867 7500 int. 7235' },
