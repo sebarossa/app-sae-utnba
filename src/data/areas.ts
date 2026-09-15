@@ -419,7 +419,7 @@ export const AREAS: Area[] = [
     listaTitulo: 'Acciones',
     lista: ['Trabajo en proyectos sociales', 'Promoción de la solidaridad'],
     contacto: {
-      emails: ['utnsolidaria@frba.utn.edu.ar', 'vinculacionsocial@frba.utn.edu.ar'],
+      emails: ['utnsolidaria@frba.utn.edu.ar'],
       oficina: 'Of. 323',
       ubicacion: 'Sede Medrano · Of. 323',
       sedes: ['medrano'],
