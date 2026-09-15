@@ -200,7 +200,11 @@ export const AREAS: Area[] = [
       {
         titulo: 'Beca Progresar',
         texto:
-          'Programa nacional de becas para estudiantes de nivel superior. Consultá en la SAE los requisitos y las fechas de inscripción vigentes.',
+          'Programa nacional de becas para estudiantes de nivel superior. Los requisitos y las fechas de inscripción se publican en el sitio oficial.',
+        enlace: {
+          texto: 'Ver requisitos e inscripción',
+          url: 'https://www.argentina.gob.ar/educacion/progresar',
+        },
       },
     ],
     contacto: {
