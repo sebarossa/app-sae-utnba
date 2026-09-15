@@ -2,7 +2,12 @@
 import Icon from './Icon.astro';
 
 interface Props {
-  bloques: { titulo: string; items: string[] }[];
+  bloques: {
+    titulo: string;
+    texto?: string;
+    items?: string[];
+    enlace?: { texto: string; url: string };
+  }[];
   acento?: 'rojo' | 'dorado';
 }
 
@@ -20,14 +25,27 @@ const { bloques, acento = 'rojo' } = Astro.props;
               <Icon name="flecha" size={16} />
             </span>
           </summary>
-          <ul class="desp__lista">
-            {b.items.map((item) => (
-              <li class="desp__item">
-                <span class="desp__punto" aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))}
-          </ul>
+          <div class="desp__cuerpo">
+            {b.texto && <p class="desp__texto">{b.texto}</p>}
+
+            {b.items && (
+              <ul class="desp__lista">
+                {b.items.map((item) => (
+                  <li class="desp__item">
+                    <span class="desp__punto" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {b.enlace && (
+              <a class="desp__enlace" href={b.enlace.url} target="_blank" rel="noopener">
+                {b.enlace.texto}
+                <Icon name="flecha" size={14} />
+              </a>
+            )}
+          </div>
         </details>
       </li>
     ))
@@ -105,11 +123,43 @@ const { bloques, acento = 'rojo' } = Astro.props;
     transform: rotate(-90deg);
   }
 
-  .desp__lista {
+  .desp__cuerpo {
     padding: 14px 16px 16px;
     border-top: 1px solid var(--linea);
+  }
+
+  .desp__texto {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--tinta-2);
+  }
+
+  .desp__lista {
     display: grid;
     gap: 10px;
+  }
+
+  .desp__texto + .desp__lista {
+    margin-top: 12px;
+  }
+
+  .desp__enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 14px;
+    padding: 10px 16px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--rojo);
+  }
+
+  .desplegables--dorado .desp__enlace {
+    color: var(--dorado);
   }
 
   .desp__item {

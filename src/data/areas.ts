@@ -43,7 +43,13 @@ export type Area = {
   lista?: string[];
   serviciosTitulo?: string;
   servicios?: Servicio[];
-  desplegables?: { titulo: string; items: string[] }[];
+  desplegablesTitulo?: string;
+  desplegables?: {
+    titulo: string;
+    texto?: string;
+    items?: string[];
+    enlace?: { texto: string; url: string };
+  }[];
   /** Bloque destacado que lleva a un sistema externo (catálogo, formulario, etc.). */
   enlace?: { kicker: string; titulo: string; texto: string; cta: string; url: string };
   /** Camino de varios pasos, cada uno con su enlace. */
@@ -165,13 +171,37 @@ export const AREAS: Area[] = [
     resumen: 'Ayuda económica, becas de servicio, investigación, Progresar y más.',
     descripcion:
       'Busca promover la igualdad de oportunidades, facilitando el acceso y la permanencia en la universidad.',
-    listaTitulo: 'Tipos de becas',
-    lista: [
-      'Beca de Ayuda Social',
-      'Beca de Servicio',
-      'Beca de Investigación',
-      'Beca Manuel Belgrano',
-      'Beca Progresar',
+    desplegablesTitulo: 'Tipos de becas',
+    desplegables: [
+      {
+        titulo: 'Beca de Ayuda Social',
+        texto:
+          'Un apoyo económico que busca cubrir los gastos que demanda una carrera universitaria. La otorga la UTN.BA a través de la Secretaría de Asuntos Estudiantiles.',
+      },
+      {
+        titulo: 'Beca de Servicio',
+        texto:
+          'Para estudiantes de la UTN.BA que quieran desarrollar actividades técnicas, no administrativas, dentro de la Facultad. En la SAE están los requerimientos y las propuestas abiertas.',
+      },
+      {
+        titulo: 'Beca de Investigación',
+        texto:
+          'Para sumarte a actividades de investigación y desarrollo tecnológico dentro de un Proyecto de Investigación y Desarrollo, en Centros y Grupos de la UTN.BA o en la UIDI.',
+      },
+      {
+        titulo: 'Beca Manuel Belgrano',
+        texto:
+          'Beca nacional para promover el acceso, la permanencia y la finalización de estudios de grado y pregrado en ocho áreas consideradas clave para el desarrollo económico del país y la igualdad social.',
+        enlace: {
+          texto: 'Ver requisitos e inscripción',
+          url: 'https://www.argentina.gob.ar/educacion/becas/becas-manuel-belgrano',
+        },
+      },
+      {
+        titulo: 'Beca Progresar',
+        texto:
+          'Programa nacional de becas para estudiantes de nivel superior. Consultá en la SAE los requisitos y las fechas de inscripción vigentes.',
+      },
     ],
     contacto: {
       emails: ['becas@frba.utn.edu.ar'],

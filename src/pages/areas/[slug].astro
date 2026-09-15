@@ -84,6 +84,7 @@ const { area } = Astro.props;
     {
       area.desplegables && (
         <section class="bloque">
+          {area.desplegablesTitulo && <p class="kicker">{area.desplegablesTitulo}</p>}
           <Desplegables bloques={area.desplegables} acento={area.acento} />
         </section>
       )
