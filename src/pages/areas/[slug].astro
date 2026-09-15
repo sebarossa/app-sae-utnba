@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import Contacto from '../../components/Contacto.astro';
 import Servicios from '../../components/Servicios.astro';
+import Desplegables from '../../components/Desplegables.astro';
 import { AREAS } from '../../data/areas';
 
 export function getStaticPaths() {
@@ -54,6 +55,14 @@ const { area } = Astro.props;
               </li>
             ))}
           </ul>
+        </section>
+      )
+    }
+
+    {
+      area.desplegables && (
+        <section class="bloque">
+          <Desplegables bloques={area.desplegables} />
         </section>
       )
     }

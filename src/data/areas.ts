@@ -38,6 +38,7 @@ export type Area = {
   lista?: string[];
   serviciosTitulo?: string;
   servicios?: Servicio[];
+  desplegables?: { titulo: string; items: string[] }[];
   contacto: Contacto;
   extra?: { titulo: string; filas: { clave: string; valor: string }[] }[];
   destacado?: boolean;
@@ -135,7 +136,10 @@ export const AREAS: Area[] = [
     ],
     contacto: {
       emails: ['salud@frba.utn.edu.ar'],
-      telefonos: [{ label: 'Salud', numero: '011 4867 7550' }],
+      telefonos: [
+        { label: 'Salud', numero: '011 4867 7550' },
+        { label: 'Interno', numero: '011 4867 7500 int. 7713' },
+      ],
       ubicacion: 'Sede Medrano y Campus',
       sedes: ['medrano', 'campus'],
     },
@@ -155,7 +159,6 @@ export const AREAS: Area[] = [
       'Beca de Investigación',
       'Beca Manuel Belgrano',
       'Beca Progresar',
-      'Orientación Vocacional',
     ],
     contacto: {
       emails: ['becas@frba.utn.edu.ar'],
@@ -212,7 +215,6 @@ export const AREAS: Area[] = [
       'Becas PILA — intercambio con universidades de América Latina',
       'Becas IAESTE — pasantías técnicas en el exterior',
       'Convenios vigentes con universidades de todo el mundo',
-      '¿Te interesa un destino que no está en la lista? Se puede gestionar el convenio',
     ],
     contacto: {
       emails: ['intercambios@frba.utn.edu.ar'],
@@ -222,25 +224,48 @@ export const AREAS: Area[] = [
   },
   {
     slug: 'oradis',
-    nombre: 'ORADIS',
+    nombre: 'Inclusión y Accesibilidad — ORADIS',
     icono: 'oradis',
     acento: 'rojo',
-    resumen: 'Inclusión, accesibilidad y autonomía en la vida universitaria.',
+    resumen: 'Acceso, permanencia y egreso en condiciones de equidad.',
     descripcion:
-      'Promueve la inclusión y la autonomía de los estudiantes, y capacita en accesibilidad a toda la comunidad universitaria.',
-    listaTitulo: 'Acciones y proyectos',
+      'Promover políticas y acciones que garanticen la inclusión y la accesibilidad en el ámbito universitario, asegurando el acceso, la permanencia y el egreso en condiciones de equidad para las personas con discapacidad.',
+    listaTitulo: 'Qué hacemos',
     lista: [
-      'Eliminar barreras arquitectónicas',
-      'Adecuar la enseñanza',
-      'Capacitar en inclusión y Braille',
-      'Certificación ISO 9001',
-      'Proyecto de accesibilidad académica',
+      'Acompañamiento integral a estudiantes',
+      'Asesoramiento a docentes y equipos de cátedra',
+      'Articulación con áreas institucionales',
+      'Identificación y eliminación de barreras de accesibilidad',
+      'Promoción del diseño universal',
+      'Formación y sensibilización de la comunidad universitaria',
+    ],
+    desplegables: [
+      {
+        titulo: '¿Qué gestiones podés solicitar?',
+        items: [
+          'Acompañamiento en el ingreso a la universidad',
+          'Apoyo en gestiones académicas (inscripciones, cursada, etc.)',
+          'Implementación de ajustes razonables',
+          'Acceso a materiales adaptados (por ejemplo, en Braille)',
+          'Información sobre becas y recursos disponibles',
+          'Identificación de barreras de accesibilidad',
+        ],
+      },
+      {
+        titulo: 'Recursos disponibles',
+        items: [
+          'Libro del Módulo B (Ingreso Universitario) en sistema Braille',
+          'Becas de apuntes y fotocopias',
+          'Pupitres adaptados',
+          'Acompañamiento personalizado',
+        ],
+      },
     ],
     contacto: {
       emails: ['oradis@frba.utn.edu.ar'],
-      telefonos: [{ label: 'ORADIS', numero: '011 4867 7585' }],
-      ubicacion: 'Sede Medrano y Campus',
-      sedes: ['medrano', 'campus'],
+      telefonos: [{ label: 'ORADIS', numero: '011 4867 7500 int. 7823' }],
+      ubicacion: 'Sede Medrano',
+      sedes: ['medrano'],
     },
   },
   {
@@ -259,7 +284,7 @@ export const AREAS: Area[] = [
       'Conectarte con empresas',
     ],
     contacto: {
-      emails: ['adp@frba.utn.edu.ar'],
+      emails: ['adp@frba.utn.edu.ar', 'bolsa@frba.utn.edu.ar'],
       telefonos: [
         { label: 'Desarrollo Profesional', numero: '011 4867 7581' },
         { label: 'Línea alternativa', numero: '011 4867 7600' },
@@ -309,7 +334,7 @@ export const AREAS: Area[] = [
     descripcion:
       'Recolecta y gestiona donaciones para destinarlas a organizaciones, fortaleciendo la organización comunitaria y la participación ciudadana.',
     listaTitulo: 'Acciones',
-    lista: ['Atención prioritaria a personas vulnerables', 'Promoción de la solidaridad'],
+    lista: ['Trabajo en proyectos sociales', 'Promoción de la solidaridad'],
     contacto: {
       emails: ['utnsolidaria@frba.utn.edu.ar', 'vinculacionsocial@frba.utn.edu.ar'],
       ubicacion: 'Sede Medrano y Campus',

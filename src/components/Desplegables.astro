@@ -1,0 +1,118 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  bloques: { titulo: string; items: string[] }[];
+}
+
+const { bloques } = Astro.props;
+---
+
+<ul class="desplegables">
+  {
+    bloques.map((b) => (
+      <li>
+        <details class="desp">
+          <summary class="desp__cab">
+            <span class="desp__titulo">{b.titulo}</span>
+            <span class="desp__chevron" aria-hidden="true">
+              <Icon name="flecha" size={16} />
+            </span>
+          </summary>
+          <ul class="desp__lista">
+            {b.items.map((item) => (
+              <li class="desp__item">
+                <span class="desp__punto" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .desplegables {
+    display: grid;
+    gap: 9px;
+  }
+
+  .desp {
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+    overflow: hidden;
+  }
+
+  .desp[open] {
+    border-color: rgba(200, 16, 46, 0.32);
+  }
+
+  .desp__cab {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 16px;
+    cursor: pointer;
+    list-style: none;
+    min-height: 54px;
+  }
+
+  .desp__cab::-webkit-details-marker {
+    display: none;
+  }
+
+  .desp__titulo {
+    font-family: var(--titulo);
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--tinta);
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+  }
+
+  .desp__chevron {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+    transform: rotate(90deg);
+    transition: transform 0.2s ease;
+  }
+
+  .desp[open] .desp__chevron {
+    transform: rotate(-90deg);
+  }
+
+  .desp__lista {
+    padding: 14px 16px 16px;
+    border-top: 1px solid var(--linea);
+    display: grid;
+    gap: 10px;
+  }
+
+  .desp__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 11px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--tinta-2);
+  }
+
+  .desp__punto {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--rojo);
+    margin-top: 8px;
+  }
+</style>
