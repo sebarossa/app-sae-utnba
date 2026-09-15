@@ -71,14 +71,17 @@ const sedes = (contacto.sedes ?? []).map((id) => SEDES[id]).filter(Boolean);
 
     {
       sedes.length > 0 ? (
-        sedes.map((sede) => (
+        sedes.map((sede, i) => (
           <li>
             <a class="fila" href={sede.mapa} target="_blank" rel="noopener">
               <span class="fila__icono">
                 <Icon name="pin" size={18} />
               </span>
               <span class="fila__texto">
-                <span class="fila__clave">{sede.nombre}</span>
+                <span class="fila__clave">
+                  {sede.nombre}
+                  {i === 0 && contacto.oficina ? ` · ${contacto.oficina}` : ''}
+                </span>
                 <span class="fila__valor">{sede.direccion}</span>
               </span>
               <Icon name="flecha" size={15} />
@@ -101,7 +104,7 @@ const sedes = (contacto.sedes ?? []).map((id) => SEDES[id]).filter(Boolean);
     }
   </ul>
 
-  {sedes.length > 0 && <p class="contacto__nota">{contacto.ubicacion}</p>}
+  {contacto.nota && <p class="contacto__nota">{contacto.nota}</p>}
 </section>
 
 <style>

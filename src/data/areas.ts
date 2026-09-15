@@ -23,6 +23,11 @@ export type Contacto = {
   emails?: string[];
   telefonos?: { label: string; numero: string; nota?: string }[];
   redes?: Red[];
+  /** Oficina concreta del área. Se muestra junto a la primera sede. */
+  oficina?: string;
+  /** Aclaración adicional sobre la atención. */
+  nota?: string;
+  /** Resumen de ubicación, usado en el directorio de /contacto. */
   ubicacion: string;
   sedes?: string[];
 };
@@ -140,7 +145,8 @@ export const AREAS: Area[] = [
       emails: ['salud@frba.utn.edu.ar'],
       // El número con interno ya es el completo: una sola fila alcanza.
       telefonos: [{ label: 'Teléfono', numero: '011 4867 7500 int. 7713' }],
-      ubicacion: 'Oficina 323 · Sede Medrano',
+      oficina: 'Of. 323',
+      ubicacion: 'Sede Medrano · Of. 323',
       sedes: ['medrano'],
     },
   },
@@ -163,7 +169,9 @@ export const AREAS: Area[] = [
     contacto: {
       emails: ['becas@frba.utn.edu.ar'],
       // La atención es siempre personalizada y se concentra en Medrano.
-      ubicacion: 'Oficina 323 · Sede Medrano · Atención personalizada',
+      oficina: 'Of. 323',
+      nota: 'La atención es siempre personalizada.',
+      ubicacion: 'Sede Medrano · Of. 323',
       sedes: ['medrano'],
     },
   },
@@ -196,7 +204,9 @@ export const AREAS: Area[] = [
           url: 'https://instagram.com/deportes.utnba',
         },
       ],
-      ubicacion: 'SAE de Sede Campus, pasillo principal · Consultas en la SAE de ambas sedes',
+      oficina: 'SAE, pasillo principal',
+      nota: 'Consultas en la SAE de ambas sedes.',
+      ubicacion: 'Sede Campus · SAE, pasillo principal',
       sedes: ['campus', 'medrano'],
     },
     destacado: true,
@@ -218,7 +228,8 @@ export const AREAS: Area[] = [
     ],
     contacto: {
       emails: ['intercambios@frba.utn.edu.ar'],
-      ubicacion: 'Oficina 323 · Sede Medrano',
+      oficina: 'Of. 323',
+      ubicacion: 'Sede Medrano · Of. 323',
       sedes: ['medrano'],
     },
   },
@@ -264,7 +275,8 @@ export const AREAS: Area[] = [
     contacto: {
       emails: ['oradis@frba.utn.edu.ar'],
       telefonos: [{ label: 'Teléfono', numero: '011 4867 7500 int. 7823' }],
-      ubicacion: 'Oficina 320 · Sede Medrano',
+      oficina: 'Of. 320',
+      ubicacion: 'Sede Medrano · Of. 320',
       sedes: ['medrano'],
     },
   },
@@ -313,7 +325,8 @@ export const AREAS: Area[] = [
         },
         { label: 'Desarrollo Profesional', numero: '011 4867 7581' },
       ],
-      ubicacion: 'Oficina 320 · Sede Medrano',
+      oficina: 'Of. 320',
+      ubicacion: 'Sede Medrano · Of. 320',
       sedes: ['medrano'],
     },
   },
@@ -407,7 +420,8 @@ export const AREAS: Area[] = [
     lista: ['Trabajo en proyectos sociales', 'Promoción de la solidaridad'],
     contacto: {
       emails: ['utnsolidaria@frba.utn.edu.ar', 'vinculacionsocial@frba.utn.edu.ar'],
-      ubicacion: 'Oficina 323 · Sede Medrano',
+      oficina: 'Of. 323',
+      ubicacion: 'Sede Medrano · Of. 323',
       sedes: ['medrano'],
     },
   },
