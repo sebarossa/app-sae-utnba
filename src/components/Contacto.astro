@@ -44,6 +44,7 @@ const sedes = (contacto.sedes ?? []).map((id) => SEDES[id]).filter(Boolean);
             <span class="fila__texto">
               <span class="fila__clave">{t.label}</span>
               <span class="fila__valor">{t.numero}</span>
+              {t.nota && <span class="fila__nota">{t.nota}</span>}
             </span>
             <Icon name="flecha" size={15} />
           </a>
@@ -181,6 +182,14 @@ const sedes = (contacto.sedes ?? []).map((id) => SEDES[id]).filter(Boolean);
     word-break: break-word;
     line-height: 1.4;
     margin-top: 1px;
+  }
+
+  .fila__nota {
+    display: block;
+    font-size: 12.5px;
+    color: var(--gris);
+    line-height: 1.45;
+    margin-top: 2px;
   }
 
   .contacto__nota {

@@ -21,7 +21,7 @@ export type Servicio = {
 
 export type Contacto = {
   emails?: string[];
-  telefonos?: { label: string; numero: string }[];
+  telefonos?: { label: string; numero: string; nota?: string }[];
   redes?: Red[];
   ubicacion: string;
   sedes?: string[];
@@ -273,21 +273,45 @@ export const AREAS: Area[] = [
     nombre: 'Desarrollo Profesional',
     icono: 'trabajo',
     acento: 'dorado',
-    resumen: 'CV, oportunidades laborales y contacto directo con empresas.',
+    resumen: 'Tu CV, tu primera pasantía y la bolsa de trabajo de la facultad.',
     descripcion:
-      'Ayuda a los estudiantes a adquirir habilidades adicionales, asegurando su crecimiento y facilitando su inserción laboral.',
-    listaTitulo: 'Qué hacemos',
+      'Te acompaña para que la carrera se traduzca en trabajo: habilidades que complementan lo académico, y el puente directo con las empresas que buscan perfiles de la UTN.',
+    enlace: {
+      kicker: 'Bolsa de trabajo',
+      titulo: 'Talentia, nuestro portal de empleo',
+      texto:
+        'Sea tu primera experiencia laboral o un nuevo desafío, acá empieza. Te registrás con unos pocos datos y en minutos ya estás viendo todas las búsquedas activas.',
+      cta: 'Entrar a Talentia',
+      url: 'https://utnba.talentia.com/portal/home',
+    },
+    listaTitulo: 'En qué te podemos ayudar',
     lista: [
-      'Ayudarte a encontrar empleo',
-      'Mejorar tu CV',
-      'Ofrecerte oportunidades',
-      'Conectarte con empresas',
+      'Acompañarte en tus búsquedas laborales',
+      'Armar tu CV desde cero, o mejorar el que ya tenés',
+      'Asesorarte entre una pasantía y un tiempo completo',
+      'Acercarte las mejores oportunidades del mercado',
+      'Traer empresas líderes a la Facultad para que las conozcas de cerca',
+      'Escuchar cómo te fue: las tutorías nos sirven para mejorar las pasantías',
+    ],
+    desplegables: [
+      {
+        titulo: 'Cómo trabajamos',
+        items: [
+          'Los estudiantes son nuestra razón de ser: todo lo que hacemos se orienta a su satisfacción.',
+          'Mejoramos de forma continua bajo el Sistema de Gestión de Calidad ISO 9001.',
+          'Buscamos generar el hábito del trabajo en equipo, la participación, la adaptación al cambio, la honestidad, la confianza y la creatividad.',
+        ],
+      },
     ],
     contacto: {
-      emails: ['adp@frba.utn.edu.ar', 'bolsa@frba.utn.edu.ar'],
+      emails: ['bolsa@frba.utn.edu.ar', 'adp@frba.utn.edu.ar'],
       telefonos: [
+        {
+          label: 'Bolsa de trabajo',
+          numero: '011 4867 7600',
+          nota: 'Lunes a viernes de 9:30 a 15:30 h',
+        },
         { label: 'Desarrollo Profesional', numero: '011 4867 7581' },
-        { label: 'Línea alternativa', numero: '011 4867 7600' },
       ],
       ubicacion: 'Sede Medrano',
       sedes: ['medrano'],

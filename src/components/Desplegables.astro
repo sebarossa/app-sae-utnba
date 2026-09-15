@@ -3,12 +3,13 @@ import Icon from './Icon.astro';
 
 interface Props {
   bloques: { titulo: string; items: string[] }[];
+  acento?: 'rojo' | 'dorado';
 }
 
-const { bloques } = Astro.props;
+const { bloques, acento = 'rojo' } = Astro.props;
 ---
 
-<ul class="desplegables">
+<ul class:list={['desplegables', `desplegables--${acento}`]}>
   {
     bloques.map((b) => (
       <li>
@@ -49,6 +50,19 @@ const { bloques } = Astro.props;
 
   .desp[open] {
     border-color: rgba(200, 16, 46, 0.32);
+  }
+
+  .desplegables--dorado .desp[open] {
+    border-color: rgba(184, 147, 62, 0.4);
+  }
+
+  .desplegables--dorado .desp__chevron {
+    background: var(--dorado-tenue);
+    color: var(--dorado);
+  }
+
+  .desplegables--dorado .desp__punto {
+    background: var(--dorado);
   }
 
   .desp__cab {
