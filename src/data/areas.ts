@@ -159,8 +159,9 @@ export const AREAS: Area[] = [
     ],
     contacto: {
       emails: ['becas@frba.utn.edu.ar'],
-      ubicacion: 'Sede Medrano y Campus',
-      sedes: ['medrano', 'campus'],
+      // La atención es siempre personalizada y se concentra en Medrano.
+      ubicacion: 'Atención personalizada en Sede Medrano',
+      sedes: ['medrano'],
     },
   },
   {
