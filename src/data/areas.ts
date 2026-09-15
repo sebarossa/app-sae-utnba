@@ -46,6 +46,13 @@ export type Area = {
   desplegables?: { titulo: string; items: string[] }[];
   /** Bloque destacado que lleva a un sistema externo (catálogo, formulario, etc.). */
   enlace?: { kicker: string; titulo: string; texto: string; cta: string; url: string };
+  /** Camino de varios pasos, cada uno con su enlace. */
+  pasos?: {
+    kicker: string;
+    titulo: string;
+    nota?: string;
+    items: { titulo: string; texto: string; cta: string; url: string }[];
+  };
   contacto: Contacto;
   extra?: { titulo: string; filas: { clave: string; valor: string }[] }[];
   destacado?: boolean;
@@ -240,7 +247,28 @@ export const AREAS: Area[] = [
     acento: 'rojo',
     resumen: 'Acceso, permanencia y egreso en condiciones de equidad.',
     descripcion:
-      'Promover políticas y acciones que garanticen la inclusión y la accesibilidad en el ámbito universitario, asegurando el acceso, la permanencia y el egreso en condiciones de equidad para las personas con discapacidad.',
+      'ORADIS, Orientación y Apoyo para Personas con Discapacidad, coordina, asesora y difunde las acciones que hacen posible un acceso equitativo a la educación para personas con movilidad o comunicación reducida.',
+    pasos: {
+      kicker: 'Cómo acceder',
+      titulo: 'Son dos pasos',
+      nota: 'Informar tu discapacidad no es obligatorio, y tampoco hace falta presentar el CUD. Lo que compartas es confidencial y solo se usa para poder acompañarte mejor.',
+      items: [
+        {
+          titulo: 'Registrate',
+          texto:
+            'Un formulario breve con tus datos. Queda como registro para que, cuando pidas algo, ya sepamos cómo acompañarte.',
+          cta: 'Completar el registro',
+          url: 'https://bit.ly/REGISTROPCD',
+        },
+        {
+          titulo: 'Pedí lo que necesites',
+          texto:
+            'Una reunión, información, un cambio de curso, ayuda con la inscripción a materias o ajustes sobre la cursada.',
+          cta: 'Hacer una solicitud',
+          url: 'https://docs.google.com/forms/d/e/1FAIpQLSf-S7RbxRKQbWEBjRw_ZrMIzv4Su5p3t0W3OUo72zFr5m-Npw/viewform',
+        },
+      ],
+    },
     listaTitulo: 'Qué hacemos',
     lista: [
       'Acompañamiento integral a estudiantes',
@@ -252,31 +280,33 @@ export const AREAS: Area[] = [
     ],
     desplegables: [
       {
-        titulo: '¿Qué gestiones podés solicitar?',
+        titulo: 'Recursos disponibles',
         items: [
-          'Acompañamiento en el ingreso a la universidad',
-          'Apoyo en gestiones académicas (inscripciones, cursada, etc.)',
-          'Implementación de ajustes razonables',
-          'Acceso a materiales adaptados (por ejemplo, en Braille)',
-          'Información sobre becas y recursos disponibles',
-          'Identificación de barreras de accesibilidad',
+          'Acompañamiento en la etapa del ingreso.',
+          'Libro del Módulo B, Ingreso Universitario, en sistema Braille.',
+          'Becas de apuntes y fotocopias para estudiantes con discapacidad.',
+          'Pupitres adaptados para personas con movilidad reducida.',
+          'Acompañamiento en gestiones académicas.',
+          'Detección de puntos inaccesibles y barreras arquitectónicas.',
         ],
       },
       {
-        titulo: 'Recursos disponibles',
+        titulo: 'Nuestra misión',
         items: [
-          'Libro del Módulo B (Ingreso Universitario) en sistema Braille',
-          'Becas de apuntes y fotocopias',
-          'Pupitres adaptados',
-          'Acompañamiento personalizado',
+          'Gestionar acciones que promuevan la inclusión de personas en situación de discapacidad, asegurando un acceso equitativo a la educación.',
+          'Potenciar la autonomía de los estudiantes con discapacidad.',
+          'Capacitar a la comunidad universitaria en accesibilidad, inclusión y diseño universal.',
+          'Garantizar la participación y la formación profesional de las personas con discapacidad en el ámbito académico.',
+          'Si conocés a alguien de la comunidad universitaria en situación de discapacidad, contale que el área existe.',
         ],
       },
     ],
     contacto: {
       emails: ['oradis@frba.utn.edu.ar'],
-      telefonos: [{ label: 'Teléfono', numero: '011 4867 7500 int. 7823' }],
-      oficina: 'Of. 320',
-      ubicacion: 'Sede Medrano · Of. 320',
+      telefonos: [{ label: 'Teléfono', numero: '011 4867 7750 int. 7823' }],
+      oficina: 'Of. 320, 3° piso',
+      nota: 'Funciona dentro de la SAE. Responsable del área: Lic. Cecilia M. A. Salas.',
+      ubicacion: 'Sede Medrano · Of. 320, 3° piso',
       sedes: ['medrano'],
     },
   },

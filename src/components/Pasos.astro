@@ -1,0 +1,134 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  pasos: {
+    kicker: string;
+    titulo: string;
+    nota?: string;
+    items: { titulo: string; texto: string; cta: string; url: string }[];
+  };
+}
+
+const { pasos } = Astro.props;
+---
+
+<section class="pasos">
+  <p class="kicker">{pasos.kicker}</p>
+  <h2 class="pasos__titulo">{pasos.titulo}</h2>
+
+  <ol class="pasos__lista">
+    {
+      pasos.items.map((paso, i) => (
+        <li class="paso">
+          <span class="paso__num" aria-hidden="true">
+            {i + 1}
+          </span>
+          <div class="paso__cuerpo">
+            <h3 class="paso__titulo">{paso.titulo}</h3>
+            <p class="paso__texto">{paso.texto}</p>
+            <a class="paso__btn" href={paso.url} target="_blank" rel="noopener">
+              {paso.cta}
+              <Icon name="flecha" size={15} />
+            </a>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+
+  {pasos.nota && <p class="pasos__nota">{pasos.nota}</p>}
+</section>
+
+<style>
+  .pasos {
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-radius: var(--r-lg);
+    padding: 20px 18px 22px;
+    margin-bottom: 30px;
+  }
+
+  .pasos__titulo {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 18px;
+  }
+
+  .pasos__lista {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 18px;
+  }
+
+  .paso {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 13px;
+    align-items: start;
+  }
+
+  .paso__num {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 14px;
+    font-weight: 800;
+    flex: none;
+  }
+
+  .paso__cuerpo {
+    min-width: 0;
+  }
+
+  .paso__titulo {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin-top: 3px;
+  }
+
+  .paso__texto {
+    margin: 6px 0 12px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .paso__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 12px 20px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s ease;
+  }
+
+  .paso__btn:active {
+    transform: scale(0.98);
+  }
+
+  .pasos__nota {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--linea);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+</style>
