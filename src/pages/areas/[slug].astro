@@ -30,6 +30,25 @@ const { area } = Astro.props;
 
   <div class="wrap seccion">
     {
+      area.enlace && (
+        <section class="enlace">
+          <p class="kicker">{area.enlace.kicker}</p>
+          <h2 class="enlace__titulo">{area.enlace.titulo}</h2>
+          <p class="enlace__texto">{area.enlace.texto}</p>
+          <a
+            class="btn btn--primario btn--bloque enlace__btn"
+            href={area.enlace.url}
+            target="_blank"
+            rel="noopener"
+          >
+            {area.enlace.cta}
+            <Icon name="flecha" size={16} />
+          </a>
+        </section>
+      )
+    }
+
+    {
       area.servicios && (
         <section class="bloque">
           <p class="kicker">{area.serviciosTitulo}</p>
@@ -132,6 +151,32 @@ const { area } = Astro.props;
 
   .bloque {
     margin-bottom: 30px;
+  }
+
+  .enlace {
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-radius: var(--r-lg);
+    padding: 20px 18px 22px;
+    margin-bottom: 30px;
+  }
+
+  .enlace__titulo {
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  .enlace__texto {
+    margin: 9px 0 16px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .enlace__btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14.5px;
   }
 
   .bloque__ayuda {

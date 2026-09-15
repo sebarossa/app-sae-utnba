@@ -39,6 +39,8 @@ export type Area = {
   serviciosTitulo?: string;
   servicios?: Servicio[];
   desplegables?: { titulo: string; items: string[] }[];
+  /** Bloque destacado que lleva a un sistema externo (catálogo, formulario, etc.). */
+  enlace?: { kicker: string; titulo: string; texto: string; cta: string; url: string };
   contacto: Contacto;
   extra?: { titulo: string; filas: { clave: string; valor: string }[] }[];
   destacado?: boolean;
@@ -298,11 +300,57 @@ export const AREAS: Area[] = [
     acento: 'rojo',
     resumen: 'De lunes a viernes, de 9 a 21 h, en las dos sedes.',
     descripcion:
-      'Salas de lectura, préstamo de material y espacios de estudio en Medrano y en el Campus.',
-    listaTitulo: 'Horarios',
+      'Salas de lectura, préstamo de material y espacios de estudio en Medrano y en el Campus. Abierta a toda la comunidad universitaria y al público en general.',
+    enlace: {
+      kicker: 'Catálogo en línea',
+      titulo: 'Buscá, reservá y renová',
+      texto:
+        'Desde el catálogo podés ver qué ejemplares hay en cada sede, reservarlos y renovar tus préstamos. Se entra con el usuario institucional.',
+      cta: 'Entrar al catálogo',
+      url: 'https://biblioteca.frba.utn.edu.ar/opac_login.php',
+    },
+    listaTitulo: 'Horarios · ambas sedes',
     lista: [
       'Atención al público: lunes a viernes de 9:00 a 21:00 h',
-      'Salas de lectura: lunes a viernes de 9:00 a 20:30 h',
+      'Sala de lectura: lunes a viernes de 9:00 a 20:30 h',
+    ],
+    desplegables: [
+      {
+        titulo: 'Consulta en sala',
+        items: [
+          'Público en general: dejando en depósito una identificación válida, cualquier persona puede pedir libros para leerlos en la Sala de Lectura. El documento se reintegra al devolver el libro.',
+          'Comunidad universitaria: se accede con el usuario institucional.',
+          'Hasta 4 libros a la vez por usuario.',
+          'La consulta es en el día.',
+        ],
+      },
+      {
+        titulo: 'Préstamo a domicilio',
+        items: [
+          'Solo para la comunidad universitaria, con usuario institucional.',
+          'Hasta 2 libros por usuario a la vez.',
+          'Cada préstamo dura 10 días hábiles.',
+          'Se renueva desde la web o en persona, en la misma sede donde retiraste el ejemplar.',
+        ],
+      },
+      {
+        titulo: 'Reservas y renovaciones',
+        items: [
+          'Las reservas se hacen desde el catálogo, con el usuario institucional.',
+          'Cuando la reserva entra en vigencia tenés 3 días hábiles para retirar el ejemplar en la sede donde está. Pasado ese plazo, se cae.',
+          'Las renovaciones se hacen dentro de las 48 h previas al vencimiento, por la web o presencialmente con el libro.',
+          'Hasta 2 renovaciones de 10 días hábiles por libro. Para una tercera hay que acercarse con el ejemplar a la sede.',
+        ],
+      },
+      {
+        titulo: 'Devoluciones, demoras y extravíos',
+        items: [
+          'La devolución no es personal: puede hacerla otra persona, siempre que el ejemplar esté en el mismo estado en que se retiró.',
+          'Devolver tarde suspende 3 días por cada día de retraso, y se acumula por cada obra demorada.',
+          'Aun estando sancionado, podés seguir haciendo consultas en sala en las mismas condiciones que el resto.',
+          'Los libros extraviados se reponen de inmediato; hasta hacerlo no se pueden pedir nuevos préstamos. Si la obra no se consigue, la Dirección de la Biblioteca indica cuál puede reemplazarla.',
+        ],
+      },
     ],
     extra: [
       {
@@ -314,7 +362,7 @@ export const AREAS: Area[] = [
       },
     ],
     contacto: {
-      emails: ['biblioteca@frba.utn.edu.ar'],
+      emails: ['biblioteca@frba.utn.edu.ar', 'biblioteca@sae.frba.utn.edu.ar'],
       telefonos: [
         { label: 'Biblioteca Medrano', numero: '011 4867 7572' },
         { label: 'Biblioteca Campus', numero: '011 4867 7500 int. 7235' },
