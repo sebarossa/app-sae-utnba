@@ -48,7 +48,7 @@ export type Area = {
     titulo: string;
     texto?: string;
     items?: string[];
-    enlace?: { texto: string; url: string };
+    enlaces?: { texto: string; url: string }[];
   }[];
   /** Bloque destacado que lleva a un sistema externo (catálogo, formulario, etc.). */
   enlace?: { kicker: string; titulo: string; texto: string; cta: string; url: string };
@@ -192,19 +192,20 @@ export const AREAS: Area[] = [
         titulo: 'Beca Manuel Belgrano',
         texto:
           'Beca nacional para promover el acceso, la permanencia y la finalización de estudios de grado y pregrado en ocho áreas consideradas clave para el desarrollo económico del país y la igualdad social.',
-        enlace: {
-          texto: 'Ver requisitos e inscripción',
-          url: 'https://www.argentina.gob.ar/educacion/becas/becas-manuel-belgrano',
-        },
+        enlaces: [
+          {
+            texto: 'Ver requisitos e inscripción',
+            url: 'https://www.argentina.gob.ar/educacion/becas/becas-manuel-belgrano',
+          },
+        ],
       },
       {
         titulo: 'Beca Progresar',
         texto:
           'Programa nacional de becas para estudiantes de nivel superior. Los requisitos y las fechas de inscripción se publican en el sitio oficial.',
-        enlace: {
-          texto: 'Ver requisitos e inscripción',
-          url: 'https://www.argentina.gob.ar/educacion/progresar',
-        },
+        enlaces: [
+          { texto: 'Ver requisitos e inscripción', url: 'https://www.argentina.gob.ar/educacion/progresar' },
+        ],
       },
     ],
     contacto: {
@@ -214,6 +215,68 @@ export const AREAS: Area[] = [
       nota: 'La atención es siempre personalizada.',
       ubicacion: 'Sede Medrano · Of. 323',
       sedes: ['medrano'],
+    },
+  },
+  {
+    slug: 'licencia-estudiantil',
+    nombre: 'Licencia Estudiantil',
+    icono: 'documento',
+    acento: 'rojo',
+    resumen: 'Frená los plazos académicos sin perder lo que ya cursaste.',
+    descripcion:
+      'Es un derecho estudiantil aprobado por el Consejo Superior. Si algo te impide seguir el ritmo de la cursada, podés pedir una licencia: los plazos se suspenden y conservás lo que ya lograste.',
+    listaTitulo: 'Qué te permite',
+    lista: [
+      'Suspender los plazos académicos: durante la licencia no corren los vencimientos de regularidad ni la presentación de tesis.',
+      'Reprogramar instancias: parciales, trabajos prácticos y otras evaluaciones se pueden mover, siempre que su naturaleza lo permita.',
+      'Congelar tu situación académica: conservás los derechos alcanzados. Si ya aprobaste la mitad de los parciales de una materia, al volver rendís solo los que faltan.',
+    ],
+    desplegablesTitulo: 'Más información',
+    desplegables: [
+      {
+        titulo: 'Por qué motivos podés pedirla',
+        items: [
+          'Trabajo',
+          'Matrimonio',
+          'Embarazo, maternidad y posparto',
+          'Paternidad',
+          'Adopción o guarda preadoptiva con fines de adopción',
+          'Atención del grupo familiar',
+          'Fallecimiento',
+          'Instancias o eventos deportivos, académicos, científicos o culturales',
+          'Representación del claustro',
+          'Actividades de intercambio en universidades o instituciones, en el país o en el exterior',
+          'Accidentes, afecciones o lesiones de corto tratamiento',
+          'Accidentes, enfermedades, afecciones o lesiones de largo tratamiento',
+          'Donación de órganos',
+        ],
+      },
+      {
+        titulo: 'Cómo se solicita',
+        texto:
+          'Primero asesorate en la SAE de cualquiera de las dos sedes. Después presentás la documentación por Mesa de Entradas.',
+        items: [
+          'Formulario de solicitud completo.',
+          'Fotocopia de tu DNI.',
+          'Documentación respaldatoria, que depende del motivo que invoques según la Ordenanza 1705/2019.',
+        ],
+        enlaces: [
+          {
+            texto: 'Descargar el formulario',
+            url: 'https://www.frba.utn.edu.ar/wp-content/uploads/2019/10/FORMULARIO-LICENCIA-ESTUDIANTIL-vd.doc',
+          },
+          {
+            texto: 'Leer la Ordenanza 1705/2019',
+            url: 'http://csu.rec.utn.edu.ar/docs/php/salida_nuevo_sitio_rectorado.php3?tipo=ORD&numero=1705&anio=0&facultad=CSU',
+          },
+        ],
+      },
+    ],
+    contacto: {
+      emails: ['sae@frba.utn.edu.ar'],
+      nota: 'Podés asesorarte en la SAE de cualquiera de las dos sedes antes de presentar la solicitud.',
+      ubicacion: 'Sede Medrano y Campus',
+      sedes: ['medrano', 'campus'],
     },
   },
   {

@@ -6,7 +6,7 @@ interface Props {
     titulo: string;
     texto?: string;
     items?: string[];
-    enlace?: { texto: string; url: string };
+    enlaces?: { texto: string; url: string }[];
   }[];
   acento?: 'rojo' | 'dorado';
 }
@@ -39,11 +39,15 @@ const { bloques, acento = 'rojo' } = Astro.props;
               </ul>
             )}
 
-            {b.enlace && (
-              <a class="desp__enlace" href={b.enlace.url} target="_blank" rel="noopener">
-                {b.enlace.texto}
-                <Icon name="flecha" size={14} />
-              </a>
+            {b.enlaces && (
+              <div class="desp__enlaces">
+                {b.enlaces.map((e) => (
+                  <a class="desp__enlace" href={e.url} target="_blank" rel="noopener">
+                    {e.texto}
+                    <Icon name="flecha" size={14} />
+                  </a>
+                ))}
+              </div>
             )}
           </div>
         </details>
@@ -143,11 +147,17 @@ const { bloques, acento = 'rojo' } = Astro.props;
     margin-top: 12px;
   }
 
+  .desp__enlaces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
   .desp__enlace {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    margin-top: 14px;
     padding: 10px 16px;
     border-radius: var(--r-full);
     border: 1px solid var(--linea);
