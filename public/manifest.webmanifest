@@ -1,0 +1,13 @@
+{
+  "name": "SAE UTN.BA — Servicios para estudiantes",
+  "short_name": "SAE UTN.BA",
+  "description": "Salud, becas, deportes, intercambios y más servicios de la Secretaría de Asuntos Estudiantiles de la UTN.BA.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0f2f5",
+  "theme_color": "#c8102e",
+  "lang": "es-AR",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

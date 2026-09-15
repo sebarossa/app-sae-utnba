@@ -1,0 +1,192 @@
+---
+import Icon from './Icon.astro';
+import { SEDES } from '../data/sedes';
+import { telHref } from '../lib/tel';
+import type { Contacto } from '../data/areas';
+
+interface Props {
+  contacto: Contacto;
+}
+
+const { contacto } = Astro.props;
+const sedes = (contacto.sedes ?? []).map((id) => SEDES[id]).filter(Boolean);
+---
+
+<section class="contacto">
+  <p class="kicker">Contacto</p>
+  <h2 class="contacto__titulo">Cómo comunicarte</h2>
+
+  <ul class="contacto__lista">
+    {
+      contacto.emails?.map((email) => (
+        <li>
+          <a class="fila" href={`mailto:${email}`}>
+            <span class="fila__icono">
+              <Icon name="mail" size={18} />
+            </span>
+            <span class="fila__texto">
+              <span class="fila__clave">Email</span>
+              <span class="fila__valor">{email}</span>
+            </span>
+            <Icon name="flecha" size={15} />
+          </a>
+        </li>
+      ))
+    }
+
+    {
+      contacto.telefonos?.map((t) => (
+        <li>
+          <a class="fila" href={telHref(t.numero)}>
+            <span class="fila__icono">
+              <Icon name="tel" size={18} />
+            </span>
+            <span class="fila__texto">
+              <span class="fila__clave">{t.label}</span>
+              <span class="fila__valor">{t.numero}</span>
+            </span>
+            <Icon name="flecha" size={15} />
+          </a>
+        </li>
+      ))
+    }
+
+    {
+      contacto.redes?.map((red) => (
+        <li>
+          <a class="fila" href={red.url} target="_blank" rel="noopener">
+            <span class="fila__icono">
+              <Icon name={red.tipo} size={18} />
+            </span>
+            <span class="fila__texto">
+              <span class="fila__clave">{red.tipo === 'instagram' ? 'Instagram' : 'Facebook'}</span>
+              <span class="fila__valor">{red.handle}</span>
+            </span>
+            <Icon name="flecha" size={15} />
+          </a>
+        </li>
+      ))
+    }
+
+    {
+      sedes.length > 0 ? (
+        sedes.map((sede) => (
+          <li>
+            <a class="fila" href={sede.mapa} target="_blank" rel="noopener">
+              <span class="fila__icono">
+                <Icon name="pin" size={18} />
+              </span>
+              <span class="fila__texto">
+                <span class="fila__clave">{sede.nombre}</span>
+                <span class="fila__valor">{sede.direccion}</span>
+              </span>
+              <Icon name="flecha" size={15} />
+            </a>
+          </li>
+        ))
+      ) : (
+        <li>
+          <div class="fila fila--estatica">
+            <span class="fila__icono">
+              <Icon name="pin" size={18} />
+            </span>
+            <span class="fila__texto">
+              <span class="fila__clave">Dónde</span>
+              <span class="fila__valor">{contacto.ubicacion}</span>
+            </span>
+          </div>
+        </li>
+      )
+    }
+  </ul>
+
+  {sedes.length > 0 && <p class="contacto__nota">{contacto.ubicacion}</p>}
+</section>
+
+<style>
+  .contacto {
+    margin-top: 4px;
+    padding-block: 26px 8px;
+    border-top: 1px solid var(--linea);
+  }
+
+  .contacto__titulo {
+    font-size: 21px;
+    font-weight: 900;
+    margin-bottom: 14px;
+  }
+
+  .contacto__lista {
+    display: grid;
+    gap: 8px;
+  }
+
+  .fila {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    color: var(--gris-2);
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+  }
+
+  .fila:active {
+    background: var(--panel);
+  }
+
+  @media (hover: hover) {
+    .fila:hover {
+      border-color: rgba(200, 16, 46, 0.3);
+    }
+  }
+
+  .fila--estatica {
+    grid-template-columns: auto 1fr;
+    background: var(--panel);
+  }
+
+  .fila__icono {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+  }
+
+  .fila__texto {
+    min-width: 0;
+  }
+
+  .fila__clave {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--gris-2);
+  }
+
+  .fila__valor {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--tinta);
+    word-break: break-word;
+    line-height: 1.4;
+    margin-top: 1px;
+  }
+
+  .contacto__nota {
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: var(--gris-2);
+    line-height: 1.6;
+  }
+</style>

@@ -1,0 +1,185 @@
+---
+import Base from '../layouts/Base.astro';
+import AreaCard from '../components/AreaCard.astro';
+import Icon from '../components/Icon.astro';
+import { AREAS, SAE } from '../data/areas';
+---
+
+<Base title="SAE UTN.BA — Servicios para estudiantes">
+  <!-- ── HERO ─────────────────────────────── -->
+  <section class="hero">
+    <p class="hero__kicker">Secretaría de Asuntos Estudiantiles</p>
+    <h1 class="hero__titulo">Estudiar acá<br />es más que cursar.</h1>
+    <p class="hero__bajada">
+      Salud, becas, deportes, intercambios, biblioteca y acompañamiento. Todo lo que la SAE pone a
+      disposición de los estudiantes de la UTN.BA, en un solo lugar.
+    </p>
+
+    <div class="hero__pills">
+      <span class="pill pill--rojo">Sede Medrano</span>
+      <span class="pill pill--dorado">Sede Campus</span>
+    </div>
+
+    <a class="btn btn--primario btn--bloque hero__cta" href="/deportes">
+      Ver la oferta deportiva
+      <Icon name="flecha" size={16} />
+    </a>
+  </section>
+
+  <div class="franja"></div>
+
+  <!-- ── ÁREAS ────────────────────────────── -->
+  <section class="wrap seccion">
+    <p class="kicker">Nuestras áreas</p>
+    <h2 class="titulo-seccion">¿Qué necesitás?</h2>
+    <p class="bajada">Tocá cualquiera para ver los servicios, los horarios y a quién escribirle.</p>
+
+    <div class="grilla">
+      {AREAS.map((area) => <AreaCard area={area} />)}
+    </div>
+  </section>
+
+  <!-- ── CONTACTO RÁPIDO ──────────────────── -->
+  <section class="cierre">
+    <div class="wrap">
+      <p class="kicker kicker--dorado">¿Dudas?</p>
+      <h2 class="cierre__titulo">Escribinos y te orientamos</h2>
+      <p class="cierre__bajada">
+        Si no sabés a qué área corresponde tu consulta, mandanos un mail general y te derivamos.
+      </p>
+
+      <a class="btn btn--primario btn--bloque" href={`mailto:${SAE.email}`}>
+        <Icon name="mail" size={17} />
+        {SAE.email}
+      </a>
+
+      <div class="cierre__redes">
+        <a class="red" href={SAE.instagram.url} target="_blank" rel="noopener">
+          <Icon name="instagram" size={18} />
+          <span>{SAE.instagram.handle}</span>
+        </a>
+        <a class="red" href={SAE.facebook.url} target="_blank" rel="noopener">
+          <Icon name="facebook" size={18} />
+          <span>{SAE.facebook.handle}</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background: var(--tinta);
+    color: #fff;
+    padding: 40px 20px 36px;
+  }
+
+  .hero__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rojo-claro);
+    margin-bottom: 16px;
+  }
+
+  .hero__titulo {
+    font-size: 34px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+  }
+
+  .hero__bajada {
+    margin-top: 16px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .hero__pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+  }
+
+  .hero__cta {
+    margin-top: 26px;
+  }
+
+  .grilla {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  @media (min-width: 520px) {
+    .hero {
+      padding: 56px 24px 48px;
+    }
+    .hero__titulo {
+      font-size: 44px;
+    }
+    .hero__cta {
+      display: inline-flex;
+      width: auto;
+    }
+    .grilla {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .cierre {
+    background: var(--panel);
+    border-top: 1px solid var(--linea);
+    padding-block: 32px 36px;
+    text-align: center;
+  }
+
+  .cierre__titulo {
+    font-size: 23px;
+    font-weight: 900;
+  }
+
+  .cierre__bajada {
+    margin: 10px 0 20px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .cierre .btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14.5px;
+  }
+
+  .cierre__redes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .red {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--tinta);
+  }
+
+  .red :global(svg) {
+    color: var(--rojo);
+  }
+</style>

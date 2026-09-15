@@ -1,0 +1,348 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { AREAS, SAE } from '../data/areas';
+import { SEDES } from '../data/sedes';
+import { telHref } from '../lib/tel';
+
+const areasConContacto = AREAS.filter((a) => a.contacto.emails?.length || a.contacto.telefonos?.length);
+const sedesPrincipales = [SEDES.medrano, SEDES.campus];
+---
+
+<Base
+  title="Contacto — SAE UTN.BA"
+  description="Emails, teléfonos y sedes de todas las áreas de la Secretaría de Asuntos Estudiantiles."
+  volverA="/"
+  volverTexto="Inicio"
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">Estamos para ayudarte</p>
+    <h1 class="cabecera__titulo">Contacto</h1>
+    <p class="cabecera__desc">
+      Todos los mails y teléfonos de la SAE, ordenados por área. Tocá cualquiera para escribir o
+      llamar directamente desde el celular.
+    </p>
+  </section>
+
+  <div class="franja"></div>
+
+  <div class="wrap seccion">
+    <!-- ── GENERAL ────────────────────────── -->
+    <section class="destacado">
+      <p class="kicker">Consulta general</p>
+      <h2 class="destacado__titulo">¿No sabés a quién escribir?</h2>
+      <a class="btn btn--primario btn--bloque destacado__btn" href={`mailto:${SAE.email}`}>
+        <Icon name="mail" size={17} />
+        {SAE.email}
+      </a>
+      <div class="redes">
+        <a class="red" href={SAE.instagram.url} target="_blank" rel="noopener">
+          <Icon name="instagram" size={17} />
+          <span>{SAE.instagram.handle}</span>
+        </a>
+        <a class="red" href={SAE.facebook.url} target="_blank" rel="noopener">
+          <Icon name="facebook" size={17} />
+          <span>{SAE.facebook.handle}</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── POR ÁREA ───────────────────────── -->
+    <section class="bloque">
+      <p class="kicker">Por área</p>
+      <h2 class="bloque__titulo">Directorio</h2>
+
+      <ul class="areas">
+        {
+          areasConContacto.map((area) => (
+            <li class="area">
+              <div class="area__cab">
+                <span class:list={['area__icono', `area__icono--${area.acento}`]}>
+                  <Icon name={area.icono} size={17} />
+                </span>
+                <a class="area__nombre" href={area.enlaceInterno ?? `/areas/${area.slug}`}>
+                  {area.nombre}
+                </a>
+              </div>
+
+              <ul class="area__datos">
+                {area.contacto.emails?.map((email) => (
+                  <li>
+                    <a class="dato" href={`mailto:${email}`}>
+                      <Icon name="mail" size={14} />
+                      <span>{email}</span>
+                    </a>
+                  </li>
+                ))}
+                {area.contacto.telefonos?.map((t) => (
+                  <li>
+                    <a class="dato" href={telHref(t.numero)}>
+                      <Icon name="tel" size={14} />
+                      <span>{t.numero}</span>
+                    </a>
+                  </li>
+                ))}
+                {area.contacto.redes?.map((red) => (
+                  <li>
+                    <a class="dato" href={red.url} target="_blank" rel="noopener">
+                      <Icon name={red.tipo} size={14} />
+                      <span>{red.handle}</span>
+                    </a>
+                  </li>
+                ))}
+                <li class="dato dato--estatico">
+                  <Icon name="pin" size={14} />
+                  <span>{area.contacto.ubicacion}</span>
+                </li>
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- ── SEDES ──────────────────────────── -->
+    <section class="bloque">
+      <p class="kicker">Cómo llegar</p>
+      <h2 class="bloque__titulo">Nuestras sedes</h2>
+      <ul class="sedes">
+        {
+          sedesPrincipales.map((sede) => (
+            <li>
+              <a class="sede" href={sede.mapa} target="_blank" rel="noopener">
+                <span class="sede__icono">
+                  <Icon name="pin" size={17} />
+                </span>
+                <span>
+                  <span class="sede__nombre">{sede.nombre}</span>
+                  <span class="sede__dir">{sede.direccion}</span>
+                </span>
+                <Icon name="flecha" size={15} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--rojo-claro);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 34px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  .cabecera__desc {
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .destacado {
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-radius: var(--r-lg);
+    padding: 20px 18px 22px;
+    text-align: center;
+    margin-bottom: 34px;
+  }
+
+  .destacado__titulo {
+    font-size: 19px;
+    font-weight: 900;
+    margin-bottom: 16px;
+  }
+
+  .destacado__btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14px;
+  }
+
+  .redes {
+    display: flex;
+    justify-content: center;
+    gap: 9px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .red {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 15px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--tinta);
+  }
+
+  .red :global(svg) {
+    color: var(--rojo);
+  }
+
+  .bloque {
+    margin-bottom: 34px;
+  }
+
+  .bloque__titulo {
+    font-size: 21px;
+    font-weight: 900;
+    margin-bottom: 14px;
+  }
+
+  .areas {
+    display: grid;
+    gap: 10px;
+  }
+
+  .area {
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    padding: 14px 15px;
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+  }
+
+  .area__cab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .area__icono {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+    flex: none;
+  }
+
+  .area__icono--dorado {
+    background: var(--dorado-tenue);
+    color: var(--dorado);
+  }
+
+  .area__nombre {
+    font-family: var(--titulo);
+    font-size: 15.5px;
+    font-weight: 800;
+    color: var(--tinta);
+  }
+
+  .area__datos {
+    display: grid;
+    gap: 1px;
+  }
+
+  .dato {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 9px;
+    padding: 6px 0;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--tinta-2);
+    word-break: break-word;
+  }
+
+  .dato :global(svg) {
+    color: var(--rojo);
+    margin-top: 3px;
+  }
+
+  .dato--estatico {
+    color: var(--gris-2);
+    font-size: 12.5px;
+  }
+
+  .dato--estatico :global(svg) {
+    color: var(--gris-2);
+  }
+
+  .sedes {
+    display: grid;
+    gap: 8px;
+  }
+
+  .sede {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    color: var(--gris-2);
+  }
+
+  .sede__icono {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+  }
+
+  .sede__nombre {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--tinta);
+  }
+
+  .sede__dir {
+    display: block;
+    font-size: 12.5px;
+    color: var(--gris);
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 42px;
+    }
+    .areas {
+      grid-template-columns: 1fr 1fr;
+    }
+    .destacado__btn {
+      display: inline-flex;
+      width: auto;
+    }
+  }
+</style>

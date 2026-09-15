@@ -1,0 +1,202 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Contacto from '../../components/Contacto.astro';
+import { AREAS } from '../../data/areas';
+
+export function getStaticPaths() {
+  // Deportes tiene su propia página (/deportes) con el cronograma completo.
+  return AREAS.filter((a) => !a.enlaceInterno).map((area) => ({
+    params: { slug: area.slug },
+    props: { area },
+  }));
+}
+
+const { area } = Astro.props;
+---
+
+<Base title={`${area.nombre} — SAE UTN.BA`} description={area.descripcion} volverA="/" volverTexto="Áreas">
+  <section class:list={['cabecera', `cabecera--${area.acento}`]}>
+    <span class="cabecera__icono">
+      <Icon name={area.icono} size={26} />
+    </span>
+    <h1 class="cabecera__titulo">{area.nombre}</h1>
+    <p class="cabecera__desc">{area.descripcion}</p>
+  </section>
+
+  <div class="franja"></div>
+
+  <div class="wrap seccion">
+    <section class="bloque">
+      <p class="kicker">{area.listaTitulo}</p>
+      <ul class="lista">
+        {
+          area.lista.map((item) => (
+            <li class="lista__item">
+              <span class="lista__check" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m4.5 12.5 5 5 10-11" />
+                </svg>
+              </span>
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    {
+      area.extra?.map((bloque) => (
+        <section class="bloque">
+          <h2 class="bloque__titulo">{bloque.titulo}</h2>
+          <dl class="datos">
+            {bloque.filas.map((fila) => (
+              <div class="datos__fila">
+                <dt>{fila.clave}</dt>
+                <dd>{fila.valor}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      ))
+    }
+
+    <Contacto contacto={area.contacto} />
+  </div>
+
+  <section class="volver">
+    <a class="btn btn--primario btn--bloque" href="/">Ver todas las áreas</a>
+  </section>
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 34px 20px 32px;
+  }
+
+  .cabecera__icono {
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    background: rgba(200, 16, 46, 0.18);
+    border: 1px solid rgba(200, 16, 46, 0.45);
+    color: #ff8fa0;
+    margin-bottom: 18px;
+  }
+
+  .cabecera--dorado .cabecera__icono {
+    background: rgba(184, 147, 62, 0.15);
+    border-color: rgba(184, 147, 62, 0.4);
+    color: #d4aa5a;
+  }
+
+  .cabecera__titulo {
+    font-size: 32px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  .cabecera__desc {
+    margin-top: 12px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .bloque {
+    margin-bottom: 30px;
+  }
+
+  .bloque__titulo {
+    font-size: 17px;
+    font-weight: 800;
+    margin-bottom: 10px;
+  }
+
+  .lista {
+    display: grid;
+    gap: 2px;
+  }
+
+  .lista__item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--linea);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tinta-2);
+  }
+
+  .lista__item:last-child {
+    border-bottom: none;
+  }
+
+  .lista__check {
+    display: grid;
+    place-items: center;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    background: var(--rojo);
+    color: #fff;
+    margin-top: 2px;
+  }
+
+  .cabecera--dorado ~ .wrap .lista__check {
+    background: var(--dorado);
+  }
+
+  .datos {
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .datos__fila {
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 10px;
+    padding: 11px 14px;
+    background: var(--panel);
+    border-radius: var(--r-sm);
+  }
+
+  .datos__fila dt {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gris-2);
+    padding-top: 3px;
+  }
+
+  .datos__fila dd {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--tinta);
+    line-height: 1.45;
+  }
+
+  .volver {
+    padding: 0 20px 32px;
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 46px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 38px;
+    }
+  }
+</style>

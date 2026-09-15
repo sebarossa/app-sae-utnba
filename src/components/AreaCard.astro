@@ -1,0 +1,101 @@
+---
+import Icon from './Icon.astro';
+import type { Area } from '../data/areas';
+
+interface Props {
+  area: Area;
+}
+
+const { area } = Astro.props;
+const href = area.enlaceInterno ?? `/areas/${area.slug}`;
+---
+
+<a class:list={['tarjeta', `tarjeta--${area.acento}`]} href={href}>
+  <span class="tarjeta__icono">
+    <Icon name={area.icono} size={22} />
+  </span>
+
+  <span class="tarjeta__texto">
+    <span class="tarjeta__nombre">{area.nombre}</span>
+    <span class="tarjeta__resumen">{area.resumen}</span>
+  </span>
+
+  <span class="tarjeta__flecha" aria-hidden="true">
+    <Icon name="flecha" size={16} />
+  </span>
+</a>
+
+<style>
+  .tarjeta {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: var(--blanco);
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    box-shadow: var(--sombra-sm);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  }
+
+  .tarjeta:active {
+    transform: scale(0.985);
+    box-shadow: none;
+  }
+
+  @media (hover: hover) {
+    .tarjeta:hover {
+      border-color: rgba(200, 16, 46, 0.35);
+      box-shadow: var(--sombra-md);
+    }
+  }
+
+  .tarjeta__icono {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+    flex: none;
+  }
+
+  .tarjeta--dorado .tarjeta__icono {
+    background: var(--dorado-tenue);
+    color: var(--dorado);
+  }
+
+  .tarjeta--dorado:hover {
+    border-color: rgba(184, 147, 62, 0.4);
+  }
+
+  .tarjeta__texto {
+    display: block;
+    min-width: 0;
+  }
+
+  .tarjeta__nombre {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--tinta);
+    letter-spacing: -0.01em;
+  }
+
+  .tarjeta__resumen {
+    display: block;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--gris);
+    margin-top: 2px;
+  }
+
+  .tarjeta__flecha {
+    color: var(--gris-2);
+    display: grid;
+    place-items: center;
+  }
+</style>

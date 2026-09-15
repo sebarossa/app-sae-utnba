@@ -1,0 +1,451 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Contacto from '../components/Contacto.astro';
+import { DEPORTES, DIAS, SELECTIVOS, OTRAS_DISCIPLINAS, SEDES_DEPORTIVAS } from '../data/deportes';
+import { getArea } from '../data/areas';
+
+const areaDeportes = getArea('deportes')!;
+const grupos = [...new Set(DEPORTES.map((d) => d.grupo))];
+---
+
+<Base
+  title="Deportes UTN.BA — Oferta 2026"
+  description="Días, horarios y sedes de las disciplinas deportivas de la UTN.BA para 2026."
+  volverA="/"
+  volverTexto="Áreas"
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">Oferta deportiva 2026</p>
+    <h1 class="cabecera__titulo">Elegí tu deporte.</h1>
+    <p class="cabecera__desc">
+      Entrenamientos abiertos a estudiantes de la UTN.BA, en el Campus y en clubes cercanos.
+      Filtrá por día para ver qué hay cuando podés.
+    </p>
+    <div class="cabecera__pills">
+      <span class="pill pill--rojo">{DEPORTES.length} entrenamientos</span>
+      <span class="pill pill--dorado">{SEDES_DEPORTIVAS.length} sedes</span>
+    </div>
+  </section>
+
+  <div class="franja"></div>
+
+  <!-- ── FILTRO POR DÍA ───────────────────── -->
+  <div class="filtro" role="group" aria-label="Filtrar por día">
+    <div class="filtro__scroll">
+      <button type="button" class="chip activo" data-dia="todos" aria-pressed="true">Todos</button>
+      {
+        DIAS.map((dia) => (
+          <button type="button" class="chip" data-dia={dia.id} aria-pressed="false">
+            {dia.corto}
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="wrap seccion">
+    <div id="resultados">
+      {
+        grupos.map((grupo) => (
+          <section class="grupo" data-grupo={grupo}>
+            <h2 class="grupo__titulo">{grupo}</h2>
+            <ul class="grupo__lista">
+              {DEPORTES.filter((d) => d.grupo === grupo).map((d) => (
+                <li class="deporte" data-dias={d.dias.join(' ')}>
+                  <div class="deporte__cab">
+                    <span class="deporte__emoji" aria-hidden="true">
+                      {d.emoji}
+                    </span>
+                    <h3 class="deporte__nombre">{d.nombre}</h3>
+                  </div>
+
+                  <p class="deporte__dato">
+                    <Icon name="reloj" size={15} />
+                    <span>{d.horario}</span>
+                  </p>
+
+                  <a class="deporte__dato deporte__dato--link" href={d.sede.mapa} target="_blank" rel="noopener">
+                    <Icon name="pin" size={15} />
+                    <span>
+                      {d.sede.nombre}
+                      {d.detalleSede ? ` — ${d.detalleSede}` : ''}
+                      <span class="deporte__dir">{d.sede.direccion}</span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+
+    <p id="vacio" class="vacio" hidden>
+      No hay entrenamientos ese día. Probá con otro o mirá los deportes selectivos más abajo.
+    </p>
+
+    <!-- ── OTRAS DISCIPLINAS ──────────────── -->
+    <section class="extra">
+      <p class="kicker kicker--dorado">Consultá también</p>
+      <h2 class="extra__titulo">Deportes selectivos</h2>
+      <p class="extra__bajada">
+        Equipos que representan a la facultad en competencias. Los horarios se coordinan con el
+        cuerpo técnico: consultá en la SAE.
+      </p>
+      <ul class="tags">
+        {SELECTIVOS.map((s) => <li class="tag">{s}</li>)}
+      </ul>
+
+      <h3 class="extra__sub">Otras actividades</h3>
+      <p class="extra__bajada">
+        También forman parte de la oferta de la SAE. Días y horarios a confirmar para 2026.
+      </p>
+      <ul class="tags">
+        {OTRAS_DISCIPLINAS.map((s) => <li class="tag tag--suave">{s}</li>)}
+      </ul>
+    </section>
+
+    <!-- ── SEDES ──────────────────────────── -->
+    <section class="extra">
+      <p class="kicker">Dónde se entrena</p>
+      <h2 class="extra__titulo">Sedes deportivas</h2>
+      <ul class="sedes">
+        {
+          SEDES_DEPORTIVAS.map((sede) => (
+            <li>
+              <a class="sede" href={sede.mapa} target="_blank" rel="noopener">
+                <span class="sede__icono">
+                  <Icon name="pin" size={17} />
+                </span>
+                <span>
+                  <span class="sede__nombre">{sede.nombre}</span>
+                  <span class="sede__dir">{sede.direccion}</span>
+                </span>
+                <Icon name="flecha" size={15} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <Contacto contacto={areaDeportes.contacto} />
+  </div>
+
+  <section class="volver">
+    <a class="btn btn--primario btn--bloque" href="/">Ver todas las áreas</a>
+  </section>
+</Base>
+
+<script>
+  const chips = document.querySelectorAll<HTMLButtonElement>('.chip');
+  const deportes = document.querySelectorAll<HTMLElement>('.deporte');
+  const grupos = document.querySelectorAll<HTMLElement>('.grupo');
+  const vacio = document.getElementById('vacio');
+
+  function filtrar(dia: string) {
+    let visibles = 0;
+
+    deportes.forEach((el) => {
+      const dias = (el.dataset.dias ?? '').split(' ');
+      const mostrar = dia === 'todos' || dias.includes(dia);
+      el.hidden = !mostrar;
+      if (mostrar) visibles++;
+    });
+
+    // Un grupo sin entrenamientos visibles se oculta junto con su título.
+    grupos.forEach((grupo) => {
+      const algunoVisible = grupo.querySelectorAll<HTMLElement>('.deporte:not([hidden])').length > 0;
+      grupo.hidden = !algunoVisible;
+    });
+
+    if (vacio) vacio.hidden = visibles > 0;
+  }
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      chips.forEach((c) => {
+        c.classList.remove('activo');
+        c.setAttribute('aria-pressed', 'false');
+      });
+      chip.classList.add('activo');
+      chip.setAttribute('aria-pressed', 'true');
+      filtrar(chip.dataset.dia ?? 'todos');
+    });
+  });
+</script>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 34px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  .cabecera__desc {
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .cabecera__pills {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Filtro ── */
+  .filtro {
+    position: sticky;
+    top: calc(env(safe-area-inset-top, 0px) + 48px);
+    z-index: 15;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .filtro__scroll {
+    display: flex;
+    gap: 7px;
+    padding: 11px 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .filtro__scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    flex: none;
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    border-radius: var(--r-full);
+    padding: 9px 16px;
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--gris);
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .chip.activo {
+    background: var(--rojo);
+    border-color: var(--rojo);
+    color: #fff;
+  }
+
+  /* ── Grupos y tarjetas ── */
+  .grupo {
+    margin-bottom: 26px;
+  }
+
+  .grupo__titulo {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gris-2);
+    padding-bottom: 9px;
+    border-bottom: 1px solid var(--linea);
+    margin-bottom: 12px;
+  }
+
+  .grupo__lista {
+    display: grid;
+    gap: 10px;
+  }
+
+  .deporte {
+    border: 1px solid var(--linea);
+    border-left: 3px solid var(--rojo);
+    border-radius: var(--r-md);
+    padding: 15px 16px;
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+  }
+
+  .deporte__cab {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 9px;
+  }
+
+  .deporte__emoji {
+    font-size: 19px;
+    line-height: 1;
+  }
+
+  .deporte__nombre {
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .deporte__dato {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 9px;
+    align-items: start;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--gris);
+    padding: 3px 0;
+  }
+
+  .deporte__dato :global(svg) {
+    color: var(--rojo);
+    margin-top: 2px;
+  }
+
+  .deporte__dato--link {
+    color: var(--tinta-2);
+    font-weight: 600;
+  }
+
+  .deporte__dir {
+    display: block;
+    font-weight: 400;
+    font-size: 12.5px;
+    color: var(--gris-2);
+  }
+
+  .vacio {
+    padding: 28px 4px;
+    text-align: center;
+    color: var(--gris);
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+
+  /* ── Extras ── */
+  .extra {
+    margin-top: 34px;
+    padding-top: 26px;
+    border-top: 1px solid var(--linea);
+  }
+
+  .extra__titulo {
+    font-size: 21px;
+    font-weight: 900;
+  }
+
+  .extra__sub {
+    font-size: 16px;
+    font-weight: 800;
+    margin-top: 24px;
+  }
+
+  .extra__bajada {
+    margin: 9px 0 14px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .tag {
+    border-radius: var(--r-full);
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--dorado-tenue);
+    color: #8a6d24;
+    border: 1px solid rgba(184, 147, 62, 0.28);
+  }
+
+  .tag--suave {
+    background: var(--panel);
+    color: var(--gris);
+    border-color: var(--linea);
+  }
+
+  .sedes {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .sede {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 13px 14px;
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    color: var(--gris-2);
+  }
+
+  .sede__icono {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+  }
+
+  .sede__nombre {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--tinta);
+    font-family: var(--titulo);
+  }
+
+  .sede__dir {
+    display: block;
+    font-size: 12.5px;
+    color: var(--gris);
+  }
+
+  .volver {
+    padding: 0 20px 32px;
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 42px;
+    }
+    .grupo__lista {
+      grid-template-columns: 1fr 1fr;
+    }
+    .volver .btn {
+      display: inline-flex;
+      width: auto;
+    }
+  }
+</style>
