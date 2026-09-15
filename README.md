@@ -63,8 +63,20 @@ UTN.BA en SVG o PNG, reemplazalo ahí y en `public/manifest.webmanifest`.
 
 ## Publicar
 
-El build es estático: `dist/` se sube tal cual a Netlify, Vercel, Cloudflare Pages o cualquier
-hosting. Si va a vivir en un subdirectorio, completá `site` y `base` en `astro.config.mjs`.
+El build es estático, así que anda en cualquier hosting. En **Vercel** se importa el repo desde
+`vercel.com/new` y no hay nada que configurar: detecta Astro solo y usa estos valores.
+
+| Ajuste | Valor |
+|---|---|
+| Framework Preset | Astro |
+| Build Command | `npm run build` |
+| Output Directory | `dist` |
+| Install Command | `npm install` |
+
+Queda con deploy automático: cada push a `main` republica el sitio.
+
+Si en cambio va a vivir en un subdirectorio (por ejemplo GitHub Pages o un servidor de la
+facultad), completá `site` y `base` en `astro.config.mjs` antes de buildear.
 
 Para la expo conviene generar un QR apuntando a la URL final y pegarlo en el stand de la SAE.
 
