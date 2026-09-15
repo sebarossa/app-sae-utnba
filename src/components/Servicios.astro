@@ -1,0 +1,264 @@
+---
+import Icon from './Icon.astro';
+import { telHref } from '../lib/tel';
+import type { Servicio } from '../data/areas';
+
+interface Props {
+  servicios: Servicio[];
+}
+
+const { servicios } = Astro.props;
+---
+
+<ul class="servicios">
+  {
+    servicios.map((s) => (
+      <li>
+        <details class="serv">
+          <summary class="serv__cab">
+            <span class="serv__texto">
+              <span class="serv__nombre">
+                {s.nombre}
+                {s.proximamente && <span class="serv__badge">Próximamente</span>}
+              </span>
+              <span class="serv__resumen">{s.resumen}</span>
+            </span>
+            <span class="serv__chevron" aria-hidden="true">
+              <Icon name="flecha" size={16} />
+            </span>
+          </summary>
+
+          <div class="serv__cuerpo">
+            {s.agenda && (
+              <ul class="agenda">
+                {s.agenda.map((a) => (
+                  <li class="agenda__item">
+                    <span class="agenda__cuando">{a.cuando}</span>
+                    <span class="agenda__quien">{a.quien}</span>
+                    <span class="agenda__donde">
+                      <Icon name="pin" size={13} />
+                      <span>
+                        {a.sede} · {a.lugar}
+                      </span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {s.nota && <p class="serv__nota">{s.nota}</p>}
+
+            {s.turno && (
+              <div class="turno">
+                <p class="turno__titulo">Cómo sacar turno</p>
+                <p class="turno__texto">{s.turno.texto}</p>
+                <div class="turno__acciones">
+                  {s.turno.telefono && (
+                    <a class="accion" href={telHref(s.turno.telefono)}>
+                      <Icon name="tel" size={15} />
+                      <span>{s.turno.telefono}</span>
+                    </a>
+                  )}
+                  {s.turno.email && (
+                    <a class="accion" href={`mailto:${s.turno.email}`}>
+                      <Icon name="mail" size={15} />
+                      <span>{s.turno.email}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        </details>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .servicios {
+    display: grid;
+    gap: 9px;
+  }
+
+  .serv {
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+    overflow: hidden;
+  }
+
+  .serv[open] {
+    border-color: rgba(200, 16, 46, 0.32);
+  }
+
+  /* Oculta el triángulo nativo en todos los motores */
+  .serv__cab {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 16px;
+    cursor: pointer;
+    list-style: none;
+    min-height: 56px;
+  }
+
+  .serv__cab::-webkit-details-marker {
+    display: none;
+  }
+
+  .serv__nombre {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 15.5px;
+    font-weight: 800;
+    color: var(--tinta);
+    letter-spacing: -0.01em;
+  }
+
+  .serv__resumen {
+    display: block;
+    font-size: 13px;
+    color: var(--gris);
+    margin-top: 2px;
+  }
+
+  .serv__badge {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 7px;
+    border-radius: var(--r-full);
+    padding: 3px 9px;
+    background: var(--dorado-tenue);
+    border: 1px solid rgba(184, 147, 62, 0.35);
+    color: #8a6d24;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .serv__chevron {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+    transform: rotate(90deg);
+    transition: transform 0.2s ease;
+  }
+
+  .serv[open] .serv__chevron {
+    transform: rotate(-90deg);
+  }
+
+  .serv__cuerpo {
+    padding: 0 16px 16px;
+    border-top: 1px solid var(--linea);
+    margin-top: -1px;
+    padding-top: 14px;
+  }
+
+  /* ── Agenda de atención ── */
+  .agenda {
+    display: grid;
+    gap: 10px;
+  }
+
+  .agenda__item {
+    border-left: 2px solid var(--rojo);
+    padding: 2px 0 2px 12px;
+  }
+
+  .agenda__cuando {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 13.5px;
+    font-weight: 800;
+    color: var(--rojo);
+  }
+
+  .agenda__quien {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--tinta);
+    margin-top: 1px;
+  }
+
+  .agenda__donde {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px;
+    align-items: start;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--gris-2);
+    margin-top: 3px;
+  }
+
+  .agenda__donde :global(svg) {
+    margin-top: 2px;
+  }
+
+  .serv__nota {
+    margin-top: 12px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  /* ── Bloque de turnos ── */
+  .turno {
+    margin-top: 14px;
+    padding: 13px 14px;
+    background: var(--panel);
+    border-radius: var(--r-sm);
+  }
+
+  .turno__titulo {
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gris-2);
+  }
+
+  .turno__texto {
+    margin-top: 5px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--tinta-2);
+  }
+
+  .turno__acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 11px;
+  }
+
+  .accion {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 13px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--tinta);
+    word-break: break-word;
+  }
+
+  .accion :global(svg) {
+    color: var(--rojo);
+    flex: none;
+  }
+</style>

@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import Contacto from '../../components/Contacto.astro';
+import Servicios from '../../components/Servicios.astro';
 import { AREAS } from '../../data/areas';
 
 export function getStaticPaths() {
@@ -27,23 +28,35 @@ const { area } = Astro.props;
   <div class="franja"></div>
 
   <div class="wrap seccion">
-    <section class="bloque">
-      <p class="kicker">{area.listaTitulo}</p>
-      <ul class="lista">
-        {
-          area.lista.map((item) => (
-            <li class="lista__item">
-              <span class="lista__check" aria-hidden="true">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="m4.5 12.5 5 5 10-11" />
-                </svg>
-              </span>
-              <span>{item}</span>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+    {
+      area.servicios && (
+        <section class="bloque">
+          <p class="kicker">{area.serviciosTitulo}</p>
+          <p class="bloque__ayuda">Tocá cada servicio para ver horarios y cómo sacar turno.</p>
+          <Servicios servicios={area.servicios} />
+        </section>
+      )
+    }
+
+    {
+      area.lista && (
+        <section class="bloque">
+          <p class="kicker">{area.listaTitulo}</p>
+          <ul class="lista">
+            {area.lista.map((item) => (
+              <li class="lista__item">
+                <span class="lista__check" aria-hidden="true">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m4.5 12.5 5 5 10-11" />
+                  </svg>
+                </span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
     {
       area.extra?.map((bloque) => (
@@ -110,6 +123,13 @@ const { area } = Astro.props;
 
   .bloque {
     margin-bottom: 30px;
+  }
+
+  .bloque__ayuda {
+    font-size: 13.5px;
+    color: var(--gris);
+    margin: -4px 0 12px;
+    line-height: 1.5;
   }
 
   .bloque__titulo {

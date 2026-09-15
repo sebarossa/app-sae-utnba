@@ -2,6 +2,23 @@ import type { IconName } from '../lib/icons';
 
 export type Red = { tipo: 'instagram' | 'facebook'; handle: string; url: string };
 
+/** Una franja de atención concreta: dónde, cuándo y con quién. */
+export type AgendaItem = {
+  sede: string;
+  lugar: string;
+  cuando: string;
+  quien: string;
+};
+
+export type Servicio = {
+  nombre: string;
+  resumen: string;
+  proximamente?: boolean;
+  agenda?: AgendaItem[];
+  nota?: string;
+  turno?: { texto: string; telefono?: string; email?: string };
+};
+
 export type Contacto = {
   emails?: string[];
   telefonos?: { label: string; numero: string }[];
@@ -17,8 +34,10 @@ export type Area = {
   acento: 'rojo' | 'dorado';
   resumen: string;
   descripcion: string;
-  listaTitulo: string;
-  lista: string[];
+  listaTitulo?: string;
+  lista?: string[];
+  serviciosTitulo?: string;
+  servicios?: Servicio[];
   contacto: Contacto;
   extra?: { titulo: string; filas: { clave: string; valor: string }[] }[];
   destacado?: boolean;
@@ -31,11 +50,89 @@ export const AREAS: Area[] = [
     nombre: 'Salud',
     icono: 'salud',
     acento: 'rojo',
-    resumen: 'Atención médica, odontología y nutrición para toda la comunidad.',
+    resumen: 'Consultorio médico, nutrición y consultoría psicológica.',
     descripcion:
       'Ofrece a la comunidad universitaria servicios médicos promoviendo el cuidado de la salud y el bienestar.',
-    listaTitulo: 'Servicios',
-    lista: ['Atención Médica', 'Odontología', 'Nutrición', 'Orientación Vocacional'],
+    serviciosTitulo: 'Servicios',
+    servicios: [
+      {
+        nombre: 'Consultorio Médico',
+        resumen: 'Medrano y Campus',
+        agenda: [
+          {
+            sede: 'Sede Medrano',
+            lugar: 'Medrano 951, 4° piso',
+            cuando: 'Lunes de 16:00 a 18:00 h',
+            quien: 'Dr. Juan Villani',
+          },
+          {
+            sede: 'Sede Medrano',
+            lugar: 'Medrano 951, 4° piso',
+            cuando: 'Martes de 18:00 a 21:00 h',
+            quien: 'Dr. Fernando Postare',
+          },
+          {
+            sede: 'Sede Campus',
+            lugar: 'Mozart 2300, 1° piso — junto a la Biblioteca',
+            cuando: 'Lunes a viernes de 8:00 a 14:00 h',
+            quien: 'Enfermera María Verónica Barraza',
+          },
+        ],
+        turno: {
+          texto:
+            'Acercate al Consultorio Médico de la Sede Medrano o llamá, dentro del horario de atención.',
+          telefono: '011 4867 7500 int. 7688',
+        },
+      },
+      {
+        nombre: 'Consultorio de Nutrición',
+        resumen: 'Viernes en Medrano',
+        agenda: [
+          {
+            sede: 'Sede Medrano',
+            lugar: 'Medrano 951, 4° piso',
+            cuando: 'Viernes de 13:30 a 15:30 h',
+            quien: 'Lic. Valeria Ronga',
+          },
+        ],
+        turno: {
+          texto:
+            'Acercate al Consultorio Médico de la Sede Medrano, llamá o escribile directamente.',
+          telefono: '011 4867 7500 int. 7688',
+          email: 'vronga@frba.utn.edu.ar',
+        },
+      },
+      {
+        nombre: 'Consultoría Psicológica',
+        resumen: 'Lunes en Medrano · virtual o presencial',
+        agenda: [
+          {
+            sede: 'Sede Medrano',
+            lugar: 'Medrano 951, 4° piso',
+            cuando: 'Lunes de 9:30 a 14:00 h',
+            quien: 'Lic. Viviana Acosta',
+          },
+        ],
+        nota: 'Se atiende de forma virtual y presencial.',
+        turno: {
+          texto:
+            'Acercate al Consultorio Médico de la Sede Medrano, llamá o escribile directamente.',
+          telefono: '011 4867 7500 int. 7688',
+          email: 'vacosta@frba.utn.edu.ar',
+        },
+      },
+      {
+        nombre: 'Odontología',
+        resumen: 'Horarios a confirmar',
+        proximamente: true,
+        nota: 'Próximamente informamos los nuevos horarios de atención.',
+      },
+      {
+        nombre: 'Orientación Vocacional',
+        resumen: 'A coordinar',
+        nota: 'Consultá por disponibilidad y turnos escribiendo a salud@frba.utn.edu.ar.',
+      },
+    ],
     contacto: {
       emails: ['salud@frba.utn.edu.ar'],
       telefonos: [{ label: 'Salud', numero: '011 4867 7550' }],
@@ -106,11 +203,16 @@ export const AREAS: Area[] = [
     nombre: 'Intercambios',
     icono: 'intercambios',
     acento: 'dorado',
-    resumen: 'Becas internacionales y convenios con universidades del mundo.',
+    resumen: 'Becas y convenios con universidades de todo el mundo.',
     descripcion:
       'Amplía programas de intercambios y becas, consolida convenios globales, fomenta la participación estudiantil en actividades internacionales y promueve el retorno de los conocimientos adquiridos.',
-    listaTitulo: 'Programas',
-    lista: ['Becas PILA', 'Becas DAAD', 'Becas IAESTE', 'Becas ARFITEC'],
+    listaTitulo: 'Programas y destinos',
+    lista: [
+      'Becas PILA — intercambio con universidades de América Latina',
+      'Becas IAESTE — pasantías técnicas en el exterior',
+      'Convenios vigentes con universidades de todo el mundo',
+      '¿Te interesa un destino que no está en la lista? Se puede gestionar el convenio',
+    ],
     contacto: {
       emails: ['intercambios@frba.utn.edu.ar'],
       ubicacion: 'Sede Medrano',
@@ -198,8 +300,8 @@ export const AREAS: Area[] = [
     },
   },
   {
-    slug: 'vinculacion-social',
-    nombre: 'Vinculación Social',
+    slug: 'utn-solidaria',
+    nombre: 'UTN Solidaria',
     icono: 'solidaria',
     acento: 'dorado',
     resumen: 'Donaciones, voluntariado y trabajo con organizaciones sociales.',
@@ -208,7 +310,7 @@ export const AREAS: Area[] = [
     listaTitulo: 'Acciones',
     lista: ['Atención prioritaria a personas vulnerables', 'Promoción de la solidaridad'],
     contacto: {
-      emails: ['vinculacionsocial@frba.utn.edu.ar', 'utnsolidaria@frba.utn.edu.ar'],
+      emails: ['utnsolidaria@frba.utn.edu.ar', 'vinculacionsocial@frba.utn.edu.ar'],
       ubicacion: 'Sede Medrano y Campus',
       sedes: ['medrano', 'campus'],
     },
@@ -217,7 +319,7 @@ export const AREAS: Area[] = [
 
 export const SAE = {
   email: 'sae@frba.utn.edu.ar',
-  instagram: { handle: '@saeutnba', url: 'https://instagram.com/saeutnba' },
+  instagram: { handle: '@sae.utn.ba', url: 'https://www.instagram.com/sae.utn.ba' },
   facebook: { handle: '@saeutnba', url: 'https://facebook.com/saeutnba' },
 };
 
