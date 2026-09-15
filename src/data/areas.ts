@@ -136,10 +136,8 @@ export const AREAS: Area[] = [
     ],
     contacto: {
       emails: ['salud@frba.utn.edu.ar'],
-      telefonos: [
-        { label: 'Salud', numero: '011 4867 7550' },
-        { label: 'Interno', numero: '011 4867 7500 int. 7713' },
-      ],
+      // El número con interno ya es el completo: una sola fila alcanza.
+      telefonos: [{ label: 'Teléfono', numero: '011 4867 7500 int. 7713' }],
       ubicacion: 'Sede Medrano y Campus',
       sedes: ['medrano', 'campus'],
     },
