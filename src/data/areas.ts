@@ -304,7 +304,7 @@ export const AREAS: Area[] = [
       },
     ],
     contacto: {
-      emails: ['bolsa@frba.utn.edu.ar', 'adp@frba.utn.edu.ar'],
+      emails: ['adp@frba.utn.edu.ar'],
       telefonos: [
         {
           label: 'Bolsa de trabajo',
@@ -313,7 +313,7 @@ export const AREAS: Area[] = [
         },
         { label: 'Desarrollo Profesional', numero: '011 4867 7581' },
       ],
-      ubicacion: 'Sede Medrano',
+      ubicacion: 'Oficina 320 · Sede Medrano',
       sedes: ['medrano'],
     },
   },
