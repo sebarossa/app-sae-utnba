@@ -1,0 +1,456 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+// ─────────────────────────────────────────────────────────────
+// SECCIÓN TEMPORAL — Ingreso 2027.
+// El contenido vive acá adentro a propósito: cuando pase la fecha,
+// se borra este archivo y la entrada "Ingreso" del nav en Base.astro,
+// y no queda nada suelto en src/data.
+// ─────────────────────────────────────────────────────────────
+
+const PREINSCRIPCION = 'https://guarani.frba.utn.edu.ar/preinscripcion';
+const VENTANILLA = 'https://frba.utn.edu.ar/ventanilla-virtual/';
+
+const opciones = [
+  {
+    etiqueta: 'Opción 1',
+    periodo: 'Octubre a diciembre de 2026',
+    titulo: 'Actividades virtuales + Evaluación Diagnóstica',
+    texto:
+      'Actividades de Matemática y Física en el Campus Virtual, para que midas solo cómo estás parado. No son clases tradicionales: son actividades que tenés que completar para poder rendir.',
+    fechas: [
+      { cuando: '1 de septiembre al 9 de octubre, 15 h', que: 'Anotarte a las actividades' },
+      { cuando: '14 de octubre', que: 'Te llega la notificación para entrar al Campus Virtual' },
+      { cuando: '15 de octubre', que: 'Arrancan las actividades' },
+      { cuando: '4 de diciembre, 8:30 o 14:00 h', que: 'Evaluación Diagnóstica' },
+    ],
+    nota: 'Hay que completar los cuestionarios del aula virtual para poder presentarte a la evaluación.',
+  },
+  {
+    etiqueta: 'Opción 2',
+    periodo: 'Febrero y marzo de 2027',
+    titulo: 'Seminario Universitario Intensivo de Verano',
+    texto:
+      'Presencial en la Sede Campus, Mozart 2300. Se cursan las dos materias del Seminario antes de empezar primer año: Matemática, con tres encuentros semanales, y después el Taller de Inicio a la Vida Universitaria, que se cursa una vez aprobada Matemática en marzo de 2027.',
+    fechas: [
+      { cuando: '1 de septiembre al 16 de diciembre', que: 'Inscripción' },
+      { cuando: '18 de diciembre, desde las 17 h', que: 'Te confirman aula y turno' },
+      { cuando: 'Última semana de enero de 2027', que: 'Empieza el curso' },
+    ],
+    nota: 'La inscripción al curso de verano se habilita después de que abra la preinscripción a la Facultad.',
+  },
+];
+
+const documentos = [
+  {
+    titulo: 'Instructivo Ingreso 2027',
+    texto: 'Documentación a presentar, fechas y alternativas.',
+    url: 'https://drive.google.com/file/d/1diDWJH8Y0LZ98pSUGMConC6fmGVkLCxK/view',
+  },
+  {
+    titulo: 'Programa analítico de Matemática',
+    texto: 'Los contenidos que entran en el Seminario.',
+    url: 'https://drive.google.com/file/d/1na8O67ZkZCGct8Hfl1211scIFQMtU5RR/view',
+  },
+];
+---
+
+<Base
+  title="Ingreso 2027 — UTN.BA"
+  description="Preinscripción, Seminario Universitario y fechas del Ingreso 2027 a las carreras de ingeniería de la UTN.BA."
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">Carreras de ingeniería</p>
+    <h1 class="cabecera__titulo">Ingreso 2027</h1>
+    <p class="cabecera__desc">
+      Para empezar en 2027 hay dos pasos: preinscribirte en la Facultad y después hacer el
+      Seminario Universitario, que podés cursar de dos maneras distintas.
+    </p>
+    <div class="cabecera__pills">
+      <span class="pill pill--rojo">Preinscripción abierta</span>
+      <span class="pill pill--dorado">Hasta el 4 de diciembre</span>
+    </div>
+  </section>
+
+  <div class="franja"></div>
+
+  <div class="wrap seccion">
+    <!-- ── PASO 1 ─────────────────────────── -->
+    <section class="primero">
+      <p class="kicker">Primero que nada</p>
+      <h2 class="primero__titulo">Preinscribite en la Facultad</h2>
+      <p class="primero__texto">
+        Es el paso que habilita todo lo demás: sin la preinscripción no podés anotarte a ninguna de
+        las dos opciones del Seminario.
+      </p>
+      <p class="primero__fecha">
+        <Icon name="reloj" size={15} />
+        <span>Del 27 de agosto, 10 h, al 4 de diciembre de 2026</span>
+      </p>
+      <a class="btn btn--primario btn--bloque primero__btn" href={PREINSCRIPCION} target="_blank" rel="noopener">
+        Preinscribirme
+        <Icon name="flecha" size={16} />
+      </a>
+    </section>
+
+    <!-- ── LAS DOS OPCIONES ───────────────── -->
+    <section class="opciones">
+      <p class="kicker">Después</p>
+      <h2 class="titulo-seccion">Elegí cómo hacer el Seminario</h2>
+      <p class="bajada">
+        Son dos caminos hacia lo mismo. Si el primero no te sale, el segundo te sigue esperando.
+      </p>
+
+      {
+        opciones.map((op) => (
+          <article class="opcion">
+            <div class="opcion__cab">
+              <span class="opcion__etiqueta">{op.etiqueta}</span>
+              <span class="opcion__periodo">{op.periodo}</span>
+            </div>
+            <h3 class="opcion__titulo">{op.titulo}</h3>
+            <p class="opcion__texto">{op.texto}</p>
+
+            <ul class="fechas">
+              {op.fechas.map((f) => (
+                <li class="fecha">
+                  <span class="fecha__cuando">{f.cuando}</span>
+                  <span class="fecha__que">{f.que}</span>
+                </li>
+              ))}
+            </ul>
+
+            <p class="opcion__nota">{op.nota}</p>
+          </article>
+        ))
+      }
+
+      <p class="puente">
+        <strong>Si no aprobás, no se termina acá.</strong> Quien haga las actividades y no apruebe la
+        Evaluación Diagnóstica de diciembre —o no se presente— puede anotarse igual al curso de
+        verano. Y quien no apruebe el curso de verano tiene dos instancias de Evaluación Diagnóstica
+        Libre en marzo de 2027.
+      </p>
+    </section>
+
+    <!-- ── DOCUMENTOS ─────────────────────── -->
+    <section class="docs">
+      <p class="kicker">Para leer con tiempo</p>
+      <h2 class="titulo-seccion">Documentos</h2>
+      <ul class="docs__lista">
+        {
+          documentos.map((d) => (
+            <li>
+              <a class="doc" href={d.url} target="_blank" rel="noopener">
+                <span class="doc__icono">
+                  <Icon name="documento" size={18} />
+                </span>
+                <span class="doc__texto">
+                  <span class="doc__titulo">{d.titulo}</span>
+                  <span class="doc__desc">{d.texto}</span>
+                </span>
+                <Icon name="flecha" size={15} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+
+  <!-- ── CONSULTAS ────────────────────────── -->
+  <section class="cierre">
+    <div class="wrap">
+      <p class="kicker kicker--dorado">¿Dudas?</p>
+      <h2 class="cierre__titulo">Escribinos por la ventanilla virtual</h2>
+      <p class="cierre__bajada">
+        Las consultas sobre el ingreso se responden por la Ventanilla de Atención Virtual de la
+        Secretaría de Planeamiento y Gestión de Procesos.
+      </p>
+      <a class="btn btn--primario btn--bloque" href={VENTANILLA} target="_blank" rel="noopener">
+        Ir a la ventanilla virtual
+        <Icon name="flecha" size={16} />
+      </a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 36px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  .cabecera__desc {
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .cabecera__pills {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Paso 1 ── */
+  .primero {
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-radius: var(--r-lg);
+    padding: 20px 18px 22px;
+    margin-bottom: 36px;
+  }
+
+  .primero__titulo {
+    font-size: 21px;
+    font-weight: 900;
+  }
+
+  .primero__texto {
+    margin: 9px 0 14px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .primero__fecha {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 9px;
+    align-items: start;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--tinta);
+    margin-bottom: 18px;
+  }
+
+  .primero__fecha :global(svg) {
+    color: var(--rojo);
+    margin-top: 2px;
+  }
+
+  .primero__btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14.5px;
+  }
+
+  /* ── Opciones ── */
+  .opcion {
+    border: 1px solid var(--linea);
+    border-left: 3px solid var(--rojo);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+    padding: 18px 16px;
+    margin-top: 14px;
+  }
+
+  .opcion__cab {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .opcion__etiqueta {
+    border-radius: 4px;
+    padding: 4px 9px;
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .opcion__periodo {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--gris);
+  }
+
+  .opcion__titulo {
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.3;
+  }
+
+  .opcion__texto {
+    margin: 8px 0 14px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .fechas {
+    display: grid;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--linea);
+  }
+
+  .fecha {
+    border-left: 2px solid var(--dorado);
+    padding-left: 12px;
+  }
+
+  .fecha__cuando {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--dorado);
+  }
+
+  .fecha__que {
+    display: block;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--tinta-2);
+    margin-top: 1px;
+  }
+
+  .opcion__nota {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--linea);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--gris-2);
+  }
+
+  .puente {
+    margin-top: 22px;
+    padding: 15px 16px;
+    background: var(--rojo-tenue);
+    border-radius: var(--r-md);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--tinta-2);
+  }
+
+  .puente strong {
+    color: var(--rojo);
+  }
+
+  /* ── Documentos ── */
+  .docs {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid var(--linea);
+  }
+
+  .docs__lista {
+    display: grid;
+    gap: 9px;
+    margin-top: 16px;
+  }
+
+  .doc {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 14px;
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    color: var(--gris-2);
+  }
+
+  .doc__icono {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+  }
+
+  .doc__texto {
+    min-width: 0;
+  }
+
+  .doc__titulo {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--tinta);
+  }
+
+  .doc__desc {
+    display: block;
+    font-size: 12.5px;
+    color: var(--gris);
+    line-height: 1.45;
+    margin-top: 1px;
+  }
+
+  /* ── Cierre ── */
+  .cierre {
+    background: var(--panel);
+    border-top: 1px solid var(--linea);
+    padding-block: 32px 36px;
+    text-align: center;
+  }
+
+  .cierre__titulo {
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .cierre__bajada {
+    margin: 10px 0 20px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .cierre .btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14.5px;
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 44px;
+    }
+    .primero__btn,
+    .cierre .btn {
+      display: inline-flex;
+      width: auto;
+    }
+  }
+</style>

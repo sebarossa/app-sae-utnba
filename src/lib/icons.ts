@@ -20,6 +20,8 @@ export const ICONS = {
     '<rect x="3.4" y="3.4" width="17.2" height="17.2" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.1" cy="6.9" r="1.1" fill="currentColor" stroke="none"/>',
   facebook:
     '<path d="M14.6 21.4v-8h2.7l.5-3.4h-3.2V7.8c0-1 .3-1.7 1.7-1.7h1.6V3.1c-.8-.1-1.7-.2-2.6-.2-2.6 0-4.4 1.6-4.4 4.5V10H8.1v3.4h2.8v8h3.7Z"/>',
+  ingreso:
+    '<path d="M14.2 3.4H6.6a2 2 0 0 0-2 2v13.2a2 2 0 0 0 2 2h7.6"/><path d="M10.4 12h9.2"/><path d="m16.4 8.8 3.2 3.2-3.2 3.2"/>',
   documento:
     '<path d="M14 3.2H6.9a2 2 0 0 0-2 2v13.6a2 2 0 0 0 2 2h10.2a2 2 0 0 0 2-2V8.2Z"/><path d="M14 3.2V8.2h5.1"/><path d="M8.6 13h6.8M8.6 16.6h4.5"/>',
   buscar: '<circle cx="11" cy="11" r="6.6"/><path d="m16 16 4.4 4.4"/>',

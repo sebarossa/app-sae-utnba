@@ -45,6 +45,18 @@ deporte es sumar un objeto a `DEPORTES`; agregar un área, uno a `AREAS` (su pá
 por día. `horario` es el texto que se muestra tal cual, así que puede describir combinaciones
 (por ejemplo, martes y jueves con horarios distintos).
 
+## Sección temporal: Ingreso 2027
+
+`/ingreso` existe solo mientras duren las fechas de inscripción. Está hecha para borrarse sin
+dejar rastro: todo su contenido vive dentro de `src/pages/ingreso.astro`, no en `src/data/`.
+
+Para darla de baja:
+
+1. Borrá `src/pages/ingreso.astro`.
+2. Sacá la entrada `Ingreso` del array `nav` en `src/layouts/Base.astro` (está comentada).
+
+La barra inferior se adapta sola a la cantidad de pestañas, así que no hay que tocar CSS.
+
 ## Identidad
 
 Colores y tipografías tomados del mailing institucional de la UTN.BA:
