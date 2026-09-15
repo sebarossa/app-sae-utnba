@@ -140,7 +140,7 @@ export const AREAS: Area[] = [
       emails: ['salud@frba.utn.edu.ar'],
       // El número con interno ya es el completo: una sola fila alcanza.
       telefonos: [{ label: 'Teléfono', numero: '011 4867 7500 int. 7713' }],
-      ubicacion: 'Sede Medrano',
+      ubicacion: 'Oficina 323 · Sede Medrano',
       sedes: ['medrano'],
     },
   },
@@ -163,7 +163,7 @@ export const AREAS: Area[] = [
     contacto: {
       emails: ['becas@frba.utn.edu.ar'],
       // La atención es siempre personalizada y se concentra en Medrano.
-      ubicacion: 'Atención personalizada en Sede Medrano',
+      ubicacion: 'Oficina 323 · Sede Medrano · Atención personalizada',
       sedes: ['medrano'],
     },
   },
@@ -196,7 +196,7 @@ export const AREAS: Area[] = [
           url: 'https://instagram.com/deportes.utnba',
         },
       ],
-      ubicacion: 'Oficina en Sede Campus · Consultas en la SAE de ambas sedes',
+      ubicacion: 'SAE de Sede Campus, pasillo principal · Consultas en la SAE de ambas sedes',
       sedes: ['campus', 'medrano'],
     },
     destacado: true,
@@ -218,7 +218,7 @@ export const AREAS: Area[] = [
     ],
     contacto: {
       emails: ['intercambios@frba.utn.edu.ar'],
-      ubicacion: 'Sede Medrano',
+      ubicacion: 'Oficina 323 · Sede Medrano',
       sedes: ['medrano'],
     },
   },
@@ -263,8 +263,8 @@ export const AREAS: Area[] = [
     ],
     contacto: {
       emails: ['oradis@frba.utn.edu.ar'],
-      telefonos: [{ label: 'ORADIS', numero: '011 4867 7500 int. 7823' }],
-      ubicacion: 'Sede Medrano',
+      telefonos: [{ label: 'Teléfono', numero: '011 4867 7500 int. 7823' }],
+      ubicacion: 'Oficina 320 · Sede Medrano',
       sedes: ['medrano'],
     },
   },
@@ -407,8 +407,8 @@ export const AREAS: Area[] = [
     lista: ['Trabajo en proyectos sociales', 'Promoción de la solidaridad'],
     contacto: {
       emails: ['utnsolidaria@frba.utn.edu.ar', 'vinculacionsocial@frba.utn.edu.ar'],
-      ubicacion: 'Sede Medrano y Campus',
-      sedes: ['medrano', 'campus'],
+      ubicacion: 'Oficina 323 · Sede Medrano',
+      sedes: ['medrano'],
     },
   },
 ];

@@ -78,7 +78,10 @@ const sedesPrincipales = [SEDES.medrano, SEDES.campus];
                   <li>
                     <a class="dato" href={telHref(t.numero)}>
                       <Icon name="tel" size={14} />
-                      <span>{t.numero}</span>
+                      <span>
+                        {t.numero}
+                        {t.label !== 'Teléfono' && <span class="dato__rotulo">{t.label}</span>}
+                      </span>
                     </a>
                   </li>
                 ))}
@@ -278,6 +281,13 @@ const sedesPrincipales = [SEDES.medrano, SEDES.campus];
   .dato :global(svg) {
     color: var(--rojo);
     margin-top: 3px;
+  }
+
+  .dato__rotulo {
+    display: block;
+    font-size: 12px;
+    color: var(--gris-2);
+    line-height: 1.4;
   }
 
   .dato--estatico {
