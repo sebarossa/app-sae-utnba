@@ -1,44 +1,67 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import Desplegables from '../components/Desplegables.astro';
+import { telHref } from '../lib/tel';
 
 // ─────────────────────────────────────────────────────────────
 // SECCIÓN TEMPORAL — Ingreso 2027.
 // El contenido vive acá adentro a propósito: cuando pase la fecha,
 // se borra este archivo y la entrada "Ingreso" del nav en Base.astro,
 // y no queda nada suelto en src/data.
+// Fuente: Instructivo Ingreso 2027 (vigencia mayo 2026).
 // ─────────────────────────────────────────────────────────────
 
-const PREINSCRIPCION = 'https://guarani.frba.utn.edu.ar/preinscripcion';
+const PREINSCRIPCION = 'https://guarani.frba.utn.edu.ar/preinscripcion/utn';
+const AUTOGESTION = 'https://guarani.frba.utn.edu.ar/autogestion/aspirantes';
 const VENTANILLA = 'https://frba.utn.edu.ar/ventanilla-virtual/';
+
+const documentacion = [
+  {
+    titulo: 'Qué documentación tenés que subir',
+    texto:
+      'Son tres archivos, de 2 MB como máximo cada uno. Conviene subirlos en PDF, escaneados o con una app tipo CamScanner.',
+    items: [
+      '1er archivo: DNI frente y dorso, constancia de CUIL y partida de nacimiento, los tres en el mismo PDF. Si sos extranjero, la documentación equivalente.',
+      '2do archivo: foto 4x4 tipo carnet. Solo el rostro, de frente, con buena visibilidad y fondo claro y liso.',
+      '3er archivo: si ya terminaste el secundario, título o certificado analítico frente y dorso, o constancia de título en trámite. Si todavía no lo terminaste, constancia de que estás cursando el último año.',
+    ],
+  },
+];
 
 const opciones = [
   {
     etiqueta: 'Opción 1',
+    modalidad: 'Modalidad libre',
     periodo: 'Octubre a diciembre de 2026',
     titulo: 'Actividades virtuales + Evaluación Diagnóstica',
     texto:
-      'Actividades de Matemática y Física en el Campus Virtual, para que midas solo cómo estás parado. No son clases tradicionales: son actividades que tenés que completar para poder rendir.',
+      'Actividades formativas virtuales de Matemática durante octubre y noviembre. Hay que completarlas para poder presentarse a la evaluación, que es presencial. No son clases tradicionales: son actividades para que midas solo cómo estás parado.',
     fechas: [
-      { cuando: '1 de septiembre al 9 de octubre, 15 h', que: 'Anotarte a las actividades' },
+      { cuando: '1 de septiembre al 9 de octubre de 2026', que: 'Inscripción web' },
       { cuando: '14 de octubre', que: 'Te llega la notificación para entrar al Campus Virtual' },
-      { cuando: '15 de octubre', que: 'Arrancan las actividades' },
-      { cuando: '4 de diciembre, 8:30 o 14:00 h', que: 'Evaluación Diagnóstica' },
+      { cuando: '15 de octubre', que: 'Empiezan las actividades' },
+      {
+        cuando: '4 de diciembre, 8:30 o 14:00 h',
+        que: 'Evaluación Diagnóstica, presencial en Sede Campus',
+      },
     ],
     nota: 'Hay que completar los cuestionarios del aula virtual para poder presentarte a la evaluación.',
   },
   {
     etiqueta: 'Opción 2',
-    periodo: 'Febrero y marzo de 2027',
-    titulo: 'Seminario Universitario Intensivo de Verano',
+    modalidad: 'Modalidad curso',
+    periodo: 'Enero a marzo de 2027',
+    titulo: 'Curso de Verano',
     texto:
-      'Presencial en la Sede Campus, Mozart 2300. Se cursan las dos materias del Seminario antes de empezar primer año: Matemática, con tres encuentros semanales, y después el Taller de Inicio a la Vida Universitaria, que se cursa una vez aprobada Matemática en marzo de 2027.',
+      'Matemática presencial en la Sede Campus, con tres encuentros semanales. Se cursa antes de empezar primer año.',
     fechas: [
-      { cuando: '1 de septiembre al 16 de diciembre', que: 'Inscripción' },
-      { cuando: '18 de diciembre, desde las 17 h', que: 'Te confirman aula y turno' },
-      { cuando: 'Última semana de enero de 2027', que: 'Empieza el curso' },
+      { cuando: '1 de septiembre al 16 de diciembre de 2026', que: 'Inscripción web' },
+      { cuando: '18 de diciembre, desde las 17 h', que: 'Te confirman turno y aula' },
+      { cuando: '25 de enero al 12 de marzo de 2027', que: 'Cursada' },
     ],
-    nota: 'La inscripción al curso de verano se habilita después de que abra la preinscripción a la Facultad.',
+    horarios: ['Mañana: 8:30 a 12:30 h', 'Tarde: 14:00 a 18:00 h', 'Noche: 19:00 a 23:00 h'],
+    nota: 'La inscripción al Curso de Verano se habilita después de que abra la preinscripción a la Facultad.',
   },
 ];
 
@@ -54,6 +77,21 @@ const documentos = [
     url: 'https://drive.google.com/file/d/1na8O67ZkZCGct8Hfl1211scIFQMtU5RR/view',
   },
 ];
+
+const oficinas = [
+  {
+    sede: 'Sede Campus',
+    lugar: 'Planta baja, Of. 11',
+    direccion: 'Mozart 2300, entre Saraza y Santiago de Compostela',
+    tel: '011 4638 8838',
+  },
+  {
+    sede: 'Sede Medrano',
+    lugar: '3er piso, Of. 308',
+    direccion: 'Av. Medrano 951',
+    tel: '011 4867 7566',
+  },
+];
 ---
 
 <Base
@@ -64,8 +102,9 @@ const documentos = [
     <p class="cabecera__kicker">Carreras de ingeniería</p>
     <h1 class="cabecera__titulo">Ingreso 2027</h1>
     <p class="cabecera__desc">
-      Para empezar en 2027 hay dos pasos: preinscribirte en la Facultad y después hacer el
-      Seminario Universitario, que podés cursar de dos maneras distintas.
+      El Seminario Universitario tiene dos materias: <strong>Matemática</strong> y el <strong>
+        Taller de Inicio a la Vida Universitaria</strong>, que se cursa después de aprobar
+      Matemática. Para llegar ahí hay dos pasos, y después elegís cómo rendir.
     </p>
     <div class="cabecera__pills">
       <span class="pill pill--rojo">Preinscripción abierta</span>
@@ -77,27 +116,69 @@ const documentos = [
 
   <div class="wrap seccion">
     <!-- ── PASO 1 ─────────────────────────── -->
-    <section class="primero">
-      <p class="kicker">Primero que nada</p>
-      <h2 class="primero__titulo">Preinscribite en la Facultad</h2>
-      <p class="primero__texto">
-        Es el paso que habilita todo lo demás: sin la preinscripción no podés anotarte a ninguna de
-        las dos opciones del Seminario.
+    <section class="paso">
+      <div class="paso__cab">
+        <span class="paso__num" aria-hidden="true">1</span>
+        <div>
+          <p class="kicker">Preinscripción</p>
+          <h2 class="paso__titulo">Registrate en la Facultad</h2>
+        </div>
+      </div>
+
+      <p class="paso__texto">
+        Es virtual y es lo que habilita todo lo demás. Generás tu usuario y adjuntás la
+        documentación.
       </p>
-      <p class="primero__fecha">
+      <p class="paso__fecha">
         <Icon name="reloj" size={15} />
         <span>Del 27 de agosto, 10 h, al 4 de diciembre de 2026</span>
       </p>
-      <a class="btn btn--primario btn--bloque primero__btn" href={PREINSCRIPCION} target="_blank" rel="noopener">
+
+      <a class="btn btn--primario btn--bloque paso__btn" href={PREINSCRIPCION} target="_blank" rel="noopener">
         Preinscribirme
         <Icon name="flecha" size={16} />
       </a>
+
+      <div class="paso__docs">
+        <Desplegables bloques={documentacion} />
+      </div>
+
+      <p class="paso__nota">
+        Una vez procesada y confirmada tu preinscripción, dentro de las 96 h hábiles te llega un
+        correo con los pasos a seguir.
+      </p>
     </section>
 
-    <!-- ── LAS DOS OPCIONES ───────────────── -->
+    <!-- ── PASO 2 ─────────────────────────── -->
+    <section class="paso">
+      <div class="paso__cab">
+        <span class="paso__num" aria-hidden="true">2</span>
+        <div>
+          <p class="kicker">Autogestión</p>
+          <h2 class="paso__titulo">Elegí cómo rendir Matemática</h2>
+        </div>
+      </div>
+
+      <p class="paso__texto">
+        Con el usuario ya generado, entrás a Autogestión Aspirantes y elegís la modalidad libre o la
+        modalidad curso.
+      </p>
+
+      <a class="btn btn--primario btn--bloque paso__btn" href={AUTOGESTION} target="_blank" rel="noopener">
+        Entrar a Autogestión
+        <Icon name="flecha" size={16} />
+      </a>
+
+      <p class="paso__nota destacada">
+        Las dos modalidades <strong>no son excluyentes</strong>: podés anotarte a las dos y usar la
+        segunda si la primera no sale.
+      </p>
+    </section>
+
+    <!-- ── LAS DOS MODALIDADES ────────────── -->
     <section class="opciones">
-      <p class="kicker">Después</p>
-      <h2 class="titulo-seccion">Elegí cómo hacer el Seminario</h2>
+      <p class="kicker">Las dos modalidades</p>
+      <h2 class="titulo-seccion">Matemática</h2>
       <p class="bajada">
         Son dos caminos hacia lo mismo. Si el primero no te sale, el segundo te sigue esperando.
       </p>
@@ -109,6 +190,7 @@ const documentos = [
               <span class="opcion__etiqueta">{op.etiqueta}</span>
               <span class="opcion__periodo">{op.periodo}</span>
             </div>
+            <p class="opcion__modalidad">{op.modalidad}</p>
             <h3 class="opcion__titulo">{op.titulo}</h3>
             <p class="opcion__texto">{op.texto}</p>
 
@@ -121,16 +203,27 @@ const documentos = [
               ))}
             </ul>
 
+            {op.horarios && (
+              <div class="turnos">
+                <p class="turnos__titulo">Turnos</p>
+                <ul class="turnos__lista">
+                  {op.horarios.map((h) => (
+                    <li>{h}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             <p class="opcion__nota">{op.nota}</p>
           </article>
         ))
       }
 
       <p class="puente">
-        <strong>Si no aprobás, no se termina acá.</strong> Quien haga las actividades y no apruebe la
-        Evaluación Diagnóstica de diciembre —o no se presente— puede anotarse igual al curso de
-        verano. Y quien no apruebe el curso de verano tiene dos instancias de Evaluación Diagnóstica
-        Libre en marzo de 2027.
+        <strong>Si no aprobás, no se termina acá.</strong> Quien complete las actividades, rinda el 4
+        de diciembre y no apruebe —o no se presente— puede inscribirse igual al Curso de Verano. Y
+        quien no apruebe el Curso de Verano tiene dos instancias de Evaluación Diagnóstica Libre en
+        marzo de 2027, con fechas a confirmar en febrero.
       </p>
     </section>
 
@@ -149,6 +242,34 @@ const documentos = [
                 <span class="doc__texto">
                   <span class="doc__titulo">{d.titulo}</span>
                   <span class="doc__desc">{d.texto}</span>
+                </span>
+                <Icon name="flecha" size={15} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- ── OFICINAS DE INGRESO ────────────── -->
+    <section class="docs">
+      <p class="kicker">Dónde consultar</p>
+      <h2 class="titulo-seccion">Oficinas de ingreso</h2>
+      <ul class="docs__lista">
+        {
+          oficinas.map((o) => (
+            <li>
+              <a class="doc" href={telHref(o.tel)}>
+                <span class="doc__icono">
+                  <Icon name="tel" size={18} />
+                </span>
+                <span class="doc__texto">
+                  <span class="doc__titulo">
+                    {o.sede} · {o.lugar}
+                  </span>
+                  <span class="doc__desc">
+                    {o.tel} · {o.direccion}
+                  </span>
                 </span>
                 <Icon name="flecha" size={15} />
               </a>
@@ -207,6 +328,11 @@ const documentos = [
     color: #c9cfe0;
   }
 
+  .cabecera__desc strong {
+    color: #fff;
+    font-weight: 600;
+  }
+
   .cabecera__pills {
     display: flex;
     gap: 8px;
@@ -214,28 +340,50 @@ const documentos = [
     flex-wrap: wrap;
   }
 
-  /* ── Paso 1 ── */
-  .primero {
+  /* ── Pasos ── */
+  .paso {
     background: var(--panel);
     border: 1px solid var(--linea);
     border-radius: var(--r-lg);
     padding: 20px 18px 22px;
-    margin-bottom: 36px;
+    margin-bottom: 14px;
   }
 
-  .primero__titulo {
-    font-size: 21px;
+  .paso__cab {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 13px;
+    align-items: start;
+    margin-bottom: 12px;
+  }
+
+  .paso__num {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 15px;
+    font-weight: 800;
+  }
+
+  .paso__titulo {
+    font-size: 20px;
     font-weight: 900;
+    line-height: 1.2;
   }
 
-  .primero__texto {
-    margin: 9px 0 14px;
+  .paso__texto {
     font-size: 14.5px;
     line-height: 1.6;
     color: var(--gris);
+    margin-bottom: 14px;
   }
 
-  .primero__fecha {
+  .paso__fecha {
     display: grid;
     grid-template-columns: auto 1fr;
     gap: 9px;
@@ -244,21 +392,51 @@ const documentos = [
     font-weight: 600;
     line-height: 1.5;
     color: var(--tinta);
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
 
-  .primero__fecha :global(svg) {
+  .paso__fecha :global(svg) {
     color: var(--rojo);
     margin-top: 2px;
   }
 
-  .primero__btn {
+  .paso__btn {
     text-transform: none;
     letter-spacing: 0.01em;
     font-size: 14.5px;
   }
 
+  .paso__docs {
+    margin-top: 16px;
+  }
+
+  .paso__nota {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--linea);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .paso__nota.destacada {
+    border-top: none;
+    background: var(--rojo-tenue);
+    border-radius: var(--r-sm);
+    padding: 13px 14px;
+    color: var(--tinta-2);
+    font-size: 13.5px;
+  }
+
+  .paso__nota strong {
+    color: var(--rojo);
+  }
+
   /* ── Opciones ── */
+  .opciones {
+    margin-top: 36px;
+  }
+
   .opcion {
     border: 1px solid var(--linea);
     border-left: 3px solid var(--rojo);
@@ -293,6 +471,16 @@ const documentos = [
     font-size: 12.5px;
     font-weight: 600;
     color: var(--gris);
+  }
+
+  .opcion__modalidad {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 4px;
   }
 
   .opcion__titulo {
@@ -336,6 +524,30 @@ const documentos = [
     margin-top: 1px;
   }
 
+  .turnos {
+    margin-top: 14px;
+    padding: 13px 14px;
+    background: var(--panel);
+    border-radius: var(--r-sm);
+  }
+
+  .turnos__titulo {
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gris-2);
+    margin-bottom: 6px;
+  }
+
+  .turnos__lista {
+    display: grid;
+    gap: 3px;
+    font-size: 13.5px;
+    color: var(--tinta-2);
+  }
+
   .opcion__nota {
     margin-top: 14px;
     padding-top: 12px;
@@ -359,7 +571,7 @@ const documentos = [
     color: var(--rojo);
   }
 
-  /* ── Documentos ── */
+  /* ── Documentos y oficinas ── */
   .docs {
     margin-top: 36px;
     padding-top: 28px;
@@ -392,6 +604,7 @@ const documentos = [
     border-radius: 9px;
     background: var(--rojo-tenue);
     color: var(--rojo);
+    flex: none;
   }
 
   .doc__texto {
@@ -404,6 +617,7 @@ const documentos = [
     font-size: 14.5px;
     font-weight: 800;
     color: var(--tinta);
+    line-height: 1.35;
   }
 
   .doc__desc {
@@ -411,7 +625,7 @@ const documentos = [
     font-size: 12.5px;
     color: var(--gris);
     line-height: 1.45;
-    margin-top: 1px;
+    margin-top: 2px;
   }
 
   /* ── Cierre ── */
@@ -447,7 +661,7 @@ const documentos = [
     .cabecera__titulo {
       font-size: 44px;
     }
-    .primero__btn,
+    .paso__btn,
     .cierre .btn {
       display: inline-flex;
       width: auto;
