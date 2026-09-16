@@ -24,10 +24,6 @@ export const CARRERAS: Carrera[] = [
     video: 'jd-wCCAFOiQ',
     sitio: 'https://frba.utn.edu.ar/civil/',
     plan: 'https://frba.utn.edu.ar/civil/plan-de-estudios/',
-    extra: {
-      texto: 'Conocé los laboratorios',
-      url: 'https://frba.utn.edu.ar/civil/organigrama-de-laboratorios/',
-    },
   },
   {
     slug: 'electronica',
