@@ -6,6 +6,8 @@ import { DEPORTES, DIAS, SELECTIVOS, OTRAS_DISCIPLINAS, SEDES_DEPORTIVAS } from 
 import { getArea } from '../data/areas';
 
 const areaDeportes = getArea('deportes')!;
+const FORMULARIO =
+  'https://docs.google.com/forms/d/e/1FAIpQLSfvznpsEqTQYI6coiGfel9v78k2Av0A21KsE6xushrWMWpVCw/viewform';
 const grupos = [...new Set(DEPORTES.map((d) => d.grupo))];
 ---
 
@@ -84,6 +86,26 @@ const grupos = [...new Set(DEPORTES.map((d) => d.grupo))];
     <p id="vacio" class="vacio" hidden>
       No hay entrenamientos ese día. Probá con otro o mirá los deportes selectivos más abajo.
     </p>
+
+    <!-- ── CÓMO ANOTARSE ──────────────────── -->
+    <section class="sumate">
+      <p class="kicker">Cómo participar</p>
+      <h2 class="sumate__titulo">Sumate a los equipos</h2>
+      <p class="sumate__texto">
+        Completá el formulario para formar parte de nuestros equipos. Tenés tiempo hasta el 1º de
+        abril inclusive.
+      </p>
+
+      <p class="sumate__aviso">
+        <strong>Antes de empezar:</strong> tené a mano una foto digital del apto médico, bien
+        legible. Es obligatoria para completar la inscripción.
+      </p>
+
+      <a class="btn btn--primario btn--bloque sumate__btn" href={FORMULARIO} target="_blank" rel="noopener">
+        Completar el formulario
+        <Icon name="flecha" size={16} />
+      </a>
+    </section>
 
     <!-- ── OTRAS DISCIPLINAS ──────────────── -->
     <section class="extra">
@@ -338,6 +360,47 @@ const grupos = [...new Set(DEPORTES.map((d) => d.grupo))];
     color: var(--gris);
     font-size: 14.5px;
     line-height: 1.6;
+  }
+
+  /* ── Sumate ── */
+  .sumate {
+    margin-top: 34px;
+    padding: 20px 18px 22px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-radius: var(--r-lg);
+  }
+
+  .sumate__titulo {
+    font-size: 21px;
+    font-weight: 900;
+  }
+
+  .sumate__texto {
+    margin: 9px 0 14px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .sumate__aviso {
+    padding: 13px 14px;
+    background: var(--rojo-tenue);
+    border-radius: var(--r-sm);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--tinta-2);
+    margin-bottom: 16px;
+  }
+
+  .sumate__aviso strong {
+    color: var(--rojo);
+  }
+
+  .sumate__btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14.5px;
   }
 
   /* ── Extras ── */
