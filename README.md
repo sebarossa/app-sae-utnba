@@ -50,9 +50,14 @@ por día. `horario` es el texto que se muestra tal cual, así que puede describi
 `/ingreso` existe solo mientras duren las fechas de inscripción. Está hecha para borrarse sin
 dejar rastro: todo su contenido vive dentro de `src/pages/ingreso.astro`, no en `src/data/`.
 
+Incluye la subpágina `/ingreso/carreras`, con las nueve ingenierías: un gancho, la charla en video
+del director de cada departamento y el link al plan de estudios. Los videos no cargan el iframe de
+YouTube hasta que el usuario toca play — solo la miniatura — así la página abre rápido aunque la
+red del predio esté saturada.
+
 Para darla de baja:
 
-1. Borrá `src/pages/ingreso.astro`.
+1. Borrá `src/pages/ingreso.astro`, `src/pages/ingreso/carreras.astro` y `src/data/carreras.ts`.
 2. Sacá la entrada `Ingreso` del array `nav` en `src/layouts/Base.astro` (está comentada).
 
 La barra inferior se adapta sola a la cantidad de pestañas, así que no hay que tocar CSS.

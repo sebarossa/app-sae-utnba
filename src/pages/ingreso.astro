@@ -115,6 +115,19 @@ const oficinas = [
   <div class="franja"></div>
 
   <div class="wrap seccion">
+    <!-- ── ANTES QUE NADA: QUÉ CARRERA ────── -->
+    <a class="carreras-link" href="/ingreso/carreras">
+      <span class="carreras-link__texto">
+        <span class="carreras-link__kicker">Antes de decidir</span>
+        <span class="carreras-link__titulo">¿Qué ingeniería estudio?</span>
+        <span class="carreras-link__desc">
+          Las nueve carreras contadas por los directores de cada departamento, con video y plan de
+          estudios.
+        </span>
+      </span>
+      <Icon name="flecha" size={18} />
+    </a>
+
     <!-- ── PASO 1 ─────────────────────────── -->
     <section class="paso">
       <div class="paso__cab">
@@ -338,6 +351,60 @@ const oficinas = [
     gap: 8px;
     margin-top: 20px;
     flex-wrap: wrap;
+  }
+
+  .carreras-link {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 16px;
+    margin-bottom: 26px;
+    border: 1px solid var(--linea);
+    border-left: 3px solid var(--dorado);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+    color: var(--gris-2);
+    transition: box-shadow 0.16s ease, transform 0.16s ease;
+  }
+
+  .carreras-link:active {
+    transform: scale(0.99);
+  }
+
+  @media (hover: hover) {
+    .carreras-link:hover {
+      box-shadow: var(--sombra-md);
+    }
+  }
+
+  .carreras-link__kicker {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--dorado);
+  }
+
+  .carreras-link__titulo {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 18px;
+    font-weight: 900;
+    color: var(--tinta);
+    letter-spacing: -0.02em;
+    margin-top: 5px;
+  }
+
+  .carreras-link__desc {
+    display: block;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--gris);
+    margin-top: 4px;
   }
 
   /* ── Pasos ── */

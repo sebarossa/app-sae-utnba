@@ -1,0 +1,304 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { CARRERAS } from '../../data/carreras';
+---
+
+<Base
+  title="Las nueve ingenierías — UTN.BA"
+  description="Qué hace cada ingeniería de la UTN.BA, contada por los directores de cada departamento, con el plan de estudios de cada carrera."
+  volverA="/ingreso"
+  volverTexto="Ingreso"
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">Carreras de grado</p>
+    <h1 class="cabecera__titulo">Las nueve ingenierías</h1>
+    <p class="cabecera__desc">
+      En cada una, el director del departamento cuenta de qué se trata, qué hace un egresado y cómo
+      está armada la carrera. Los videos se cargan recién cuando tocás play.
+    </p>
+  </section>
+
+  <div class="franja"></div>
+
+  <div class="wrap seccion">
+    <ul class="carreras">
+      {
+        CARRERAS.map((c) => (
+          <li class="carrera" id={c.slug}>
+            <h2 class="carrera__nombre">{c.nombre}</h2>
+            <p class="carrera__gancho">{c.gancho}</p>
+
+            <div class="video" data-video={c.video}>
+              <img
+                class="video__thumb"
+                src={`https://i.ytimg.com/vi/${c.video}/maxresdefault.jpg`}
+                data-fallback={`https://i.ytimg.com/vi/${c.video}/hqdefault.jpg`}
+                alt=""
+                width="1280"
+                height="720"
+                loading="lazy"
+                decoding="async"
+              />
+              <button class="video__play" type="button" aria-label={`Ver el video de ${c.nombre}`}>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M8 5.2v13.6L19 12 8 5.2Z" />
+                </svg>
+              </button>
+            </div>
+
+            <p class="carrera__charla">{c.charla}</p>
+
+            <div class="carrera__links">
+              <a class="enlace enlace--fuerte" href={c.plan} target="_blank" rel="noopener">
+                Plan de estudios
+                <Icon name="flecha" size={14} />
+              </a>
+              <a class="enlace" href={c.sitio} target="_blank" rel="noopener">
+                Sitio de la carrera
+                <Icon name="flecha" size={14} />
+              </a>
+              {c.extra && (
+                <a class="enlace" href={c.extra.url} target="_blank" rel="noopener">
+                  {c.extra.texto}
+                  <Icon name="flecha" size={14} />
+                </a>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <section class="cierre">
+    <div class="wrap">
+      <p class="kicker kicker--dorado">¿Ya sabés cuál?</p>
+      <h2 class="cierre__titulo">El próximo paso es inscribirte</h2>
+      <p class="cierre__bajada">
+        La preinscripción es la misma para las nueve carreras: la elegís al momento de registrarte.
+      </p>
+      <a class="btn btn--primario btn--bloque" href="/ingreso">Ver cómo es el ingreso</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // El iframe de YouTube pesa mucho: se carga solo cuando el usuario toca play.
+  document.querySelectorAll<HTMLElement>('.video').forEach((caja) => {
+    const id = caja.dataset.video;
+    if (!id) return;
+
+    // maxresdefault no existe para todos los videos; si falla, se usa hqdefault.
+    const thumb = caja.querySelector<HTMLImageElement>('.video__thumb');
+    if (thumb) {
+      thumb.addEventListener('error', () => {
+        const alt = thumb.dataset.fallback;
+        if (alt && thumb.src !== alt) thumb.src = alt;
+      });
+    }
+
+    caja.querySelector('.video__play')?.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = 'Video de la carrera';
+      iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.className = 'video__iframe';
+      caja.replaceChildren(iframe);
+    });
+  });
+</script>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 34px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  .cabecera__desc {
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .carreras {
+    display: grid;
+    gap: 16px;
+  }
+
+  .carrera {
+    border: 1px solid var(--linea);
+    border-radius: var(--r-lg);
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+    padding: 18px 16px 20px;
+    scroll-margin-top: 70px;
+  }
+
+  .carrera__nombre {
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .carrera__gancho {
+    margin: 8px 0 14px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--tinta-2);
+  }
+
+  /* ── Video ── */
+  .video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--r-md);
+    overflow: hidden;
+    background: var(--tinta);
+  }
+
+  .video__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video__play {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    border: none;
+    background: rgba(17, 24, 39, 0.28);
+    color: #fff;
+    transition: background-color 0.2s ease;
+  }
+
+  .video__play > svg {
+    display: block;
+    width: 26px;
+    height: 26px;
+    padding: 16px 14px 16px 18px;
+    border-radius: 50%;
+    background: var(--rojo);
+    box-sizing: content-box;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease;
+  }
+
+  .video__play:active > svg {
+    transform: scale(0.94);
+  }
+
+  @media (hover: hover) {
+    .video__play:hover {
+      background: rgba(17, 24, 39, 0.12);
+    }
+  }
+
+  .video :global(.video__iframe) {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+  }
+
+  .carrera__charla {
+    margin: 14px 0 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  /* ── Enlaces ── */
+  .carrera__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 15px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--tinta);
+  }
+
+  .enlace--fuerte {
+    background: var(--rojo);
+    border-color: var(--rojo);
+    color: #fff;
+  }
+
+  /* ── Cierre ── */
+  .cierre {
+    background: var(--panel);
+    border-top: 1px solid var(--linea);
+    padding-block: 32px 36px;
+    text-align: center;
+  }
+
+  .cierre__titulo {
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .cierre__bajada {
+    margin: 10px 0 20px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .cierre .btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14.5px;
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 42px;
+    }
+    .cierre .btn {
+      display: inline-flex;
+      width: auto;
+    }
+  }
+</style>
