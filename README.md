@@ -36,6 +36,12 @@ src/
     contacto.astro       → /contacto
 ```
 
+### Convocatorias
+
+Un área puede declarar una `convocatoria` (ver Intercambios). Mientras exista, se muestra como
+bloque destacado en la página del área **y** como aviso al tope de la home, con un punto que late.
+Para darla de baja cuando cierre, se borra ese campo del área: el aviso de la home desaparece solo.
+
 **Para actualizar contenido no hace falta tocar HTML**: todo vive en `src/data/`. Agregar un
 deporte es sumar un objeto a `DEPORTES`; agregar un área, uno a `AREAS` (su página se genera sola).
 

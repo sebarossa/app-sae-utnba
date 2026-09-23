@@ -5,6 +5,7 @@ import Contacto from '../../components/Contacto.astro';
 import Servicios from '../../components/Servicios.astro';
 import Desplegables from '../../components/Desplegables.astro';
 import Pasos from '../../components/Pasos.astro';
+import Convocatoria from '../../components/Convocatoria.astro';
 import { AREAS } from '../../data/areas';
 
 export function getStaticPaths() {
@@ -30,6 +31,8 @@ const { area } = Astro.props;
   <div class="franja"></div>
 
   <div class="wrap seccion">
+    {area.convocatoria && <Convocatoria convocatoria={area.convocatoria} acento={area.acento} />}
+
     {area.pasos && <Pasos pasos={area.pasos} />}
 
     {

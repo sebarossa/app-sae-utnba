@@ -52,6 +52,16 @@ export type Area = {
   }[];
   /** Bloque destacado que lleva a un sistema externo (catálogo, formulario, etc.). */
   enlace?: { kicker: string; titulo: string; texto: string; cta: string; url: string };
+  /** Convocatoria vigente. Se destaca en la home mientras esté abierta. */
+  convocatoria?: {
+    etiqueta: string;
+    titulo: string;
+    texto: string;
+    cierre: string;
+    nota?: string;
+    cta: { texto: string; url: string };
+    detalles: { titulo: string; texto?: string; items?: string[] }[];
+  };
   /** Camino de varios pasos, cada uno con su enlace. */
   pasos?: {
     kicker: string;
@@ -262,6 +272,56 @@ export const AREAS: Area[] = [
     resumen: 'Becas y convenios con universidades de todo el mundo.',
     descripcion:
       'Amplía programas de intercambios y becas, consolida convenios globales, fomenta la participación estudiantil en actividades internacionales y promueve el retorno de los conocimientos adquiridos.',
+    convocatoria: {
+      etiqueta: 'Convocatoria abierta',
+      titulo: 'Programa PILA Presencial 2027-1',
+      texto:
+        'Cursá parte de tu carrera de grado en una universidad de América Latina, con reconocimiento académico pleno de las materias al volver.',
+      cierre: 'Postulaciones hasta el 23 de octubre',
+      nota: 'La documentación y las consultas se envían a intercambios@frba.utn.edu.ar.',
+      cta: {
+        texto: 'Descargar el formulario',
+        url: 'https://docs.google.com/document/d/1cih7Wh02jJztBgIJbUWV0c-yo4IeDIrv/edit?usp=sharing&rtpof=true&sd=true',
+      },
+      detalles: [
+        {
+          titulo: 'Requisitos y qué cubre la beca',
+          items: [
+            'Ser estudiante regular de grado.',
+            'Tener al menos el 40 % de la carrera aprobada.',
+            'La universidad de destino cubre hospedaje y alimentación.',
+            'El pasaje aéreo no está financiado: corre por tu cuenta.',
+          ],
+        },
+        {
+          titulo: 'Destinos y cupos',
+          texto: 'Hay 2 cupos en total, uno por institución.',
+          items: [
+            'Universidad Pedagógica y Tecnológica de Colombia (UPTC).',
+            'Universidad Nacional de Asunción, Paraguay (UNA).',
+          ],
+        },
+        {
+          titulo: 'Documentación a presentar',
+          texto: 'Para las dos instituciones:',
+          items: [
+            'Formulario PILA.',
+            'Certificado analítico con promedio.',
+            'CV.',
+            'Copia del DNI.',
+            'Solo para UPTC (Colombia): carta de presentación dirigida a Claudia Milena Díaz Ulloa, Directora de Relaciones Internacionales, y carta de motivos del estudiante.',
+            'Si quedás seleccionado, te van a pedir documentación adicional específica.',
+          ],
+        },
+        {
+          titulo: 'Cómo completar el Formulario PILA',
+          items: [
+            'Coordinador Institucional: el referente de Relaciones Internacionales de la Facultad.',
+            'Responsable Académico: el secretario académico o el director de tu carrera, que es quien garantiza el reconocimiento de las materias.',
+          ],
+        },
+      ],
+    },
     listaTitulo: 'Programas y destinos',
     lista: [
       'Becas PILA — intercambio con universidades de América Latina',
