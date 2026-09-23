@@ -295,7 +295,8 @@ export const AREAS: Area[] = [
         },
         {
           titulo: 'Destinos y cupos',
-          texto: 'Hay 2 cupos en total, uno por institución.',
+          texto:
+            'Hay 2 cupos en total, uno por institución. Son cupos de toda la UTN, no exclusivos de la Facultad Regional Buenos Aires: se compite con postulantes de todas las regionales del país.',
           items: [
             'Universidad Pedagógica y Tecnológica de Colombia (UPTC).',
             'Universidad Nacional de Asunción, Paraguay (UNA).',
