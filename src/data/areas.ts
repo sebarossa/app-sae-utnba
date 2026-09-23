@@ -276,7 +276,7 @@ export const AREAS: Area[] = [
       etiqueta: 'Convocatoria abierta',
       titulo: 'Programa PILA Presencial 2027-1',
       texto:
-        'Cursá parte de tu carrera de grado en una universidad de América Latina, con reconocimiento académico pleno de las materias al volver.',
+        'Cursá el primer cuatrimestre de 2027 en una universidad de América Latina, con reconocimiento académico pleno de las materias al volver.',
       cierre: 'Postulaciones hasta el 23 de octubre',
       nota: 'La documentación y las consultas se envían a intercambios@frba.utn.edu.ar.',
       cta: {
