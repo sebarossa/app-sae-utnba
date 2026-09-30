@@ -56,12 +56,43 @@ por día. `horario` es el texto que se muestra tal cual, así que puede describi
 `/feria` cubre el evento del 7 y 8 de octubre. Se llega desde el banner rojo del inicio, que es lo
 primero que se ve al abrir la app, y desde la ficha de Desarrollo Profesional.
 
-Para darla de baja una vez pasado el evento:
+Mientras dure, **la Feria ocupa el hero del inicio**: es lo primero que se ve al abrir la app.
+El hero de Deportes vuelve después del evento.
+
+Para darla de baja una vez pasado el 8 de octubre:
 
 1. Borrá `src/pages/feria.astro`.
-2. Sacá el bloque `<section class="wrap destacado">` de `src/pages/index.astro` y sus estilos
-   (`.destacado`, `.evento*`).
-3. Sacá el campo `convocatoria` de Desarrollo Profesional en `src/data/areas.ts`.
+2. Sacá el campo `convocatoria` de Desarrollo Profesional en `src/data/areas.ts`.
+3. Restaurá el hero original en `src/pages/index.astro`, reemplazando el bloque marcado
+   `TEMPORAL` por esto:
+
+```astro
+  <section class="hero">
+    <p class="hero__kicker">Secretaría de Asuntos Estudiantiles</p>
+    <h1 class="hero__titulo">Estudiar acá<br />es más que cursar.</h1>
+    <p class="hero__bajada">
+      Salud, becas, deportes, intercambios, biblioteca y acompañamiento. Todo lo que la SAE pone a
+      disposición de los estudiantes de la UTN.BA, en un solo lugar.
+    </p>
+
+    <div class="hero__pills">
+      <span class="pill pill--rojo">Sede Medrano</span>
+      <span class="pill pill--dorado">Sede Campus</span>
+    </div>
+
+    <div class="hero__acciones">
+      <a class="btn btn--primario hero__cta" href="/deportes">
+        Ver la oferta deportiva
+        <Icon name="flecha" size={16} />
+      </a>
+    </div>
+  </section>
+```
+
+Los estilos del hero sirven para las dos versiones, así que no hay que tocar CSS. La bajada de
+"¿Qué necesitás?" repite las áreas mientras el hero habla de la Feria; al restaurar el hero
+conviene volver a acortarla a *"Tocá cualquiera para ver los servicios, los horarios y a quién
+escribirle."*
 
 ## Sección temporal: Ingreso 2027
 
