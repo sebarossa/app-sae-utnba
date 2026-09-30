@@ -5,7 +5,7 @@ import Icon from '../components/Icon.astro';
 import { AREAS, SAE } from '../data/areas';
 
 // Cualquier área con una convocatoria vigente se anuncia arriba de la grilla.
-const convocatorias = AREAS.filter((a) => a.convocatoria);
+const convocatorias = AREAS.filter((a) => a.convocatoria && a.convocatoria.enHome !== false);
 ---
 
 <Base title="SAE UTN.BA — Servicios para estudiantes">
@@ -32,6 +32,24 @@ const convocatorias = AREAS.filter((a) => a.convocatoria);
   <div class="franja"></div>
 
   <!-- ── ÁREAS ────────────────────────────── -->
+  <!-- Evento temporal: se borra junto con /feria una vez pasado. -->
+  <section class="wrap destacado">
+    <a class="evento" href="/feria">
+      <span class="evento__fecha">
+        <span class="evento__punto" aria-hidden="true"></span>
+        7 y 8 de octubre
+      </span>
+      <span class="evento__titulo">Feria de Empleabilidad 2026</span>
+      <span class="evento__texto">
+        Empresas que buscan talento UTN, charlas y una evaluación de competencias sin costo.
+      </span>
+      <span class="evento__cta">
+        Ver la Feria
+        <Icon name="flecha" size={15} />
+      </span>
+    </a>
+  </section>
+
   {
     convocatorias.length > 0 && (
       <section class="wrap avisos">
@@ -133,11 +151,90 @@ const convocatorias = AREAS.filter((a) => a.convocatoria);
     margin-top: 26px;
   }
 
+  /* ── Evento destacado ── */
+  .destacado {
+    padding-top: 24px;
+  }
+
+  .evento {
+    display: block;
+    padding: 20px 18px 20px;
+    border: 1px solid var(--linea);
+    border-left: 3px solid var(--rojo);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    box-shadow: var(--sombra-md);
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+  }
+
+  .evento:active {
+    transform: scale(0.99);
+  }
+
+  @media (hover: hover) {
+    .evento:hover {
+      box-shadow: var(--sombra-lg);
+    }
+  }
+
+  .evento__fecha {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--rojo);
+  }
+
+  .evento__punto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--rojo);
+    animation: latido 2.2s ease-out infinite;
+  }
+
+  .evento__titulo {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 21px;
+    font-weight: 900;
+    color: var(--tinta);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-top: 8px;
+  }
+
+  .evento__texto {
+    display: block;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+    margin-top: 7px;
+  }
+
+  .evento__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 12px 22px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 13.5px;
+    font-weight: 800;
+  }
+
   /* ── Aviso de convocatoria ── */
   .avisos {
     display: grid;
     gap: 10px;
-    padding-top: 24px;
+    padding-top: 14px;
   }
 
   .aviso {

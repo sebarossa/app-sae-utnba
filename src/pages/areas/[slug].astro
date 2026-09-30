@@ -44,8 +44,8 @@ const { area } = Astro.props;
           <a
             class="btn btn--primario btn--bloque enlace__btn"
             href={area.enlace.url}
-            target="_blank"
-            rel="noopener"
+            target={area.enlace.url.startsWith('/') ? undefined : '_blank'}
+            rel={area.enlace.url.startsWith('/') ? undefined : 'noopener'}
           >
             {area.enlace.cta}
             <Icon name="flecha" size={16} />

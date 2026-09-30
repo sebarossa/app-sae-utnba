@@ -25,14 +25,23 @@ const { convocatoria: c, acento = 'rojo' } = Astro.props;
     <span>{c.cierre}</span>
   </p>
 
-  <a class="conv__btn" href={c.cta.url} target="_blank" rel="noopener">
+  <a
+    class="conv__btn"
+    href={c.cta.url}
+    target={c.cta.url.startsWith('/') ? undefined : '_blank'}
+    rel={c.cta.url.startsWith('/') ? undefined : 'noopener'}
+  >
     {c.cta.texto}
     <Icon name="flecha" size={15} />
   </a>
 
-  <div class="conv__detalles">
-    <Desplegables bloques={c.detalles} acento={acento} />
-  </div>
+  {
+    c.detalles.length > 0 && (
+      <div class="conv__detalles">
+        <Desplegables bloques={c.detalles} acento={acento} />
+      </div>
+    )
+  }
 
   {c.nota && <p class="conv__nota">{c.nota}</p>}
 </section>

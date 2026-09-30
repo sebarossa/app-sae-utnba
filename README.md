@@ -51,6 +51,18 @@ deporte es sumar un objeto a `DEPORTES`; agregar un área, uno a `AREAS` (su pá
 por día. `horario` es el texto que se muestra tal cual, así que puede describir combinaciones
 (por ejemplo, martes y jueves con horarios distintos).
 
+## Sección temporal: Feria de Empleabilidad 2026
+
+`/feria` cubre el evento del 7 y 8 de octubre. Se llega desde el banner rojo del inicio, que es lo
+primero que se ve al abrir la app, y desde la ficha de Desarrollo Profesional.
+
+Para darla de baja una vez pasado el evento:
+
+1. Borrá `src/pages/feria.astro`.
+2. Sacá el bloque `<section class="wrap destacado">` de `src/pages/index.astro` y sus estilos
+   (`.destacado`, `.evento*`).
+3. Sacá el campo `convocatoria` de Desarrollo Profesional en `src/data/areas.ts`.
+
 ## Sección temporal: Ingreso 2027
 
 `/ingreso` existe solo mientras duren las fechas de inscripción. Está hecha para borrarse sin

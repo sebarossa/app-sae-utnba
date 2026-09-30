@@ -1,0 +1,524 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { SEDES } from '../data/sedes';
+
+// ─────────────────────────────────────────────────────────────
+// SECCIÓN TEMPORAL — Feria de Empleabilidad 2026 (7 y 8 de octubre).
+// Como en /ingreso, el contenido vive dentro de este archivo: pasada
+// la fecha se borra la página y el banner del inicio, y listo.
+// ─────────────────────────────────────────────────────────────
+
+const INSCRIPCION = 'https://luma.com/3unm2j2r';
+const CLOUD = 'https://res.cloudinary.com/pu6xe6eg/image/upload';
+
+const empresas = [
+  { nombre: 'Molinos Río de la Plata', logo: `${CLOUD}/e_trim/h_82,c_scale,q_auto/v1790788015/logo_molinos.png` },
+  { nombre: 'mAbxience', logo: `${CLOUD}/e_trim/h_68,c_scale,q_auto/v1790788015/Logo_MABXIENCE.png` },
+  { nombre: 'Novo Space', logo: `${CLOUD}/e_trim/h_44,c_scale,q_auto/v1790788017/Novo_Space_Logo_horizontal_blue.png` },
+  { nombre: 'Prysmian', logo: `${CLOUD}/e_trim/h_52,c_scale,q_auto/v1790792469/Logo_-Prysmian_300x300.png` },
+  { nombre: 'Andreani', logo: `${CLOUD}/e_trim/h_44,c_scale,q_auto/v1790792443/andreani.png` },
+  { nombre: 'Mirgor', logo: `${CLOUD}/e_trim/h_66,c_scale,q_auto/v1790788016/MIRGOR_LOGO-3.png`, fondo: '#12173A' },
+  { nombre: 'Swiss Medical', logo: `${CLOUD}/e_trim/h_48,c_scale,q_auto/v1790788016/logo_swiss_medical_curvas.png` },
+  { nombre: 'PwC Argentina', logo: `${CLOUD}/w_800,c_scale/e_trim/h_76,c_scale,q_auto/v1790792736/PwC-logo.png` },
+  { nombre: 'Chevron', logo: `${CLOUD}/e_trim/h_112,c_scale,q_auto/v1790788014/CVX_Logo_Corp_Flat_Hldgshape_RGB.png` },
+  { nombre: 'Datalytics', logo: `${CLOUD}/e_trim/h_104,c_scale,q_auto/v1790788482/datalyticsit_logo.jpg` },
+  { nombre: 'Central Puerto', logo: `${CLOUD}/w_1000,c_scale/e_trim/e_replace_color:0b2d5b:25:ffffff/h_62,c_scale,q_auto/v1790792940/logo-footer.png` },
+  { nombre: 'Techint', logo: `${CLOUD}/h_112,c_scale,q_auto/v1790788017/Logo_OT_negro_1.jpg` },
+  { nombre: 'JPMorgan Chase', logo: `${CLOUD}/c_crop,w_1.0,h_0.22,g_center/h_48,c_scale,q_auto/v1790788020/JPMC_bronze_logo.png` },
+  { nombre: 'Terminales Río de la Plata' },
+  { nombre: 'SACDE', logo: `${CLOUD}/e_trim/h_50,c_scale,q_auto/v1790788017/sacde_Blue_2.png` },
+  { nombre: 'EY', logo: `${CLOUD}/e_trim/h_102,c_scale,q_auto/v1790792434/EY_logo_2019.svg.png` },
+  { nombre: 'Coca-Cola FEMSA', logo: `${CLOUD}/e_trim/h_88,c_scale,q_auto/v1790788016/LOGO-_Coca-Cola_FEMSA_1.jpg` },
+  { nombre: 'Stellantis', logo: `${CLOUD}/e_trim/h_52,c_scale,q_auto/v1790787981/stellantis_letras_azul_sin_fondo.png` },
+  { nombre: 'Banco Patagonia', logo: `${CLOUD}/h_60,c_scale,q_auto/v1790787980/banco_patagonia_letras_blancas_fondo_azul.png`, fondo: '#00457C' },
+];
+
+const jornadas = [
+  {
+    modo: 'Presencial',
+    icono: '📍',
+    acento: 'rojo' as const,
+    fecha: 'Miércoles 7 de octubre',
+    donde: 'UTN Buenos Aires · Av. Medrano 951, CABA',
+    texto:
+      'Recorré los espacios de las empresas, conocé a sus equipos y acercate directamente a las oportunidades disponibles.',
+  },
+  {
+    modo: 'Virtual',
+    icono: '💻',
+    acento: 'dorado' as const,
+    fecha: 'Jueves 8 de octubre',
+    donde: 'Online · los accesos llegan por email a quienes se inscriban',
+    texto: 'Participá de charlas y talleres con empresas a lo largo del día, desde donde estés.',
+  },
+];
+
+const bloques = [
+  {
+    icono: '🤝',
+    titulo: 'Empresas y oportunidades laborales',
+    texto:
+      'Conocé presencialmente a empresas de distintas industrias, conversá con sus equipos de Recursos Humanos y descubrí pasantías, primeros empleos, posiciones profesionales y programas de jóvenes talentos.',
+  },
+  {
+    icono: '🧠',
+    titulo: 'Conocé mejor tu perfil profesional',
+    nuevo: true,
+    texto:
+      'Este año vas a poder acceder sin costo a una evaluación de habilidades y competencias, pensada para que conozcas tus fortalezas y llegues con más información a tus próximos procesos de selección.',
+  },
+  {
+    icono: '🚀',
+    titulo: 'Herramientas para dar el próximo paso',
+    texto:
+      'La Feria es parte de las iniciativas de UTN.BA para acompañar a estudiantes y graduados en su desarrollo profesional y generar nuevas conexiones con el mundo del trabajo.',
+  },
+];
+---
+
+<Base
+  title="Feria de Empleabilidad 2026 — UTN.BA"
+  description="7 y 8 de octubre. Empresas que buscan talento UTN, charlas y una evaluación de competencias sin costo. Participación gratuita con inscripción previa."
+  volverA="/"
+  volverTexto="Inicio"
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">Feria de Empleabilidad 2026</p>
+    <h1 class="cabecera__titulo">Tu próximo desafío profesional puede empezar acá.</h1>
+    <p class="cabecera__desc">
+      Dos jornadas para conocer a las empresas que están buscando talento, hablar con sus equipos de
+      Recursos Humanos y sumar herramientas para tu desarrollo profesional.
+    </p>
+    <div class="cabecera__pills">
+      <span class="pill pill--rojo">Miércoles 7 · Presencial</span>
+      <span class="pill pill--dorado">Jueves 8 · Virtual</span>
+    </div>
+  </section>
+
+  <div class="franja"></div>
+
+  <div class="wrap seccion">
+    <p class="intro">
+      Es el punto de encuentro entre estudiantes, graduados y algunas de las principales empresas y
+      organizaciones del país. El <strong>7 de octubre</strong> en la Sede Medrano, para recorrer los
+      stands y conocer a los equipos cara a cara. El <strong>8 de octubre</strong> seguimos online,
+      con charlas y talleres a lo largo del día.
+    </p>
+    <p class="intro">
+      Pasantías, primeros empleos, posiciones profesionales y programas de jóvenes talentos: si estás
+      pensando en tu próximo paso, este es el lugar para darlo.
+    </p>
+
+    <a class="btn btn--primario btn--bloque inscribir" href={INSCRIPCION} target="_blank" rel="noopener">
+      Inscribirme a la Feria
+      <Icon name="flecha" size={16} />
+    </a>
+    <p class="inscribir__nota">
+      Participación gratuita para estudiantes y graduados, con inscripción previa.
+    </p>
+  </div>
+
+  <!-- ── QUÉ VAS A ENCONTRAR ──────────────── -->
+  <div class="wrap seccion seccion--top">
+    <p class="kicker">La Feria</p>
+    <h2 class="titulo-seccion">¿Qué vas a encontrar?</h2>
+    <ul class="bloques">
+      {
+        bloques.map((b) => (
+          <li class="bloque">
+            <span class="bloque__icono" aria-hidden="true">
+              {b.icono}
+            </span>
+            <div>
+              <h3 class="bloque__titulo">
+                {b.titulo}
+                {b.nuevo && <span class="bloque__nuevo">Nuevo</span>}
+              </h3>
+              <p class="bloque__texto">{b.texto}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <!-- ── DOS JORNADAS ─────────────────────── -->
+  <section class="agenda">
+    <div class="wrap">
+      <p class="kicker kicker--dorado">Agenda</p>
+      <h2 class="agenda__titulo">Dos jornadas para participar</h2>
+
+      {
+        jornadas.map((j) => (
+          <article class="jornada">
+            <span class:list={['jornada__modo', `jornada__modo--${j.acento}`]}>
+              {j.icono} {j.modo}
+            </span>
+            <h3 class="jornada__fecha">{j.fecha}</h3>
+            <p class="jornada__donde">{j.donde}</p>
+            <p class="jornada__texto">{j.texto}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <!-- ── EMPRESAS ─────────────────────────── -->
+  <div class="wrap seccion">
+    <p class="kicker">Empresas confirmadas</p>
+    <h2 class="titulo-seccion">Quiénes te esperan</h2>
+    <p class="bajada">Algunas de las organizaciones que ya confirmaron. Y se siguen sumando.</p>
+
+    <ul class="empresas">
+      {
+        empresas.map((e) => (
+          <li class="empresa" style={e.fondo ? `background-color:${e.fondo}` : undefined}>
+            {e.logo ? (
+              <img src={e.logo} alt={e.nombre} loading="lazy" decoding="async" />
+            ) : (
+              <span class="empresa__nombre">{e.nombre}</span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="empresas__nota">Al inscribirte te enviamos la lista completa de empresas participantes.</p>
+  </div>
+
+  <!-- ── CÓMO LLEGAR ──────────────────────── -->
+  <div class="wrap seccion seccion--top">
+    <p class="kicker">Cómo llegar</p>
+    <h2 class="titulo-seccion">Sede Medrano</h2>
+    <p class="bajada">Av. Medrano 951, C1179AAQ — Ciudad Autónoma de Buenos Aires</p>
+    <a class="mapa" href={SEDES.medrano.mapa} target="_blank" rel="noopener">
+      <Icon name="pin" size={17} />
+      Ver en el mapa
+    </a>
+  </div>
+
+  <!-- ── CIERRE ───────────────────────────── -->
+  <section class="cierre">
+    <div class="wrap">
+      <p class="kicker">Participación gratuita</p>
+      <h2 class="cierre__titulo">Conectamos talento UTN con oportunidades.</h2>
+      <p class="cierre__bajada">
+        Registrate para recibir por email el cronograma de actividades, las empresas participantes y
+        los accesos a las actividades virtuales.
+      </p>
+      <a class="btn btn--primario btn--bloque" href={INSCRIPCION} target="_blank" rel="noopener">
+        Quiero inscribirme
+        <Icon name="flecha" size={16} />
+      </a>
+      <p class="cierre__consultas">
+        Consultas: <a href="mailto:sae@frba.utn.edu.ar">sae@frba.utn.edu.ar</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 32px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+  }
+
+  .cabecera__desc {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .cabecera__pills {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .seccion--top {
+    padding-top: 0;
+    margin-top: 6px;
+    border-top: 1px solid var(--linea);
+    padding-block-start: 30px;
+  }
+
+  .intro {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--tinta-2);
+    margin-bottom: 16px;
+  }
+
+  .intro strong {
+    color: var(--rojo);
+  }
+
+  .inscribir {
+    margin-top: 10px;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 15px;
+  }
+
+  .inscribir__nota {
+    margin-top: 12px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--gris-2);
+    text-align: center;
+  }
+
+  /* ── Qué vas a encontrar ── */
+  .bloques {
+    display: grid;
+    gap: 2px;
+    margin-top: 18px;
+  }
+
+  .bloque {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .bloque:last-child {
+    border-bottom: none;
+  }
+
+  .bloque__icono {
+    font-size: 21px;
+    line-height: 1.2;
+  }
+
+  .bloque__titulo {
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+
+  .bloque__nuevo {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 7px;
+    border-radius: 4px;
+    padding: 3px 8px;
+    background: var(--rojo);
+    color: #fff;
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .bloque__texto {
+    margin-top: 6px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  /* ── Agenda ── */
+  .agenda {
+    background: var(--tinta);
+    padding-block: 32px 36px;
+  }
+
+  .agenda__titulo {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 18px;
+  }
+
+  .jornada {
+    background: var(--blanco);
+    border-radius: var(--r-md);
+    padding: 20px 18px;
+    margin-bottom: 12px;
+  }
+
+  .jornada:last-child {
+    margin-bottom: 0;
+    background: var(--panel);
+  }
+
+  .jornada__modo {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-family: var(--titulo);
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .jornada__modo--rojo {
+    background: var(--rojo);
+  }
+
+  .jornada__modo--dorado {
+    background: var(--dorado);
+  }
+
+  .jornada__fecha {
+    font-size: 19px;
+    font-weight: 800;
+    margin-top: 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .jornada__donde {
+    margin-top: 4px;
+    font-size: 13px;
+    color: var(--gris);
+    line-height: 1.5;
+  }
+
+  .jornada__texto {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--tinta-2);
+  }
+
+  /* ── Empresas ── */
+  .empresas {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .empresa {
+    display: grid;
+    place-items: center;
+    height: 72px;
+    padding: 0 12px;
+    background: var(--blanco);
+    border: 1px solid var(--linea);
+    border-radius: var(--r-sm);
+  }
+
+  .empresa img {
+    max-width: 100%;
+    max-height: 38px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .empresa__nombre {
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--tinta);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .empresas__nota {
+    margin-top: 16px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: var(--gris-2);
+  }
+
+  /* ── Mapa ── */
+  .mapa {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 16px;
+    padding: 13px 24px;
+    border: 2px solid var(--rojo);
+    border-radius: var(--r-sm);
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--rojo);
+  }
+
+  /* ── Cierre ── */
+  .cierre {
+    background: var(--panel);
+    border-top: 1px solid var(--linea);
+    padding-block: 34px 38px;
+    text-align: center;
+  }
+
+  .cierre__titulo {
+    font-size: 23px;
+    font-weight: 900;
+    line-height: 1.25;
+  }
+
+  .cierre__bajada {
+    margin: 12px 0 22px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--gris);
+  }
+
+  .cierre .btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 15px;
+  }
+
+  .cierre__consultas {
+    margin-top: 18px;
+    font-size: 12.5px;
+    color: var(--gris-2);
+  }
+
+  .cierre__consultas a {
+    color: var(--rojo);
+    font-weight: 600;
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 40px;
+    }
+    .empresas {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .inscribir,
+    .cierre .btn {
+      display: inline-flex;
+      width: auto;
+    }
+  }
+</style>
