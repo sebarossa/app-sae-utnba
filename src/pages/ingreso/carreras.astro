@@ -14,8 +14,8 @@ import { CARRERAS } from '../../data/carreras';
     <p class="cabecera__kicker">Carreras de grado</p>
     <h1 class="cabecera__titulo">Las nueve ingenierías</h1>
     <p class="cabecera__desc">
-      En cada una, el director del departamento cuenta de qué se trata, qué hace un egresado y cómo
-      está armada la carrera. Los videos se cargan recién cuando tocás play.
+      Qué hace cada una, dónde se trabaja y cómo está armada. Entrá al plan de estudios para ver
+      las materias año por año.
     </p>
   </section>
 
@@ -27,27 +27,8 @@ import { CARRERAS } from '../../data/carreras';
         CARRERAS.map((c) => (
           <li class="carrera" id={c.slug}>
             <h2 class="carrera__nombre">{c.nombre}</h2>
-            <p class="carrera__gancho">{c.gancho}</p>
+            <p class="carrera__texto">{c.texto}</p>
 
-            <div class="video" data-video={c.video}>
-              <img
-                class="video__thumb"
-                src={`https://i.ytimg.com/vi/${c.video}/maxresdefault.jpg`}
-                data-fallback={`https://i.ytimg.com/vi/${c.video}/hqdefault.jpg`}
-                alt=""
-                width="1280"
-                height="720"
-                loading="lazy"
-                decoding="async"
-              />
-              <button class="video__play" type="button" aria-label={`Ver el video de ${c.nombre}`}>
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M8 5.2v13.6L19 12 8 5.2Z" />
-                </svg>
-              </button>
-            </div>
-
-            <p class="carrera__charla">{c.charla}</p>
 
             <div class="carrera__links">
               <a class="enlace enlace--fuerte" href={c.plan} target="_blank" rel="noopener">
@@ -82,34 +63,6 @@ import { CARRERAS } from '../../data/carreras';
     </div>
   </section>
 </Base>
-
-<script>
-  // El iframe de YouTube pesa mucho: se carga solo cuando el usuario toca play.
-  document.querySelectorAll<HTMLElement>('.video').forEach((caja) => {
-    const id = caja.dataset.video;
-    if (!id) return;
-
-    // maxresdefault no existe para todos los videos; si falla, se usa hqdefault.
-    const thumb = caja.querySelector<HTMLImageElement>('.video__thumb');
-    if (thumb) {
-      thumb.addEventListener('error', () => {
-        const alt = thumb.dataset.fallback;
-        if (alt && thumb.src !== alt) thumb.src = alt;
-      });
-    }
-
-    caja.querySelector('.video__play')?.addEventListener('click', () => {
-      const iframe = document.createElement('iframe');
-      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
-      iframe.title = 'Video de la carrera';
-      iframe.allow =
-        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-      iframe.allowFullscreen = true;
-      iframe.className = 'video__iframe';
-      caja.replaceChildren(iframe);
-    });
-  });
-</script>
 
 <style>
   .cabecera {
@@ -163,76 +116,11 @@ import { CARRERAS } from '../../data/carreras';
     line-height: 1.25;
   }
 
-  .carrera__gancho {
-    margin: 8px 0 14px;
+  .carrera__texto {
+    margin-top: 8px;
     font-size: 14.5px;
     line-height: 1.6;
     color: var(--tinta-2);
-  }
-
-  /* ── Video ── */
-  .video {
-    position: relative;
-    aspect-ratio: 16 / 9;
-    border-radius: var(--r-md);
-    overflow: hidden;
-    background: var(--tinta);
-  }
-
-  .video__thumb {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  .video__play {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    place-items: center;
-    border: none;
-    background: rgba(17, 24, 39, 0.28);
-    color: #fff;
-    transition: background-color 0.2s ease;
-  }
-
-  .video__play > svg {
-    display: block;
-    width: 26px;
-    height: 26px;
-    padding: 16px 14px 16px 18px;
-    border-radius: 50%;
-    background: var(--rojo);
-    box-sizing: content-box;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
-    transition: transform 0.2s ease;
-  }
-
-  .video__play:active > svg {
-    transform: scale(0.94);
-  }
-
-  @media (hover: hover) {
-    .video__play:hover {
-      background: rgba(17, 24, 39, 0.12);
-    }
-  }
-
-  .video :global(.video__iframe) {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    display: block;
-  }
-
-  .carrera__charla {
-    margin: 14px 0 0;
-    font-size: 13.5px;
-    line-height: 1.6;
-    color: var(--gris);
   }
 
   /* ── Enlaces ── */

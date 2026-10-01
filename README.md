@@ -99,10 +99,9 @@ escribirle."*
 `/ingreso` existe solo mientras duren las fechas de inscripción. Está hecha para borrarse sin
 dejar rastro: todo su contenido vive dentro de `src/pages/ingreso.astro`, no en `src/data/`.
 
-Incluye la subpágina `/ingreso/carreras`, con las nueve ingenierías: un gancho, la charla en video
-del director de cada departamento y el link al plan de estudios. Los videos no cargan el iframe de
-YouTube hasta que el usuario toca play — solo la miniatura — así la página abre rápido aunque la
-red del predio esté saturada.
+Incluye la subpágina `/ingreso/carreras`, con las nueve ingenierías: un párrafo sobre qué hace
+cada una y los links al plan de estudios y al sitio de la carrera. No lleva videos ni nombres de
+autoridades a propósito: ese material queda viejo cuando cambian los directores de departamento.
 
 Para darla de baja:
 
