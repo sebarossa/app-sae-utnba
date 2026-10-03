@@ -1,7 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { SEDES } from '../data/sedes';
 
 // ─────────────────────────────────────────────────────────────
 // SECCIÓN TEMPORAL — Feria de Empleabilidad 2026 (7 y 8 de octubre).
@@ -39,8 +38,9 @@ const jornadas = [
     modo: 'Presencial',
     icono: '📍',
     acento: 'rojo' as const,
-    fecha: 'Miércoles 7 de octubre · 12 a 19 h',
-    donde: 'UTN Buenos Aires · Av. Medrano 951, CABA',
+    fecha: 'Miércoles 7 de octubre',
+    hora: '12 a 19 h',
+    donde: 'Aula Magna · UTN Buenos Aires · Av. Medrano 951, CABA',
     texto:
       'Recorré los espacios de las empresas, conocé a sus equipos y acercate directamente a las oportunidades disponibles.',
   },
@@ -210,6 +210,7 @@ const bloques = [
               {j.icono} {j.modo}
             </span>
             <h3 class="jornada__fecha">{j.fecha}</h3>
+            {j.hora && <p class="jornada__hora">{j.hora}</p>}
             <p class="jornada__donde">{j.donde}</p>
             <p class="jornada__texto">{j.texto}</p>
           </article>
@@ -279,16 +280,6 @@ const bloques = [
     <p class="empresas__nota">Al inscribirte te enviamos la lista completa de empresas participantes.</p>
   </div>
 
-  <!-- ── CÓMO LLEGAR ──────────────────────── -->
-  <div class="wrap seccion seccion--top">
-    <p class="kicker">Cómo llegar</p>
-    <h2 class="titulo-seccion">Sede Medrano</h2>
-    <p class="bajada">Av. Medrano 951, C1179AAQ — Ciudad Autónoma de Buenos Aires</p>
-    <a class="mapa" href={SEDES.medrano.mapa} target="_blank" rel="noopener">
-      <Icon name="pin" size={17} />
-      Ver en el mapa
-    </a>
-  </div>
 
   <!-- ── CIERRE ───────────────────────────── -->
   <section class="cierre">
@@ -574,6 +565,15 @@ const bloques = [
     letter-spacing: -0.02em;
   }
 
+  .jornada__hora {
+    margin-top: 2px;
+    font-family: var(--titulo);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--rojo);
+    letter-spacing: -0.01em;
+  }
+
   .jornada__donde {
     margin-top: 4px;
     font-size: 13px;
@@ -681,22 +681,6 @@ const bloques = [
   }
 
   /* ── Mapa ── */
-  .mapa {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    margin-top: 16px;
-    padding: 13px 24px;
-    border: 2px solid var(--rojo);
-    border-radius: var(--r-sm);
-    font-family: var(--titulo);
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--rojo);
-  }
-
   /* ── Cierre ── */
   .cierre {
     background: var(--panel);
