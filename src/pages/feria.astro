@@ -39,7 +39,7 @@ const jornadas = [
     modo: 'Presencial',
     icono: '📍',
     acento: 'rojo' as const,
-    fecha: 'Miércoles 7 de octubre',
+    fecha: 'Miércoles 7 de octubre · 12 a 19 h',
     donde: 'UTN Buenos Aires · Av. Medrano 951, CABA',
     texto:
       'Recorré los espacios de las empresas, conocé a sus equipos y acercate directamente a las oportunidades disponibles.',
@@ -50,7 +50,58 @@ const jornadas = [
     acento: 'dorado' as const,
     fecha: 'Jueves 8 de octubre',
     donde: 'Online · los accesos llegan por email a quienes se inscriban',
-    texto: 'Participá de charlas y talleres con empresas a lo largo del día, desde donde estés.',
+    texto:
+      'Participá de charlas y talleres con empresas a lo largo del día, desde donde estés. Cada charla tiene su propia inscripción: elegí las que te interesen.',
+  },
+];
+
+// Las charlas del jueves, cada una con su formulario.
+const logoDe = (nombre: string) => empresas.find((e) => e.nombre === nombre)?.logo;
+
+const charlas = [
+  {
+    hora: '10 a 11 h',
+    empresa: 'Lovelytics',
+    titulo: 'Quiero trabajar en datos e IA: por dónde empezar',
+    url: 'https://forms.gle/SirSsneXGhXoTxwFA',
+    logo: `${CLOUD}/e_trim/h_52,c_scale,q_auto/v1790788015/1.Logo_Lovelytics-black-color.png`,
+  },
+  {
+    hora: '11 a 12 h',
+    empresa: 'Coca-Cola FEMSA',
+    titulo: 'Del aula a la operación: la ingeniería detrás de cada botella',
+    url: 'https://forms.gle/YgS1hpzo8pRSj7Do7',
+    logo: logoDe('Coca-Cola FEMSA'),
+  },
+  {
+    hora: '13 a 14 h',
+    empresa: 'PwC',
+    titulo: 'IA para potenciar tu búsqueda laboral: guía práctica para estudiantes',
+    url: 'https://forms.gle/UJDgnrJ1uWT2N8gQ6',
+    logo: logoDe('PwC Argentina'),
+  },
+  {
+    hora: '14 a 15 h',
+    empresa: 'EY',
+    titulo: 'La ciberseguridad en la era de la IA agéntica',
+    url: 'https://forms.gle/6XoFryQwz5wybh4u8',
+    logo: logoDe('EY'),
+  },
+  {
+    hora: '15 a 16 h',
+    empresa: 'Chevron',
+    titulo: 'Implementación de nuevas tecnologías y desarrollo con IA',
+    url: 'https://forms.gle/v2MxCQyR5RDrm22JA',
+    logo: logoDe('Chevron'),
+    simultaneo: true,
+  },
+  {
+    hora: '15 a 16 h',
+    empresa: 'Swiss Medical',
+    titulo: 'Tecnología, innovación y salud',
+    url: 'https://forms.gle/kHQ7gzYuCM1bhZRp9',
+    logo: logoDe('Swiss Medical'),
+    simultaneo: true,
   },
 ];
 
@@ -151,7 +202,7 @@ const bloques = [
 
       {
         jornadas.map((j) => (
-          <article class="jornada">
+          <article class:list={['jornada', `jornada--${j.acento}`]}>
             <span class:list={['jornada__modo', `jornada__modo--${j.acento}`]}>
               {j.icono} {j.modo}
             </span>
@@ -161,6 +212,29 @@ const bloques = [
           </article>
         ))
       }
+
+      <ul class="charlas">
+        {
+          charlas.map((c) => (
+            <li class="charla">
+              <span class="charla__logo">
+                <img src={c.logo} alt={c.empresa} loading="lazy" decoding="async" />
+              </span>
+              <div class="charla__cuerpo">
+                <p class="charla__hora">
+                  {c.hora} · {c.empresa}
+                  {c.simultaneo && <span class="charla__simultaneo">En simultáneo</span>}
+                </p>
+                <h4 class="charla__titulo">{c.titulo}</h4>
+                <a class="charla__btn" href={c.url} target="_blank" rel="noopener">
+                  Inscribirme
+                  <Icon name="flecha" size={13} />
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
     </div>
   </section>
 
@@ -362,9 +436,97 @@ const bloques = [
     margin-bottom: 12px;
   }
 
-  .jornada:last-child {
-    margin-bottom: 0;
+  .jornada--dorado {
     background: var(--panel);
+  }
+
+  .charlas {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+  }
+
+  .charla {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    background: #1c2434;
+    border-radius: var(--r-md);
+    padding: 15px 16px;
+  }
+
+  .charla__logo {
+    display: grid;
+    place-items: center;
+    width: 62px;
+    height: 56px;
+    padding: 0 6px;
+    border-radius: 8px;
+    background: #fff;
+    flex: none;
+  }
+
+  .charla__logo img {
+    max-width: 100%;
+    max-height: 34px;
+    width: auto;
+    height: auto;
+  }
+
+  .charla__cuerpo {
+    min-width: 0;
+  }
+
+  .charla__hora {
+    font-family: var(--titulo);
+    font-size: 11.5px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ff8fa0;
+    line-height: 1.4;
+  }
+
+  .charla__simultaneo {
+    display: inline-block;
+    margin-left: 6px;
+    border-radius: 4px;
+    padding: 2px 7px;
+    background: rgba(184, 147, 62, 0.2);
+    color: #d4aa5a;
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+  }
+
+  .charla__titulo {
+    margin-top: 5px;
+    font-family: var(--titulo);
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .charla__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 10px 18px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .charla__btn:active {
+    transform: scale(0.98);
   }
 
   .jornada__modo {
