@@ -105,6 +105,9 @@ const charlas = [
   },
 ];
 
+const mitad = Math.ceil(empresas.length / 2);
+const hileras = [empresas.slice(0, mitad), empresas.slice(mitad)];
+
 const bloques = [
   {
     icono: '🤝',
@@ -244,20 +247,35 @@ const bloques = [
     <h2 class="titulo-seccion">Quiénes te esperan</h2>
     <p class="bajada">Algunas de las organizaciones que ya confirmaron. Y se siguen sumando.</p>
 
-    <ul class="empresas">
-      {
-        empresas.map((e) => (
-          <li class="empresa" style={e.fondo ? `background-color:${e.fondo}` : undefined}>
-            {e.logo ? (
-              <img src={e.logo} alt={e.nombre} loading="lazy" decoding="async" />
-            ) : (
-              <span class="empresa__nombre">{e.nombre}</span>
-            )}
-          </li>
-        ))
-      }
-    </ul>
+  </div>
 
+  <div class="cinta">
+    {
+      hileras.map((hilera, i) => (
+        <div class:list={['cinta__fila', i % 2 === 1 && 'cinta__fila--vuelta']}>
+          <ul class="cinta__pista">
+            {[0, 1].map((copia) =>
+              hilera.map((e) => (
+                <li
+                  class="empresa"
+                  style={e.fondo ? `background-color:${e.fondo}` : undefined}
+                  aria-hidden={copia === 1 ? 'true' : undefined}
+                >
+                  {e.logo ? (
+                    <img src={e.logo} alt={copia === 1 ? '' : e.nombre} decoding="async" />
+                  ) : (
+                    <span class="empresa__nombre">{e.nombre}</span>
+                  )}
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="wrap">
     <p class="empresas__nota">Al inscribirte te enviamos la lista completa de empresas participantes.</p>
   </div>
 
@@ -571,18 +589,55 @@ const bloques = [
   }
 
   /* ── Empresas ── */
-  .empresas {
+  .cinta {
+    margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-top: 18px;
+    gap: 10px;
+    /* Difumina los bordes para que los logos entren y salgan, no se corten. */
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+  }
+
+  .cinta__fila {
+    overflow: hidden;
+  }
+
+  .cinta__pista {
+    display: flex;
+    width: max-content;
+    gap: 10px;
+    /* La pista lleva dos copias de la hilera: al correr media pista,
+       vuelve al punto de partida y el ciclo no se nota. */
+    animation: desfile 52s linear infinite;
+    will-change: transform;
+  }
+
+  .cinta__fila--vuelta .cinta__pista {
+    animation-direction: reverse;
+  }
+
+  @keyframes desfile {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(calc(-50% - 5px), 0, 0);
+    }
+  }
+
+  @media (hover: hover) {
+    .cinta:hover .cinta__pista {
+      animation-play-state: paused;
+    }
   }
 
   .empresa {
+    flex: none;
     display: grid;
     place-items: center;
+    width: 132px;
     height: 72px;
-    padding: 0 12px;
+    padding: 0 14px;
     background: var(--blanco);
     border: 1px solid var(--linea);
     border-radius: var(--r-sm);
@@ -603,6 +658,19 @@ const bloques = [
     color: var(--tinta);
     text-align: center;
     line-height: 1.3;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cinta__pista {
+      animation: none;
+    }
+    .cinta__fila {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .cinta__fila::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .empresas__nota {
@@ -673,9 +741,6 @@ const bloques = [
     }
     .cabecera__titulo {
       font-size: 40px;
-    }
-    .empresas {
-      grid-template-columns: repeat(3, 1fr);
     }
     .inscribir,
     .cierre .btn {
