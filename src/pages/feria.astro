@@ -103,6 +103,14 @@ const charlas = [
     logo: logoDe('Swiss Medical'),
     simultaneo: true,
   },
+  {
+    hora: '16 a 17 h',
+    empresa: 'SACDE',
+    titulo: 'SACDE en el desarrollo de la infraestructura energética estratégica de la Argentina',
+    // Pendiente: el formulario no vino en el PDF del cronograma.
+    url: undefined,
+    logo: logoDe('SACDE'),
+  },
 ];
 
 const mitad = Math.ceil(empresas.length / 2);
@@ -230,10 +238,14 @@ const bloques = [
                   {c.simultaneo && <span class="charla__simultaneo">En simultáneo</span>}
                 </p>
                 <h4 class="charla__titulo">{c.titulo}</h4>
-                <a class="charla__btn" href={c.url} target="_blank" rel="noopener">
-                  Inscribirme
-                  <Icon name="flecha" size={13} />
-                </a>
+                {c.url ? (
+                  <a class="charla__btn" href={c.url} target="_blank" rel="noopener">
+                    Inscribirme
+                    <Icon name="flecha" size={13} />
+                  </a>
+                ) : (
+                  <p class="charla__pendiente">Inscripción: próximamente</p>
+                )}
               </div>
             </li>
           ))
@@ -536,6 +548,20 @@ const bloques = [
 
   .charla__btn:active {
     transform: scale(0.98);
+  }
+
+  .charla__pendiente {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: var(--r-sm);
+    font-family: var(--titulo);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9aa4ba;
   }
 
   .jornada__modo {
