@@ -109,6 +109,16 @@ const charlas = [
     titulo: 'SACDE en el desarrollo de la infraestructura energética estratégica de la Argentina',
     url: 'https://forms.gle/pyaGHwcE2ArdYDH78',
     logo: logoDe('SACDE'),
+    simultaneo: true,
+  },
+  {
+    hora: '16 a 17 h',
+    empresa: 'Tetra Pak',
+    titulo: 'Tetra Pak y oportunidades para Make an Impact',
+    url: 'https://docs.google.com/forms/d/e/1FAIpQLSeKhy68WbIlsEw0baBjOG_UBmNIzepk1IJ4n9UqZP4TMPwQmw/viewform',
+    // Sin logo cargado: la tarjeta cae al nombre en texto.
+    logo: undefined,
+    simultaneo: true,
   },
 ];
 
@@ -229,7 +239,11 @@ const bloques = [
           charlas.map((c) => (
             <li class="charla">
               <span class="charla__logo">
-                <img src={c.logo} alt={c.empresa} loading="lazy" decoding="async" />
+                {c.logo ? (
+                  <img src={c.logo} alt={c.empresa} loading="lazy" decoding="async" />
+                ) : (
+                  <span class="charla__sigla">{c.empresa}</span>
+                )}
               </span>
               <div class="charla__cuerpo">
                 <p class="charla__hora">
@@ -492,6 +506,15 @@ const bloques = [
     max-height: 34px;
     width: auto;
     height: auto;
+  }
+
+  .charla__sigla {
+    font-family: var(--titulo);
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--tinta);
+    text-align: center;
+    line-height: 1.25;
   }
 
   .charla__cuerpo {
