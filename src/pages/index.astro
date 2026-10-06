@@ -4,12 +4,14 @@ import AreaCard from '../components/AreaCard.astro';
 import Icon from '../components/Icon.astro';
 import { AREAS, SAE } from '../data/areas';
 import { viajeDestacado } from '../data/viajes';
+import { actividadDestacada } from '../data/actividades';
 
 // Cualquier área con una convocatoria vigente se anuncia arriba de la grilla.
 const convocatorias = AREAS.filter((a) => a.convocatoria && a.convocatoria.enHome !== false);
 
 // El viaje con inscripción abierta va primero, más grande que los avisos.
 const viaje = viajeDestacado();
+const actividad = actividadDestacada();
 ---
 
 <Base title="SAE UTN.BA — Servicios para estudiantes">
@@ -69,6 +71,33 @@ const viaje = viajeDestacado();
           {viaje.cierre && <span class="destacado__cierre">{viaje.cierre}</span>}
           <span class="destacado__ir">
             Ver la convocatoria
+            <Icon name="flecha" size={15} />
+          </span>
+        </a>
+      </section>
+    )
+  }
+
+  <!-- ── ACTIVIDAD DESTACADA ──────────────── -->
+  {
+    actividad && (
+      <section class="wrap">
+        <a class="actividad" href={`/actividades/${actividad.slug}`}>
+          <span class="actividad__etiqueta">{actividad.area} · Charla abierta</span>
+          <span class="actividad__nombre">{actividad.nombre}</span>
+          <span class="actividad__resumen">{actividad.resumen}</span>
+          <span class="actividad__datos">
+            <span class="actividad__dato">
+              <Icon name="reloj" size={14} />
+              {actividad.cuando}
+            </span>
+            <span class="actividad__dato">
+              <Icon name="pin" size={14} />
+              {actividad.donde}
+            </span>
+          </span>
+          <span class="actividad__ir">
+            Ver la charla
             <Icon name="flecha" size={15} />
           </span>
         </a>
@@ -325,6 +354,99 @@ const viaje = viajeDestacado();
     color: #fff;
     font-family: var(--titulo);
     font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Actividad destacada ── */
+  .actividad {
+    display: block;
+    margin-top: 12px;
+    padding: 20px 18px 22px;
+    background: var(--blanco);
+    border: 1px solid var(--linea);
+    border-left: 4px solid var(--rojo);
+    border-radius: var(--r-lg);
+    box-shadow: var(--sombra-sm);
+    transition: box-shadow 0.16s ease, transform 0.16s ease;
+  }
+
+  .actividad:active {
+    transform: scale(0.99);
+  }
+
+  @media (hover: hover) {
+    .actividad:hover {
+      box-shadow: var(--sombra-md);
+    }
+  }
+
+  .actividad__etiqueta {
+    display: inline-block;
+    border-radius: var(--r-full);
+    padding: 5px 12px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .actividad__nombre {
+    display: block;
+    margin-top: 13px;
+    font-family: var(--titulo);
+    font-size: 21px;
+    font-weight: 900;
+    color: var(--tinta);
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .actividad__resumen {
+    display: block;
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .actividad__datos {
+    display: grid;
+    gap: 7px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--linea);
+  }
+
+  .actividad__dato {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 9px;
+    align-items: start;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--tinta-2);
+  }
+
+  .actividad__dato :global(svg) {
+    color: var(--rojo);
+    margin-top: 2px;
+  }
+
+  .actividad__ir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 12px 22px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 13px;
     font-weight: 800;
     letter-spacing: 0.04em;
   }

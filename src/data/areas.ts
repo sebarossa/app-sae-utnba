@@ -86,6 +86,14 @@ export const AREAS: Area[] = [
     resumen: 'Consultorio médico, nutrición y consultoría psicológica.',
     descripcion:
       'Ofrece a la comunidad universitaria servicios médicos promoviendo el cuidado de la salud y el bienestar.',
+    enlace: {
+      kicker: 'Actividad abierta',
+      titulo: 'Jornada de Fotoeducación',
+      texto:
+        'El jueves 22 de octubre, a las 18 h en el Aula 506 de Medrano: prevención del cáncer de piel, fotoprotección e inteligencia artificial en dermatología.',
+      cta: 'Ver la charla',
+      url: '/actividades/fotoeducacion',
+    },
     serviciosTitulo: 'Servicios',
     servicios: [
       {

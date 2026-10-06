@@ -104,6 +104,17 @@ anuncia en el inicio arriba de los avisos de convocatoria.
 Cuando una convocatoria termina, cambiá `estado` a `'cerrada'` y el destacado del inicio desaparece
 solo, sin tocar la home.
 
+## Actividades de las áreas
+
+`src/data/actividades.ts` guarda las charlas, jornadas y talleres puntuales. Cada una genera su
+ficha en `/actividades/<slug>` y, con `estado: 'abierta'` y `destacadaEnHome: true`, aparece en el
+inicio entre el viaje destacado y los avisos de convocatoria. Al pasar la fecha, poné
+`estado: 'cerrada'` y desaparece sola.
+
+Es un módulo aparte de `viajes.ts` a propósito: un viaje tiene costo, cupos y orden de mérito; una
+charla tiene disertante y temario. Mezclarlos obligaría a que la mitad de los campos quedara
+vacía en cada caso.
+
 ## Sección temporal: Ingreso 2027
 
 `/ingreso` existe solo mientras duren las fechas de inscripción. Está hecha para borrarse sin
