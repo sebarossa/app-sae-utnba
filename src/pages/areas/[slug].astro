@@ -7,6 +7,7 @@ import Desplegables from '../../components/Desplegables.astro';
 import Pasos from '../../components/Pasos.astro';
 import Convocatoria from '../../components/Convocatoria.astro';
 import { AREAS } from '../../data/areas';
+import { actividadesDeArea } from '../../data/actividades';
 
 export function getStaticPaths() {
   // Deportes tiene su propia página (/deportes) con el cronograma completo.
@@ -17,6 +18,7 @@ export function getStaticPaths() {
 }
 
 const { area } = Astro.props;
+const actividades = actividadesDeArea(area.slug);
 ---
 
 <Base title={`${area.nombre} — SAE UTN.BA`} description={area.descripcion} volverA="/" volverTexto="Áreas">
@@ -32,6 +34,30 @@ const { area } = Astro.props;
 
   <div class="wrap seccion">
     {area.convocatoria && <Convocatoria convocatoria={area.convocatoria} acento={area.acento} />}
+
+    {
+      actividades.length > 0 && (
+        <section class="actividades">
+          <p class="kicker">{actividades.length === 1 ? 'Actividad abierta' : 'Actividades abiertas'}</p>
+          <ul class="actividades__lista">
+            {actividades.map((act) => (
+              <li>
+                <a class="act" href={`/actividades/${act.slug}`}>
+                  <span class="act__nombre">{act.nombre}</span>
+                  <span class="act__cuando">
+                    {act.cuando} · {act.donde}
+                  </span>
+                  <span class="act__ir">
+                    Ver la charla
+                    <Icon name="flecha" size={14} />
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
 
     {area.pasos && <Pasos pasos={area.pasos} />}
 
@@ -158,6 +184,63 @@ const { area } = Astro.props;
 
   .bloque {
     margin-bottom: 30px;
+  }
+
+  .actividades {
+    margin-bottom: 30px;
+  }
+
+  .actividades__lista {
+    display: grid;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .act {
+    display: block;
+    padding: 16px;
+    background: var(--blanco);
+    border: 1px solid var(--linea);
+    border-left: 4px solid var(--rojo);
+    border-radius: var(--r-md);
+    box-shadow: var(--sombra-sm);
+  }
+
+  .act:active {
+    transform: scale(0.99);
+  }
+
+  .act__nombre {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--tinta);
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+  }
+
+  .act__cuando {
+    display: block;
+    margin-top: 6px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--gris);
+  }
+
+  .act__ir {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+    padding: 10px 18px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
   }
 
   .enlace {

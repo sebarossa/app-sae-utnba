@@ -4,14 +4,14 @@ import AreaCard from '../components/AreaCard.astro';
 import Icon from '../components/Icon.astro';
 import { AREAS, SAE } from '../data/areas';
 import { viajeDestacado } from '../data/viajes';
-import { actividadDestacada } from '../data/actividades';
+import { actividadesDestacadas } from '../data/actividades';
 
 // Cualquier área con una convocatoria vigente se anuncia arriba de la grilla.
 const convocatorias = AREAS.filter((a) => a.convocatoria && a.convocatoria.enHome !== false);
 
 // El viaje con inscripción abierta va primero, más grande que los avisos.
 const viaje = viajeDestacado();
-const actividad = actividadDestacada();
+const actividades = actividadesDestacadas();
 ---
 
 <Base title="SAE UTN.BA — Servicios para estudiantes">
@@ -80,8 +80,9 @@ const actividad = actividadDestacada();
 
   <!-- ── ACTIVIDAD DESTACADA ──────────────── -->
   {
-    actividad && (
+    actividades.length > 0 && (
       <section class="wrap">
+        {actividades.map((actividad) => (
         <a class="actividad" href={`/actividades/${actividad.slug}`}>
           <span class="actividad__etiqueta">{actividad.area} · Charla abierta</span>
           <span class="actividad__nombre">{actividad.nombre}</span>
@@ -101,6 +102,7 @@ const actividad = actividadDestacada();
             <Icon name="flecha" size={15} />
           </span>
         </a>
+        ))}
       </section>
     )
   }

@@ -71,6 +71,17 @@ const { actividad } = Astro.props;
         <p class="kicker">Disertante</p>
         <h2 class="titulo-seccion">{actividad.disertante.nombre}</h2>
         <p class="disertante">{actividad.disertante.texto}</p>
+        {actividad.disertante.enlace && (
+          <a
+            class="disertante__enlace"
+            href={actividad.disertante.enlace.url}
+            target="_blank"
+            rel="noopener"
+          >
+            {actividad.disertante.enlace.texto}
+            <Icon name="flecha" size={14} />
+          </a>
+        )}
       </div>
     )
   }
@@ -81,7 +92,7 @@ const { actividad } = Astro.props;
       <section class="temario">
         <div class="wrap">
           <p class="kicker">Temario</p>
-          <h2 class="titulo-seccion">De qué vamos a hablar</h2>
+          <h2 class="titulo-seccion">{actividad.temarioTitulo ?? 'De qué vamos a hablar'}</h2>
           <ol class="temas">
             {actividad.temario.map((t, i) => (
               <li class:list={['tema', i === actividad.temario!.length - 1 && 'tema--final']}>
@@ -236,6 +247,21 @@ const { actividad } = Astro.props;
     font-size: 14.5px;
     line-height: 1.65;
     color: var(--gris);
+  }
+
+  .disertante__enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 14px;
+    padding: 10px 18px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--rojo);
   }
 
   /* ── Temario ── */

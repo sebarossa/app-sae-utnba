@@ -7,6 +7,10 @@ export type Actividad = {
   nombre: string;
   /** Área que la organiza, tal como se muestra en la etiqueta. */
   area: string;
+  /** Slug del área, para listarla en su página. */
+  areaSlug: string;
+  /** Fecha en formato ISO, solo para ordenar. */
+  fechaISO: string;
   subtitulo: string;
   resumen: string;
   cuando: string;
@@ -17,16 +21,82 @@ export type Actividad = {
   hero: { kicker: string; titulo: string; texto: string; pills: string[] };
   intro: string[];
   datos: { clave: string; valor: string }[];
-  disertante?: { nombre: string; texto: string };
+  disertante?: { nombre: string; texto: string; enlace?: { texto: string; url: string } };
+  temarioTitulo?: string;
   temario?: { titulo: string; texto: string }[];
   inscripcion: { texto: string; cta: string; url: string };
 };
 
 export const ACTIVIDADES: Actividad[] = [
   {
+    slug: 'donacion-sangre',
+    nombre: 'La ingeniería detrás de una donación de sangre',
+    area: 'Salud',
+    areaSlug: 'salud',
+    fechaISO: '2026-10-13',
+    subtitulo: 'Salud · Charla abierta',
+    resumen:
+      'El recorrido completo de la sangre, desde que sale del donante hasta que llega al paciente. No hace falta saber nada del tema.',
+    cuando: 'Martes 13 de octubre · 12 h',
+    donde: 'Sede Medrano',
+    estado: 'abierta',
+    destacadaEnHome: true,
+
+    hero: {
+      kicker: 'Fundación Hemocentro Buenos Aires',
+      titulo: '¿Qué ingeniería hay detrás de una donación de sangre?',
+      texto:
+        'Una charla sobre donación de sangre, tecnología y seguridad transfusional, abierta a toda la comunidad de la UTN.BA.',
+      pills: ['Martes 13/10 · 12 h', 'Sede Medrano'],
+    },
+
+    intro: [
+      'La Fundación Hemocentro Buenos Aires invita a toda la comunidad de la UTN.BA a una charla abierta para conocer el recorrido completo de la sangre, desde que sale del donante hasta que llega al paciente.',
+      'Donar es un acto solidario, pero también es parte de un sistema científico, tecnológico y humano que tiene que funcionar con seguridad en cada paso.',
+      'No se requieren conocimientos previos.',
+    ],
+
+    datos: [
+      { clave: 'Fecha', valor: 'Martes 13 de octubre' },
+      { clave: 'Horario', valor: '12 h' },
+      { clave: 'Lugar', valor: 'Sede Medrano' },
+    ],
+
+    disertante: {
+      nombre: 'Tec. Fernando M. Couto',
+      texto:
+        'Técnico Superior en Hemoterapia (M.N. 535), de la Fundación Hemocentro Buenos Aires.',
+      enlace: { texto: 'Conocé más sobre Hemocentro', url: 'https://www.hemocentro.org/informacion' },
+    },
+
+    temarioTitulo: 'Del donante al paciente',
+    temario: [
+      { titulo: 'La extracción', texto: 'Diseño de agujas y bolsas.' },
+      { titulo: 'El procesamiento', texto: 'Separación de hemocomponentes.' },
+      { titulo: 'El análisis', texto: 'Biología molecular y período de ventana.' },
+      {
+        titulo: 'Conservación y distribución',
+        texto: 'Cadena de frío, trazabilidad y logística.',
+      },
+      {
+        titulo: 'Las personas',
+        texto: 'Factores humanos en un sistema que no admite errores.',
+      },
+    ],
+
+    inscripcion: {
+      texto:
+        'Detrás de cada donación hay un sistema entero. Vení a conocerlo por dentro: completá el formulario para reservar tu lugar.',
+      cta: 'Inscribirme',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLScVAmlNbaMW1e6pPCpsks4EuDcqk0APdkDhwVbkYQB4dGmo9w/viewform',
+    },
+  },
+  {
     slug: 'fotoeducacion',
     nombre: 'Fotoeducación y prevención del cáncer de piel',
     area: 'Salud',
+    areaSlug: 'salud',
+    fechaISO: '2026-10-22',
     subtitulo: 'Salud · Charla abierta',
     resumen:
       'Cómo revisar tus lunares, cómo elegir un protector solar que de verdad te cubra, y qué puede —y qué no— la inteligencia artificial en dermatología.',
@@ -95,5 +165,13 @@ export const ACTIVIDADES: Actividad[] = [
 ];
 
 export const getActividad = (slug: string) => ACTIVIDADES.find((a) => a.slug === slug);
-export const actividadDestacada = () =>
-  ACTIVIDADES.find((a) => a.destacadaEnHome && a.estado === 'abierta');
+
+const porFecha = (a: Actividad, b: Actividad) => a.fechaISO.localeCompare(b.fechaISO);
+
+/** Abiertas y marcadas para el inicio, la más próxima primero. */
+export const actividadesDestacadas = () =>
+  ACTIVIDADES.filter((a) => a.destacadaEnHome && a.estado === 'abierta').sort(porFecha);
+
+/** Abiertas de un área, para listarlas en su página. */
+export const actividadesDeArea = (areaSlug: string) =>
+  ACTIVIDADES.filter((a) => a.areaSlug === areaSlug && a.estado === 'abierta').sort(porFecha);

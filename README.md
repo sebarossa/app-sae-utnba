@@ -111,6 +111,9 @@ ficha en `/actividades/<slug>` y, con `estado: 'abierta'` y `destacadaEnHome: tr
 inicio entre el viaje destacado y los avisos de convocatoria. Al pasar la fecha, poné
 `estado: 'cerrada'` y desaparece sola.
 
+Si hay varias abiertas, se ordenan por `fechaISO`: primero la más próxima. Cada una también se
+lista sola en la página de su área, según `areaSlug`.
+
 Es un módulo aparte de `viajes.ts` a propósito: un viaje tiene costo, cupos y orden de mérito; una
 charla tiene disertante y temario. Mezclarlos obligaría a que la mitad de los campos quedara
 vacía en cada caso.
