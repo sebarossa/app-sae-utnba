@@ -1,0 +1,601 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { VIAJES } from '../../data/viajes';
+
+export function getStaticPaths() {
+  return VIAJES.map((viaje) => ({ params: { slug: viaje.slug }, props: { viaje } }));
+}
+
+const { viaje } = Astro.props;
+---
+
+<Base
+  title={`${viaje.nombre} — SAE UTN.BA`}
+  description={viaje.resumen}
+  volverA="/viajes"
+  volverTexto="Viajes"
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">{viaje.hero.kicker}</p>
+    <h1 class="cabecera__titulo">{viaje.hero.titulo}</h1>
+    <p class="cabecera__desc">{viaje.hero.texto}</p>
+    <div class="cabecera__pills">
+      {
+        viaje.hero.pills.map((p, i) => (
+          <span class:list={['pill', i === 0 ? 'pill--rojo' : 'pill--dorado']}>{p}</span>
+        ))
+      }
+    </div>
+  </section>
+
+  <div class="franja"></div>
+
+  <!-- ── DE QUÉ SE TRATA ──────────────────── -->
+  <div class="wrap seccion">
+    {viaje.intro.map((parrafo) => <p class="intro">{parrafo}</p>)}
+
+    {
+      viaje.inscripcion && (
+        <a
+          class="btn btn--primario btn--bloque postular"
+          href={viaje.inscripcion.url}
+          target="_blank"
+          rel="noopener"
+        >
+          {viaje.inscripcion.cta}
+          <Icon name="flecha" size={16} />
+        </a>
+      )
+    }
+    {viaje.cierre && <p class="postular__cierre">{viaje.cierre}</p>}
+  </div>
+
+  <!-- ── COSTO ────────────────────────────── -->
+  {
+    viaje.costo && (
+      <section class="costo">
+        <div class="wrap">
+          <p class="kicker kicker--dorado">Costo y pago</p>
+          <p class="costo__monto">{viaje.costo.monto}</p>
+          <p class="costo__detalle">{viaje.costo.detalle}</p>
+
+          <div class="costo__caja">
+            {viaje.costo.incluye.map((b) => (
+              <div class="costo__item">
+                <h3 class="costo__item-titulo">{b.titulo}</h3>
+                <p class="costo__item-texto">{b.texto}</p>
+              </div>
+            ))}
+          </div>
+
+          {viaje.costo.nota && <p class="costo__nota">{viaje.costo.nota}</p>}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── REQUISITOS ───────────────────────── -->
+  {
+    viaje.requisitos && (
+      <div class="wrap seccion">
+        <p class="kicker">Requisitos</p>
+        <h2 class="titulo-seccion">{viaje.requisitos.titulo}</h2>
+        <ol class="requisitos">
+          {viaje.requisitos.items.map((item, i) => (
+            <li class="requisito">
+              <span class="requisito__num" aria-hidden="true">
+                {i + 1}
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    )
+  }
+
+  <!-- ── SELECCIÓN ────────────────────────── -->
+  {
+    viaje.seleccion && (
+      <section class="seleccion">
+        <div class="wrap">
+          <p class="kicker">Selección</p>
+          <h2 class="titulo-seccion">{viaje.seleccion.titulo}</h2>
+          <p class="bajada">{viaje.seleccion.bajada}</p>
+
+          {viaje.seleccion.pasos.map((paso, i) => (
+            <article class="paso">
+              <h3 class="paso__titulo">
+                <span class="paso__num">{i + 1}</span>
+                {paso.titulo}
+              </h3>
+              <p class="paso__texto">{paso.texto}</p>
+
+              {paso.puntajes && (
+                <table class="matriz">
+                  <tbody>
+                    {paso.puntajes.map((p) => (
+                      <tr>
+                        <th scope="row">
+                          {p.que}
+                          {p.detalle && <span class="matriz__detalle">{p.detalle}</span>}
+                        </th>
+                        <td>hasta {p.pts} pts</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── CRONOGRAMA ───────────────────────── -->
+  {
+    viaje.cronograma && (
+      <section class="agenda">
+        <div class="wrap">
+          <p class="kicker kicker--dorado">Cronograma</p>
+          <h2 class="agenda__titulo">Fechas clave</h2>
+          <ul class="fechas">
+            {viaje.cronograma.map((f) => (
+              <li class:list={['fecha', f.final && 'fecha--final']}>
+                <span class="fecha__cuando">{f.cuando}</span>
+                <span class="fecha__que">{f.que}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── DOCUMENTOS ───────────────────────── -->
+  {
+    viaje.documentos && (
+      <div class="wrap seccion">
+        <p class="kicker">Documentos</p>
+        <h2 class="titulo-seccion">Todo lo que necesitás leer</h2>
+        <ul class="docs">
+          {viaje.documentos.map((d) => (
+            <li>
+              <a class="doc" href={d.url} target="_blank" rel="noopener">
+                <span class="doc__icono">
+                  <Icon name="documento" size={18} />
+                </span>
+                <span class="doc__texto">
+                  <span class="doc__titulo">{d.titulo}</span>
+                  <span class="doc__desc">{d.texto}</span>
+                </span>
+                <Icon name="flecha" size={15} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  <!-- ── CIERRE ───────────────────────────── -->
+  {
+    viaje.inscripcion && (
+      <section class="cierre">
+        <div class="wrap">
+          {viaje.cierre && <p class="kicker">{viaje.cierre}</p>}
+          <h2 class="cierre__titulo">Reglas claras para un viaje que vale la pena.</h2>
+          <p class="cierre__bajada">{viaje.inscripcion.texto}</p>
+          <a
+            class="btn btn--primario btn--bloque"
+            href={viaje.inscripcion.url}
+            target="_blank"
+            rel="noopener"
+          >
+            {viaje.inscripcion.cta}
+            <Icon name="flecha" size={16} />
+          </a>
+          {viaje.inscripcion.nota && <p class="cierre__nota">{viaje.inscripcion.nota}</p>}
+          <p class="cierre__consultas">
+            Consultas: <a href="mailto:sae@frba.utn.edu.ar">sae@frba.utn.edu.ar</a>
+          </p>
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 32px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+  }
+
+  .cabecera__desc {
+    margin-top: 14px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .cabecera__pills {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .intro {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--tinta-2);
+    margin-bottom: 16px;
+  }
+
+  .postular {
+    margin-top: 10px;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 15px;
+  }
+
+  .postular__cierre {
+    margin-top: 12px;
+    text-align: center;
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--rojo);
+    line-height: 1.5;
+  }
+
+  /* ── Costo ── */
+  .costo {
+    background: var(--tinta);
+    color: #fff;
+    padding-block: 34px 36px;
+    text-align: center;
+  }
+
+  .costo__monto {
+    font-family: var(--titulo);
+    font-size: 40px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+  }
+
+  .costo__detalle {
+    margin-top: 10px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .costo__caja {
+    margin-top: 22px;
+    background: #fff;
+    border-radius: var(--r-md);
+    padding: 18px;
+    text-align: left;
+    display: grid;
+    gap: 16px;
+  }
+
+  .costo__item-titulo {
+    font-size: 14.5px;
+    font-weight: 800;
+  }
+
+  .costo__item-texto {
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .costo__nota {
+    margin-top: 16px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #8a93a8;
+  }
+
+  /* ── Requisitos ── */
+  .requisitos {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+
+  .requisito {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--linea);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--tinta-2);
+  }
+
+  .requisito:last-child {
+    border-bottom: none;
+  }
+
+  .requisito__num {
+    font-family: var(--titulo);
+    font-size: 19px;
+    font-weight: 900;
+    color: var(--rojo);
+    line-height: 1.2;
+  }
+
+  /* ── Selección ── */
+  .seleccion {
+    background: var(--panel);
+    border-block: 1px solid var(--linea);
+    padding-block: 32px 36px;
+  }
+
+  .paso {
+    background: #fff;
+    border-radius: var(--r-md);
+    border-left: 4px solid var(--rojo);
+    padding: 18px 16px;
+    margin-top: 12px;
+  }
+
+  .paso__titulo {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+
+  .paso__num {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--rojo);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .paso__texto {
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .matriz {
+    width: 100%;
+    margin-top: 14px;
+    border-collapse: collapse;
+  }
+
+  .matriz th {
+    text-align: left;
+    font-weight: 400;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--tinta-2);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .matriz tr:last-child th,
+  .matriz tr:last-child td {
+    border-bottom: none;
+  }
+
+  .matriz__detalle {
+    display: block;
+    font-size: 12.5px;
+    color: var(--gris-2);
+  }
+
+  .matriz td {
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+    padding: 10px 0 10px 12px;
+    border-bottom: 1px solid var(--linea);
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--rojo);
+  }
+
+  /* ── Cronograma ── */
+  .agenda {
+    background: var(--tinta);
+    padding-block: 32px 36px;
+  }
+
+  .agenda__titulo {
+    font-size: 24px;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 18px;
+  }
+
+  .fechas {
+    display: grid;
+    background: #fff;
+    border-radius: var(--r-md);
+    overflow: hidden;
+  }
+
+  .fecha {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .fecha:last-child {
+    border-bottom: none;
+  }
+
+  .fecha__cuando {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--rojo);
+    letter-spacing: 0.02em;
+  }
+
+  .fecha--final .fecha__cuando {
+    color: var(--dorado);
+  }
+
+  .fecha__que {
+    display: block;
+    margin-top: 3px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--tinta-2);
+  }
+
+  /* ── Documentos ── */
+  .docs {
+    display: grid;
+    gap: 9px;
+    margin-top: 18px;
+  }
+
+  .doc {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 14px;
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    color: var(--gris-2);
+  }
+
+  .doc__icono {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+    flex: none;
+  }
+
+  .doc__texto {
+    min-width: 0;
+  }
+
+  .doc__titulo {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--tinta);
+    line-height: 1.35;
+  }
+
+  .doc__desc {
+    display: block;
+    margin-top: 2px;
+    font-size: 12.5px;
+    color: var(--gris);
+    line-height: 1.45;
+  }
+
+  /* ── Cierre ── */
+  .cierre {
+    background: var(--panel);
+    border-top: 1px solid var(--linea);
+    padding-block: 32px 36px;
+    text-align: center;
+  }
+
+  .cierre__titulo {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.25;
+  }
+
+  .cierre__bajada {
+    margin: 12px 0 20px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--gris);
+  }
+
+  .cierre .btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 15px;
+  }
+
+  .cierre__nota {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--gris-2);
+  }
+
+  .cierre__consultas {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: var(--gris-2);
+  }
+
+  .cierre__consultas a {
+    color: var(--rojo);
+    font-weight: 600;
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 40px;
+    }
+    .postular,
+    .cierre .btn {
+      display: inline-flex;
+      width: auto;
+    }
+  }
+</style>

@@ -94,6 +94,16 @@ Los estilos del hero sirven para las dos versiones, así que no hay que tocar CS
 conviene volver a acortarla a *"Tocá cualquiera para ver los servicios, los horarios y a quién
 escribirle."*
 
+## Viajes y eventos
+
+`/viajes` es la categoría y `/viajes/<slug>` la ficha de cada viaje, generada desde
+`src/data/viajes.ts`. Para sumar uno nuevo alcanza con agregar un objeto a `VIAJES`: aparece en la
+categoría, se le arma la ficha y, si lleva `estado: 'abierta'` y `destacadoEnHome: true`, se
+anuncia en el inicio arriba de los avisos de convocatoria.
+
+Cuando una convocatoria termina, cambiá `estado` a `'cerrada'` y el destacado del inicio desaparece
+solo, sin tocar la home.
+
 ## Sección temporal: Ingreso 2027
 
 `/ingreso` existe solo mientras duren las fechas de inscripción. Está hecha para borrarse sin

@@ -1,0 +1,260 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { VIAJES } from '../../data/viajes';
+import { SAE } from '../../data/areas';
+
+const etiquetas = {
+  abierta: { texto: 'Inscripción abierta', clase: 'abierta' },
+  proximamente: { texto: 'Próximamente', clase: 'proximamente' },
+  cerrada: { texto: 'Inscripción cerrada', clase: 'cerrada' },
+} as const;
+---
+
+<Base
+  title="Viajes y Eventos — SAE UTN.BA"
+  description="Viajes académicos y recreativos organizados por la Secretaría de Asuntos Estudiantiles de la UTN.BA."
+  volverA="/"
+  volverTexto="Áreas"
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">Secretaría de Asuntos Estudiantiles</p>
+    <h1 class="cabecera__titulo">Viajes y Eventos</h1>
+    <p class="cabecera__desc">
+      Salir de la Facultad también es formarse. Organizamos viajes para ver de cerca la ingeniería
+      que se estudia en el aula, y para conocer gente de otras carreras.
+    </p>
+  </section>
+
+  <div class="franja"></div>
+
+  <div class="wrap seccion">
+    <ul class="viajes">
+      {
+        VIAJES.map((v) => {
+          const e = etiquetas[v.estado];
+          return (
+            <li>
+              <a class="viaje" href={`/viajes/${v.slug}`}>
+                <span class:list={['viaje__estado', `viaje__estado--${e.clase}`]}>{e.texto}</span>
+                <span class="viaje__sub">{v.subtitulo}</span>
+                <span class="viaje__nombre">{v.nombre}</span>
+                <span class="viaje__resumen">{v.resumen}</span>
+
+                <span class="viaje__datos">
+                  <span class="viaje__dato">
+                    <Icon name="reloj" size={14} />
+                    {v.cuando}
+                  </span>
+                  <span class="viaje__dato">
+                    <Icon name="pin" size={14} />
+                    {v.donde}
+                  </span>
+                </span>
+
+                {v.cierre && <span class="viaje__cierre">{v.cierre}</span>}
+
+                <span class="viaje__ir">
+                  Ver la convocatoria
+                  <Icon name="flecha" size={15} />
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <p class="proximos">
+      Se vienen más. Las novedades se anuncian por mail y en
+      <a href={SAE.instagram.url} target="_blank" rel="noopener">{SAE.instagram.handle}</a>.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 34px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  .cabecera__desc {
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .viajes {
+    display: grid;
+    gap: 14px;
+  }
+
+  .viaje {
+    display: block;
+    border: 1px solid var(--linea);
+    border-left: 4px solid var(--dorado);
+    border-radius: var(--r-lg);
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+    padding: 20px 18px 22px;
+    transition: box-shadow 0.16s ease, transform 0.16s ease;
+  }
+
+  .viaje:active {
+    transform: scale(0.99);
+  }
+
+  @media (hover: hover) {
+    .viaje:hover {
+      box-shadow: var(--sombra-md);
+    }
+  }
+
+  .viaje__estado {
+    display: inline-block;
+    border-radius: var(--r-full);
+    padding: 5px 12px;
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .viaje__estado--abierta {
+    background: var(--rojo);
+    color: #fff;
+  }
+
+  .viaje__estado--proximamente {
+    background: var(--dorado-tenue);
+    color: #8a6d24;
+    border: 1px solid rgba(184, 147, 62, 0.35);
+  }
+
+  .viaje__estado--cerrada {
+    background: var(--panel);
+    color: var(--gris);
+    border: 1px solid var(--linea);
+  }
+
+  .viaje__sub {
+    display: block;
+    margin-top: 14px;
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dorado);
+  }
+
+  .viaje__nombre {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--titulo);
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--tinta);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .viaje__resumen {
+    display: block;
+    margin-top: 9px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .viaje__datos {
+    display: grid;
+    gap: 7px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid var(--linea);
+  }
+
+  .viaje__dato {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 9px;
+    align-items: start;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--tinta-2);
+  }
+
+  .viaje__dato :global(svg) {
+    color: var(--dorado);
+    margin-top: 2px;
+  }
+
+  .viaje__cierre {
+    display: block;
+    margin-top: 12px;
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 800;
+    color: var(--rojo);
+    line-height: 1.4;
+  }
+
+  .viaje__ir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+    padding: 13px 22px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .proximos {
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--linea);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .proximos a {
+    color: var(--rojo);
+    font-weight: 600;
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 42px;
+    }
+  }
+</style>

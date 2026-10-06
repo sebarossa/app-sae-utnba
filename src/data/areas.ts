@@ -267,6 +267,22 @@ export const AREAS: Area[] = [
     enlaceInterno: '/deportes',
   },
   {
+    slug: 'viajes-y-eventos',
+    nombre: 'Viajes y Eventos',
+    icono: 'viajes',
+    acento: 'dorado',
+    resumen: 'Viajes académicos y recreativos organizados por la SAE.',
+    descripcion:
+      'Salir de la Facultad también es formarse. Organizamos viajes académicos y recreativos para ver de cerca la ingeniería que se estudia en el aula, y para conocer gente de otras carreras.',
+    enlaceInterno: '/viajes',
+    contacto: {
+      emails: ['sae@frba.utn.edu.ar'],
+      oficina: 'Of. 323',
+      ubicacion: 'Sede Medrano · Of. 323',
+      sedes: ['medrano'],
+    },
+  },
+  {
     slug: 'intercambios',
     nombre: 'Intercambios',
     icono: 'intercambios',
