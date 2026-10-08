@@ -432,17 +432,6 @@ export const AREAS: Area[] = [
     resumen: 'Tu CV, tu primera pasantía y la bolsa de trabajo de la facultad.',
     descripcion:
       'Te acompaña para que la carrera se traduzca en trabajo: habilidades que complementan lo académico, y el puente directo con las empresas que buscan perfiles de la UTN.',
-    // Temporal: se saca junto con /feria una vez pasado el 8 de octubre.
-    convocatoria: {
-      enHome: false,
-      etiqueta: '7 y 8 de octubre',
-      titulo: 'Feria de Empleabilidad 2026',
-      texto:
-        'Dos jornadas con empresas que buscan talento UTN: el 7 presencial en Medrano y el 8 online, con charlas y talleres. Este año suma una evaluación de competencias sin costo.',
-      cierre: 'Participación gratuita, con inscripción previa',
-      cta: { texto: 'Ver la Feria', url: '/feria' },
-      detalles: [],
-    },
     enlace: {
       kicker: 'Bolsa de trabajo',
       titulo: 'Talentia, nuestro portal de empleo',

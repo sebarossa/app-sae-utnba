@@ -16,31 +16,23 @@ const actividades = actividadesDestacadas();
 
 <Base title="SAE UTN.BA — Servicios para estudiantes">
   <!-- ── HERO ─────────────────────────────── -->
-  <!-- TEMPORAL: el hero es la Feria hasta el 8 de octubre.
-       El README tiene el hero original para restaurarlo después. -->
   <section class="hero">
-    <p class="hero__kicker">
-      <span class="hero__punto" aria-hidden="true"></span>
-      7 y 8 de octubre
-    </p>
-    <h1 class="hero__titulo">Feria de<br />Empleabilidad<br />2026</h1>
+    <p class="hero__kicker">Secretaría de Asuntos Estudiantiles</p>
+    <h1 class="hero__titulo">Estudiar acá<br />es más que cursar.</h1>
     <p class="hero__bajada">
-      Dos jornadas con las empresas que están buscando talento UTN. Conocé a sus equipos, sumá
-      herramientas y accedé a una evaluación de competencias sin costo.
+      Salud, becas, deportes, intercambios, biblioteca y acompañamiento. Todo lo que la SAE pone a
+      disposición de los estudiantes de la UTN.BA, en un solo lugar.
     </p>
 
     <div class="hero__pills">
-      <span class="pill pill--rojo">Miércoles 7 · Presencial</span>
-      <span class="pill pill--dorado">Jueves 8 · Virtual</span>
+      <span class="pill pill--rojo">Sede Medrano</span>
+      <span class="pill pill--dorado">Sede Campus</span>
     </div>
 
     <div class="hero__acciones">
-      <a class="btn btn--primario hero__cta" href="/feria">
-        Ver la Feria
+      <a class="btn btn--primario hero__cta" href="/deportes">
+        Ver la oferta deportiva
         <Icon name="flecha" size={16} />
-      </a>
-      <a class="btn btn--fantasma hero__cta" href="https://luma.com/3unm2j2r" target="_blank" rel="noopener">
-        Inscribirme
       </a>
     </div>
   </section>
@@ -190,26 +182,6 @@ const actividades = actividadesDestacadas();
     margin-bottom: 16px;
   }
 
-  .hero__punto {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--rojo-claro);
-    animation: latido 2.2s ease-out infinite;
-  }
-
-  @keyframes latido {
-    0% {
-      box-shadow: 0 0 0 0 rgba(232, 64, 96, 0.6);
-    }
-    70% {
-      box-shadow: 0 0 0 8px rgba(232, 64, 96, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(232, 64, 96, 0);
-    }
-  }
-
   .hero__acciones {
     display: grid;
     gap: 10px;
@@ -278,10 +250,10 @@ const actividades = actividadesDestacadas();
     height: 7px;
     border-radius: 50%;
     background: var(--dorado);
-    animation: latido 2.4s ease-in-out infinite;
+    animation: latido-destacado 2.4s ease-in-out infinite;
   }
 
-  @keyframes latido {
+  @keyframes latido-destacado {
     0%,
     100% {
       opacity: 1;
@@ -501,10 +473,10 @@ const actividades = actividadesDestacadas();
     height: 7px;
     border-radius: 50%;
     background: var(--dorado);
-    animation: latido 2.2s ease-out infinite;
+    animation: latido-aviso 2.2s ease-out infinite;
   }
 
-  @keyframes latido {
+  @keyframes latido-aviso {
     0% {
       box-shadow: 0 0 0 0 rgba(184, 147, 62, 0.55);
     }
