@@ -49,8 +49,8 @@ const { actividad } = Astro.props;
   <!-- ── CUÁNDO Y DÓNDE ───────────────────── -->
   <section class="agenda">
     <div class="wrap">
-      <p class="kicker kicker--dorado">Cuándo y dónde</p>
-      <h2 class="agenda__titulo">Te esperamos en Medrano</h2>
+      <p class="kicker kicker--dorado">{actividad.datosKicker ?? 'Cuándo y dónde'}</p>
+      <h2 class="agenda__titulo">{actividad.datosTitulo ?? 'Te esperamos en Medrano'}</h2>
       <dl class="datos">
         {
           actividad.datos.map((d) => (
@@ -91,7 +91,7 @@ const { actividad } = Astro.props;
     actividad.temario && (
       <section class="temario">
         <div class="wrap">
-          <p class="kicker">Temario</p>
+          <p class="kicker">{actividad.temarioKicker ?? 'Temario'}</p>
           <h2 class="titulo-seccion">{actividad.temarioTitulo ?? 'De qué vamos a hablar'}</h2>
           <ol class="temas">
             {actividad.temario.map((t, i) => (
@@ -112,8 +112,10 @@ const { actividad } = Astro.props;
   <!-- ── CIERRE ───────────────────────────── -->
   <section class="cierre">
     <div class="wrap">
-      <p class="kicker">{actividad.cuando} · {actividad.donde}</p>
-      <h2 class="cierre__titulo">Reservá tu lugar</h2>
+      <p class="kicker">
+        {actividad.cierreKicker ?? `${actividad.cuando} · ${actividad.donde}`}
+      </p>
+      <h2 class="cierre__titulo">{actividad.cierreTitulo ?? 'Reservá tu lugar'}</h2>
       <p class="cierre__bajada">{actividad.inscripcion.texto}</p>
       <a
         class="btn btn--primario btn--bloque"

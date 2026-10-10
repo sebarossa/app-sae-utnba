@@ -4,7 +4,7 @@ import AreaCard from '../components/AreaCard.astro';
 import Icon from '../components/Icon.astro';
 import { AREAS, SAE } from '../data/areas';
 import { viajeDestacado } from '../data/viajes';
-import { actividadesDestacadas } from '../data/actividades';
+import { actividadesDestacadas, resaltadosDe } from '../data/actividades';
 
 // Cualquier área con una convocatoria vigente se anuncia arriba de la grilla.
 const convocatorias = AREAS.filter((a) => a.convocatoria && a.convocatoria.enHome !== false);
@@ -76,21 +76,19 @@ const actividades = actividadesDestacadas();
       <section class="wrap">
         {actividades.map((actividad) => (
         <a class="actividad" href={`/actividades/${actividad.slug}`}>
-          <span class="actividad__etiqueta">{actividad.area} · Charla abierta</span>
+          <span class="actividad__etiqueta">{actividad.subtitulo}</span>
           <span class="actividad__nombre">{actividad.nombre}</span>
           <span class="actividad__resumen">{actividad.resumen}</span>
           <span class="actividad__datos">
-            <span class="actividad__dato">
-              <Icon name="reloj" size={14} />
-              {actividad.cuando}
-            </span>
-            <span class="actividad__dato">
-              <Icon name="pin" size={14} />
-              {actividad.donde}
-            </span>
+            {resaltadosDe(actividad).map((r) => (
+              <span class="actividad__dato">
+                <Icon name={r.icono} size={14} />
+                {r.texto}
+              </span>
+            ))}
           </span>
           <span class="actividad__ir">
-            Ver la charla
+            {actividad.resaltados ? 'Ver más' : 'Ver la charla'}
             <Icon name="flecha" size={15} />
           </span>
         </a>

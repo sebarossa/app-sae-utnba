@@ -41,8 +41,8 @@ export const VIAJES: Viaje[] = [
       'Una semana de ingeniería a escala real en San Rafael, Mendoza. Presas, centrales hidroeléctricas e industrias regionales, por dentro.',
     cuando: '18 al 24 de octubre de 2026',
     donde: 'CTDR Los Reyunos · San Rafael, Mendoza',
-    estado: 'abierta',
-    cierre: 'Inscripción hasta el viernes 9 de octubre, 23:59 h',
+    estado: 'cerrada',
+    cierre: 'La inscripción cerró el viernes 9 de octubre',
     destacadoEnHome: true,
 
     hero: {

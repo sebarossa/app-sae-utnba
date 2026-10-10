@@ -1,4 +1,6 @@
-// Actividades puntuales de las áreas: charlas, jornadas, talleres.
+import type { IconName } from '../lib/icons';
+
+// Actividades puntuales de las áreas: charlas, jornadas, talleres, encuestas.
 // Para sumar una, agregá un objeto acá: su ficha y el destacado del inicio
 // salen solos. Cuando pasa la fecha, poné estado: 'cerrada'.
 
@@ -13,31 +15,102 @@ export type Actividad = {
   fechaISO: string;
   subtitulo: string;
   resumen: string;
-  cuando: string;
-  donde: string;
+  /** Una encuesta online no tiene fecha ni lugar: usa `resaltados`. */
+  cuando?: string;
+  donde?: string;
+  /** Reemplaza al par fecha + lugar en las tarjetas. */
+  resaltados?: { icono: IconName; texto: string }[];
   estado: 'abierta' | 'cerrada';
   destacadaEnHome?: boolean;
 
   hero: { kicker: string; titulo: string; texto: string; pills: string[] };
   intro: string[];
+  datosKicker?: string;
+  datosTitulo?: string;
   datos: { clave: string; valor: string }[];
   disertante?: { nombre: string; texto: string; enlace?: { texto: string; url: string } };
+  temarioKicker?: string;
   temarioTitulo?: string;
   temario?: { titulo: string; texto: string }[];
   inscripcion: { texto: string; cta: string; url: string };
+  cierreKicker?: string;
+  cierreTitulo?: string;
 };
 
 export const ACTIVIDADES: Actividad[] = [
+  {
+    slug: 'encuesta-salud-mental',
+    nombre: 'Encuesta de Salud Mental',
+    area: 'Salud',
+    areaSlug: 'salud',
+    fechaISO: '2026-10-10',
+    subtitulo: 'Bienestar · Encuesta anónima',
+    resumen:
+      'Cinco minutos, sin dar tu nombre. Lo que respondas nos sirve para entender cómo está la comunidad y acompañar mejor.',
+    resaltados: [
+      { icono: 'reloj', texto: '5 minutos' },
+      { icono: 'candado', texto: '100% anónima' },
+    ],
+    estado: 'abierta',
+    destacadaEnHome: true,
+
+    hero: {
+      kicker: '10 de octubre · Día Mundial de la Salud Mental',
+      titulo: 'Queremos escucharte',
+      texto:
+        'Ayudanos a mejorar la comunidad tecnológica respondiendo una encuesta breve sobre cómo estás hoy.',
+      pills: ['100% anónima', 'Solo 5 minutos'],
+    },
+
+    intro: [
+      'En el marco del Día Mundial de la Salud Mental, desde la Secretaría de Asuntos Estudiantiles te invitamos a responder nuestra Encuesta sobre Salud Mental.',
+      'Queremos conocer y comprender el bienestar de toda la comunidad tecnológica para seguir fortaleciendo el acompañamiento institucional.',
+      'Porque tu salud mental y tu bienestar son prioridad en la UTN.BA.',
+    ],
+
+    datosKicker: 'La encuesta',
+    datosTitulo: 'En pocas palabras',
+    datos: [
+      { clave: 'Duración', valor: '5 minutos' },
+      { clave: 'Formato', valor: '100% anónima' },
+      { clave: 'Para', valor: 'Estudiantes de todas las especialidades' },
+    ],
+
+    temarioKicker: 'Por qué tu respuesta importa',
+    temarioTitulo: 'Tu aporte, en concreto',
+    temario: [
+      {
+        titulo: 'Detectar necesidades',
+        texto: 'Entender qué está pasando hoy en la comunidad estudiantil.',
+      },
+      {
+        titulo: 'Crear mejores estrategias',
+        texto: 'Diseñar acciones de acompañamiento a partir de lo que nos cuentes.',
+      },
+      {
+        titulo: 'Con total confidencialidad',
+        texto: 'No se pide nombre, legajo ni mail. Nadie puede saber quién respondió qué.',
+      },
+    ],
+
+    inscripcion: {
+      texto: 'Te invitamos a completarla. Gracias por acompañarnos y sumar tu aporte.',
+      cta: 'Completar la encuesta',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLScfGTrsfpApzmU5D_RZNT4aabjItS8xnyzXDDZ69c7MlJam0Q/viewform',
+    },
+    cierreKicker: '5 minutos · 100% anónima',
+    cierreTitulo: 'Tu respuesta suma.',
+  },
   {
     slug: 'donacion-sangre',
     nombre: 'La ingeniería detrás de una donación de sangre',
     area: 'Salud',
     areaSlug: 'salud',
-    fechaISO: '2026-10-13',
+    fechaISO: '2026-10-30',
     subtitulo: 'Salud · Charla abierta',
     resumen:
       'El recorrido completo de la sangre, desde que sale del donante hasta que llega al paciente. No hace falta saber nada del tema.',
-    cuando: 'Martes 13 de octubre · 12 h',
+    cuando: 'Viernes 30 de octubre · 12 h',
     donde: 'Sede Medrano',
     estado: 'abierta',
     destacadaEnHome: true,
@@ -47,7 +120,7 @@ export const ACTIVIDADES: Actividad[] = [
       titulo: '¿Qué ingeniería hay detrás de una donación de sangre?',
       texto:
         'Una charla sobre donación de sangre, tecnología y seguridad transfusional, abierta a toda la comunidad de la UTN.BA.',
-      pills: ['Martes 13/10 · 12 h', 'Sede Medrano'],
+      pills: ['Viernes 30/10 · 12 h', 'Sede Medrano'],
     },
 
     intro: [
@@ -57,7 +130,7 @@ export const ACTIVIDADES: Actividad[] = [
     ],
 
     datos: [
-      { clave: 'Fecha', valor: 'Martes 13 de octubre' },
+      { clave: 'Fecha', valor: 'Viernes 30 de octubre' },
       { clave: 'Horario', valor: '12 h' },
       { clave: 'Lugar', valor: 'Sede Medrano' },
     ],
@@ -165,6 +238,14 @@ export const ACTIVIDADES: Actividad[] = [
 ];
 
 export const getActividad = (slug: string) => ACTIVIDADES.find((a) => a.slug === slug);
+
+/** Par de datos para las tarjetas: los propios, o fecha y lugar. */
+export const resaltadosDe = (a: Actividad) =>
+  a.resaltados ??
+  [
+    { icono: 'reloj' as IconName, texto: a.cuando },
+    { icono: 'pin' as IconName, texto: a.donde },
+  ].filter((r): r is { icono: IconName; texto: string } => Boolean(r.texto));
 
 const porFecha = (a: Actividad, b: Actividad) => a.fechaISO.localeCompare(b.fechaISO);
 
