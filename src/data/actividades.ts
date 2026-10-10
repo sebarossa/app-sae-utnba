@@ -110,7 +110,7 @@ export const ACTIVIDADES: Actividad[] = [
     subtitulo: 'Salud · Charla abierta',
     resumen:
       'El recorrido completo de la sangre, desde que sale del donante hasta que llega al paciente. No hace falta saber nada del tema.',
-    cuando: 'Viernes 30 de octubre · 12 h',
+    cuando: 'Viernes 30 de octubre · 14 h',
     donde: 'Sede Medrano',
     estado: 'abierta',
     destacadaEnHome: true,
@@ -120,7 +120,7 @@ export const ACTIVIDADES: Actividad[] = [
       titulo: '¿Qué ingeniería hay detrás de una donación de sangre?',
       texto:
         'Una charla sobre donación de sangre, tecnología y seguridad transfusional, abierta a toda la comunidad de la UTN.BA.',
-      pills: ['Viernes 30/10 · 12 h', 'Sede Medrano'],
+      pills: ['Viernes 30/10 · 14 h', 'Sede Medrano'],
     },
 
     intro: [
@@ -131,7 +131,7 @@ export const ACTIVIDADES: Actividad[] = [
 
     datos: [
       { clave: 'Fecha', valor: 'Viernes 30 de octubre' },
-      { clave: 'Horario', valor: '12 h' },
+      { clave: 'Horario', valor: '14 h' },
       { clave: 'Lugar', valor: 'Sede Medrano' },
     ],
 
