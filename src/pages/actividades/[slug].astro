@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
+import Desplegables from '../../components/Desplegables.astro';
 import { ACTIVIDADES } from '../../data/actividades';
 
 export function getStaticPaths() {
@@ -35,34 +36,70 @@ const { actividad } = Astro.props;
   <div class="wrap seccion">
     {actividad.intro.map((parrafo) => <p class="intro">{parrafo}</p>)}
 
-    <a
-      class="btn btn--primario btn--bloque inscribir"
-      href={actividad.inscripcion.url}
-      target="_blank"
-      rel="noopener"
-    >
-      {actividad.inscripcion.cta}
-      <Icon name="flecha" size={16} />
-    </a>
+    {
+      actividad.inscripcion && (
+        <a
+          class="btn btn--primario btn--bloque inscribir"
+          href={actividad.inscripcion.url}
+          target="_blank"
+          rel="noopener"
+        >
+          {actividad.inscripcion.cta}
+          <Icon name="flecha" size={16} />
+        </a>
+      )
+    }
   </div>
 
   <!-- ── CUÁNDO Y DÓNDE ───────────────────── -->
-  <section class="agenda">
-    <div class="wrap">
-      <p class="kicker kicker--dorado">{actividad.datosKicker ?? 'Cuándo y dónde'}</p>
-      <h2 class="agenda__titulo">{actividad.datosTitulo ?? 'Te esperamos en Medrano'}</h2>
-      <dl class="datos">
-        {
-          actividad.datos.map((d) => (
-            <div class="datos__fila">
-              <dt>{d.clave}</dt>
-              <dd>{d.valor}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
-  </section>
+  {
+    actividad.datos && (
+      <section class="agenda">
+        <div class="wrap">
+          <p class="kicker kicker--dorado">{actividad.datosKicker ?? 'Cuándo y dónde'}</p>
+          <h2 class="agenda__titulo">{actividad.datosTitulo ?? 'Te esperamos en Medrano'}</h2>
+          <dl class="datos">
+            {actividad.datos.map((d) => (
+              <div class="datos__fila">
+                <dt>{d.clave}</dt>
+                <dd>{d.valor}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── JORNADAS ─────────────────────────── -->
+  {
+    actividad.jornadas && (
+      <section class="agenda">
+        <div class="wrap">
+          <p class="kicker kicker--dorado">Las jornadas</p>
+          <h2 class="agenda__titulo">Elegí la que te quede mejor</h2>
+          {actividad.jornadas.map((j) => (
+            <article class="jornada">
+              <p class="jornada__etiqueta">{j.etiqueta}</p>
+              <h3 class="jornada__sede">{j.sede}</h3>
+              <dl class="datos datos--jornada">
+                {j.datos.map((d) => (
+                  <div class="datos__fila">
+                    <dt>{d.clave}</dt>
+                    <dd>{d.valor}</dd>
+                  </div>
+                ))}
+              </dl>
+              <a class="jornada__btn" href={j.cta.url} target="_blank" rel="noopener">
+                {j.cta.texto}
+                <Icon name="flecha" size={15} />
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    )
+  }
 
   <!-- ── DISERTANTE ───────────────────────── -->
   {
@@ -104,8 +141,39 @@ const { actividad } = Astro.props;
               </li>
             ))}
           </ol>
+          {actividad.temarioNota && <p class="temario__nota">{actividad.temarioNota}</p>}
         </div>
       </section>
+    )
+  }
+
+  <!-- ── RECOMENDACIONES ──────────────────── -->
+  {
+    actividad.desplegables && (
+      <div class="wrap seccion">
+        <p class="kicker">Recomendaciones</p>
+        <h2 class="titulo-seccion">Antes y después de donar</h2>
+        <div class="recos">
+          <Desplegables bloques={actividad.desplegables} />
+        </div>
+      </div>
+    )
+  }
+
+  <!-- ── ENLACE RELACIONADO ───────────────── -->
+  {
+    actividad.enlace && (
+      <div class="wrap">
+        <a class="relacionado" href={actividad.enlace.url}>
+          <span class="relacionado__kicker">{actividad.enlace.kicker}</span>
+          <span class="relacionado__titulo">{actividad.enlace.titulo}</span>
+          <span class="relacionado__texto">{actividad.enlace.texto}</span>
+          <span class="relacionado__ir">
+            {actividad.enlace.cta}
+            <Icon name="flecha" size={15} />
+          </span>
+        </a>
+      </div>
     )
   }
 
@@ -113,19 +181,39 @@ const { actividad } = Astro.props;
   <section class="cierre">
     <div class="wrap">
       <p class="kicker">
-        {actividad.cierreKicker ?? `${actividad.cuando} · ${actividad.donde}`}
+        {actividad.cierreKicker ?? [actividad.cuando, actividad.donde].filter(Boolean).join(' · ')}
       </p>
       <h2 class="cierre__titulo">{actividad.cierreTitulo ?? 'Reservá tu lugar'}</h2>
-      <p class="cierre__bajada">{actividad.inscripcion.texto}</p>
-      <a
-        class="btn btn--primario btn--bloque"
-        href={actividad.inscripcion.url}
-        target="_blank"
-        rel="noopener"
-      >
-        {actividad.inscripcion.cta}
-        <Icon name="flecha" size={16} />
-      </a>
+      {actividad.inscripcion && <p class="cierre__bajada">{actividad.inscripcion.texto}</p>}
+      {
+        actividad.inscripcion && (
+          <a
+            class="btn btn--primario btn--bloque"
+            href={actividad.inscripcion.url}
+            target="_blank"
+            rel="noopener"
+          >
+            {actividad.inscripcion.cta}
+            <Icon name="flecha" size={16} />
+          </a>
+        )
+      }
+      {
+        actividad.jornadas && (
+          <div class="cierre__jornadas">
+            <p class="cierre__bajada">
+              Cada jornada tiene su propia inscripción. Si conocés a alguien de la facu que pueda
+              donar, pasale el dato.
+            </p>
+            {actividad.jornadas.map((j) => (
+              <a class="btn btn--primario btn--bloque" href={j.cta.url} target="_blank" rel="noopener">
+                {j.cta.texto}
+                <Icon name="flecha" size={16} />
+              </a>
+            ))}
+          </div>
+        )
+      }
       <p class="cierre__consultas">
         Consultas: <a href="mailto:sae@frba.utn.edu.ar">sae@frba.utn.edu.ar</a>
       </p>
@@ -228,7 +316,7 @@ const { actividad } = Astro.props;
     padding-top: 2px;
   }
 
-  .datos__fila:last-child dt {
+  .datos:not(.datos--jornada) .datos__fila:last-child dt {
     color: var(--dorado);
   }
 
@@ -237,6 +325,126 @@ const { actividad } = Astro.props;
     font-size: 14px;
     line-height: 1.5;
     color: var(--tinta-2);
+  }
+
+  /* ── Jornadas ── */
+  .jornada {
+    background: #fff;
+    border-radius: var(--r-md);
+    border-left: 4px solid var(--rojo);
+    padding: 18px 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .jornada:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .jornada__etiqueta {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    line-height: 1.4;
+  }
+
+  .jornada__sede {
+    margin-top: 5px;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  .datos--jornada {
+    margin-top: 12px;
+    border: 1px solid var(--linea);
+  }
+
+  .jornada__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 13px 22px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .temario__nota {
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .recos {
+    margin-top: 16px;
+  }
+
+  /* ── Enlace relacionado ── */
+  .relacionado {
+    display: block;
+    margin-bottom: 30px;
+    padding: 20px 18px 22px;
+    background: var(--tinta);
+    border-radius: var(--r-lg);
+    border-left: 4px solid var(--dorado);
+    color: #c9cfe0;
+  }
+
+  .relacionado__kicker {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dorado);
+  }
+
+  .relacionado__titulo {
+    display: block;
+    margin-top: 10px;
+    font-family: var(--titulo);
+    font-size: 19px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+
+  .relacionado__texto {
+    display: block;
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .relacionado__ir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 11px 20px;
+    border-radius: var(--r-sm);
+    background: var(--dorado);
+    color: var(--tinta);
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .cierre__jornadas {
+    display: grid;
+    gap: 10px;
   }
 
   /* ── Disertante ── */

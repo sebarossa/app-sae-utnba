@@ -27,17 +27,157 @@ export type Actividad = {
   intro: string[];
   datosKicker?: string;
   datosTitulo?: string;
-  datos: { clave: string; valor: string }[];
+  datos?: { clave: string; valor: string }[];
   disertante?: { nombre: string; texto: string; enlace?: { texto: string; url: string } };
+  /** Varias fechas, cada una con su inscripción. Reemplaza a `datos`. */
+  jornadas?: {
+    etiqueta: string;
+    sede: string;
+    datos: { clave: string; valor: string }[];
+    cta: { texto: string; url: string };
+  }[];
   temarioKicker?: string;
   temarioTitulo?: string;
   temario?: { titulo: string; texto: string }[];
-  inscripcion: { texto: string; cta: string; url: string };
+  temarioNota?: string;
+  /** Contenido plegable, como las recomendaciones de una campaña. */
+  desplegables?: { titulo: string; texto?: string; items?: string[] }[];
+  /** Enlace a otra pieza relacionada. */
+  enlace?: { kicker: string; titulo: string; texto: string; cta: string; url: string };
+  inscripcion?: { texto: string; cta: string; url: string };
   cierreKicker?: string;
   cierreTitulo?: string;
 };
 
 export const ACTIVIDADES: Actividad[] = [
+  {
+    slug: 'campana-donacion-sangre',
+    nombre: 'Campaña de donación de sangre',
+    area: 'Salud',
+    areaSlug: 'salud',
+    fechaISO: '2026-11-02',
+    subtitulo: 'Salud · Campaña',
+    resumen:
+      'Tres jornadas en noviembre, una en Medrano y dos en Campus, con la Fundación Hemocentro y el Hospital Gutiérrez. Cada una tiene su propia inscripción.',
+    resaltados: [
+      { icono: 'reloj', texto: '2, 5 y 24 de noviembre' },
+      { icono: 'pin', texto: 'Sede Medrano y Sede Campus' },
+    ],
+    estado: 'abierta',
+    destacadaEnHome: true,
+
+    hero: {
+      kicker: 'Donación de sangre',
+      titulo: 'Tres jornadas para donar sin salir de la facu',
+      texto:
+        'En noviembre los equipos de la Fundación Hemocentro Buenos Aires y del Hospital de Niños Ricardo Gutiérrez vienen a nuestras dos sedes. Elegí la fecha que te quede más cómoda y anotate.',
+      pills: ['Lunes 2/11 · Medrano', 'Jueves 5/11 · Campus', 'Martes 24/11 · Campus'],
+    },
+
+    intro: [
+      'Una donación lleva menos de una hora entre la entrevista, el chequeo y la extracción, y con ese medio litro de sangre se puede ayudar a más de un paciente.',
+      'Son tres jornadas, una en Medrano y dos en Campus, cada una con su propia inscripción. Abajo están los datos de cada una, los requisitos para donar y qué hacer antes y después.',
+    ],
+
+    jornadas: [
+      {
+        etiqueta: 'Jornada 1 · Fundación Hemocentro Buenos Aires',
+        sede: 'Sede Medrano',
+        datos: [
+          { clave: 'Fecha', valor: 'Lunes 2 de noviembre' },
+          { clave: 'Horario', valor: 'Elegís tu turno al inscribirte' },
+          { clave: 'Lugar', valor: 'Sede Medrano. El aula se confirma antes de la jornada' },
+        ],
+        cta: { texto: 'Sacar turno en Medrano', url: 'https://v2.soloturnos.com/agenda/utn--sede-medrano' },
+      },
+      {
+        etiqueta: 'Jornada 2 · Hospital de Niños Ricardo Gutiérrez',
+        sede: 'Sede Campus',
+        datos: [
+          { clave: 'Fecha', valor: 'Jueves 5 de noviembre' },
+          { clave: 'Horario', valor: 'De 8 a 12 h' },
+          { clave: 'Lugar', valor: 'Sede Campus, Auditorio' },
+        ],
+        cta: { texto: 'Inscribirme para el 5/11', url: 'https://forms.gle/sPgjDaxsYcTkspMc9' },
+      },
+      {
+        etiqueta: 'Jornada 3 · Fundación Hemocentro Buenos Aires',
+        sede: 'Sede Campus',
+        datos: [
+          { clave: 'Fecha', valor: 'Martes 24 de noviembre' },
+          { clave: 'Horario', valor: 'De 9 a 12:30 h. Elegís tu turno al inscribirte' },
+          { clave: 'Lugar', valor: 'Sede Campus, Auditorio' },
+        ],
+        cta: { texto: 'Inscribirme para el 24/11', url: 'https://v2.soloturnos.com/agenda/utn--campus' },
+      },
+    ],
+
+    temarioKicker: 'Requisitos',
+    temarioTitulo: '¿Podés donar?',
+    temario: [
+      {
+        titulo: 'Edad, peso y salud',
+        texto: 'Tener entre 18 y 65 años, pesar 50 kg o más y estar con buena salud.',
+      },
+      {
+        titulo: 'Última donación',
+        texto: 'Que hayan pasado 4 meses si sos varón, o 6 meses si sos mujer.',
+      },
+      {
+        titulo: 'Tatuajes, piercings y estudios',
+        texto:
+          'Esperar 6 meses después de un tatuaje, piercing, acupuntura, transfusión, endoscopía o colonoscopía.',
+      },
+      {
+        titulo: 'Embarazo',
+        texto: 'No estar embarazada y, si tuviste un parto, que hayan pasado 6 meses.',
+      },
+      {
+        titulo: 'Medicación y viajes',
+        texto:
+          'No te impiden donar, pero contalo en la entrevista. Si viajaste fuera del país en el último año, avisá a dónde.',
+      },
+    ],
+    temarioNota:
+      'Antes de la extracción vas a tener una entrevista confidencial con un profesional. Respondé con sinceridad: es lo que garantiza que la sangre llegue segura a quien la recibe.',
+
+    desplegables: [
+      {
+        titulo: 'Antes de donar',
+        items: [
+          'Llevá tu DNI o registro de conducir.',
+          'No vengas en ayunas: desayuná algo liviano.',
+          'Calculá alrededor de una hora entre el ingreso, la entrevista, el chequeo y la extracción.',
+        ],
+      },
+      {
+        titulo: 'Después de donar',
+        items: [
+          'Quedate hasta que el equipo te diga que podés irte, y aprovechá el refrigerio.',
+          'Durante el resto del día tomá mucho líquido, no fumes ni tomes alcohol enseguida, y esperá unas horas para sacarte la gasa.',
+          'Si te mareás, avisá: sentate con la cabeza entre las rodillas o acostate con las piernas levantadas.',
+          'Si el pinchazo sangra, levantá el brazo y hacé presión durante 15 minutos. Si se forma un moretón, poné una compresa fría.',
+        ],
+      },
+      {
+        titulo: 'Para reponer hierro',
+        texto:
+          'En los días siguientes sumá carnes rojas magras, pollo, pescado, huevos, legumbres o verduras de hoja oscura, y acompañalas con cítricos, que ayudan a absorber el hierro.',
+        items: [
+          'Evitá el mate, el té, el café y las gaseosas junto con esas comidas, porque dificultan la absorción.',
+        ],
+      },
+    ],
+
+    enlace: {
+      kicker: 'Antes de las jornadas',
+      titulo: '¿Qué ingeniería hay detrás de una donación?',
+      texto:
+        'El viernes 30 de octubre, a las 14 h en Medrano, el Tec. Fernando M. Couto cuenta el recorrido de la sangre desde el donante hasta el paciente. No hace falta saber nada del tema.',
+      cta: 'Ver la charla',
+      url: '/actividades/donacion-sangre',
+    },
+  },
   {
     slug: 'encuesta-salud-mental',
     nombre: 'Encuesta de Salud Mental',
