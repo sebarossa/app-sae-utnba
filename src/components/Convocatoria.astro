@@ -1,10 +1,10 @@
 ---
 import Icon from './Icon.astro';
 import Desplegables from './Desplegables.astro';
-import type { Area } from '../data/areas';
+import type { Convocatoria } from '../data/areas';
 
 interface Props {
-  convocatoria: NonNullable<Area['convocatoria']>;
+  convocatoria: Convocatoria;
   acento?: 'rojo' | 'dorado';
 }
 
@@ -36,7 +36,7 @@ const { convocatoria: c, acento = 'rojo' } = Astro.props;
   </a>
 
   {
-    c.detalles.length > 0 && (
+    c.detalles && c.detalles.length > 0 && (
       <div class="conv__detalles">
         <Desplegables bloques={c.detalles} acento={acento} />
       </div>

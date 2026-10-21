@@ -33,7 +33,11 @@ const actividades = actividadesDeArea(area.slug);
   <div class="franja"></div>
 
   <div class="wrap seccion">
-    {area.convocatoria && <Convocatoria convocatoria={area.convocatoria} acento={area.acento} />}
+    {
+      area.convocatorias?.map((c) => (
+        <Convocatoria convocatoria={c} acento={area.acento} />
+      ))
+    }
 
     {
       actividades.length > 0 && (

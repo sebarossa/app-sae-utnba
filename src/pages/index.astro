@@ -6,8 +6,12 @@ import { AREAS, SAE } from '../data/areas';
 import { viajeDestacado } from '../data/viajes';
 import { actividadesDestacadas, resaltadosDe } from '../data/actividades';
 
-// Cualquier área con una convocatoria vigente se anuncia arriba de la grilla.
-const convocatorias = AREAS.filter((a) => a.convocatoria && a.convocatoria.enHome !== false);
+// Cada convocatoria vigente se anuncia arriba de la grilla, con su área.
+const convocatorias = AREAS.flatMap((area) =>
+  (area.convocatorias ?? [])
+    .filter((c) => c.enHome !== false)
+    .map((c) => ({ area, convocatoria: c }))
+);
 
 // El viaje con inscripción abierta va primero, más grande que los avisos.
 const viaje = viajeDestacado();
@@ -102,15 +106,15 @@ const actividades = actividadesDestacadas();
   {
     convocatorias.length > 0 && (
       <section class="wrap avisos">
-        {convocatorias.map((area) => (
+        {convocatorias.map(({ area, convocatoria }) => (
           <a class="aviso" href={`/areas/${area.slug}`}>
             <span class="aviso__texto">
               <span class="aviso__etiqueta">
                 <span class="aviso__punto" aria-hidden="true" />
-                {area.convocatoria!.etiqueta}
+                {convocatoria.etiqueta}
               </span>
-              <span class="aviso__titulo">{area.convocatoria!.titulo}</span>
-              <span class="aviso__cierre">{area.convocatoria!.cierre}</span>
+              <span class="aviso__titulo">{convocatoria.titulo}</span>
+              <span class="aviso__cierre">{convocatoria.cierre}</span>
             </span>
             <Icon name="flecha" size={18} />
           </a>

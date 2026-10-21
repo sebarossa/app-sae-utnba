@@ -32,6 +32,19 @@ export type Contacto = {
   sedes?: string[];
 };
 
+/** Una convocatoria abierta de un área. */
+export type Convocatoria = {
+  /** false cuando la home ya la promociona con su propio banner. */
+  enHome?: boolean;
+  etiqueta: string;
+  titulo: string;
+  texto: string;
+  cierre: string;
+  nota?: string;
+  cta: { texto: string; url: string };
+  detalles?: { titulo: string; texto?: string; items?: string[] }[];
+};
+
 export type Area = {
   slug: string;
   nombre: string;
@@ -52,18 +65,8 @@ export type Area = {
   }[];
   /** Bloque destacado que lleva a un sistema externo (catálogo, formulario, etc.). */
   enlace?: { kicker: string; titulo: string; texto: string; cta: string; url: string };
-  /** Convocatoria vigente. Se destaca en la home mientras esté abierta. */
-  convocatoria?: {
-    /** false cuando la home ya la promociona con su propio banner. */
-    enHome?: boolean;
-    etiqueta: string;
-    titulo: string;
-    texto: string;
-    cierre: string;
-    nota?: string;
-    cta: { texto: string; url: string };
-    detalles: { titulo: string; texto?: string; items?: string[] }[];
-  };
+  /** Convocatorias vigentes. Se destacan en la home mientras estén abiertas. */
+  convocatorias?: Convocatoria[];
   /** Camino de varios pasos, cada uno con su enlace. */
   pasos?: {
     kicker: string;
@@ -290,7 +293,8 @@ export const AREAS: Area[] = [
     resumen: 'Becas y convenios con universidades de todo el mundo.',
     descripcion:
       'Amplía programas de intercambios y becas, consolida convenios globales, fomenta la participación estudiantil en actividades internacionales y promueve el retorno de los conocimientos adquiridos.',
-    convocatoria: {
+    convocatorias: [
+      {
       etiqueta: 'Convocatoria abierta',
       titulo: 'Programa PILA Presencial 2027-1',
       texto:
@@ -340,7 +344,30 @@ export const AREAS: Area[] = [
           ],
         },
       ],
-    },
+      },
+      {
+        etiqueta: 'Convocatoria abierta',
+        titulo: 'Programa ejecutivo en California e Italia',
+        texto:
+          'Programa corto de IBS Americas en la California State University Northridge y en CUOA Business School, Italia. Los requisitos, el costo y el detalle de la beca están en el sitio de IBS.',
+        cierre: 'Inscripción hasta el 25 de octubre',
+        cta: {
+          texto: 'Ver la convocatoria',
+          url: 'https://lps.ibs-americas.com/es/afi-arg-csuncuoa?channel=afi-ar&camp=csun-cuoa10-2026',
+        },
+      },
+      {
+        etiqueta: 'Convocatoria abierta',
+        titulo: 'Programa ejecutivo en Londres y Nueva York',
+        texto:
+          'Programa corto de IBS Americas en Bayswater College London y en la State University of New York. Los requisitos, el costo y el detalle de la beca están en el sitio de IBS.',
+        cierre: 'Consultá la fecha de cierre en el sitio',
+        cta: {
+          texto: 'Ver la convocatoria',
+          url: 'https://lps.ibs-americas.com/es/afi-argbcl?channel=afi-ar&camp=suny',
+        },
+      },
+    ],
     listaTitulo: 'Programas y destinos',
     lista: [
       'Becas PILA — intercambio con universidades de América Latina',
