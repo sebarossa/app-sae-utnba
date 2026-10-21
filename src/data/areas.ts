@@ -347,25 +347,101 @@ export const AREAS: Area[] = [
       },
       {
         etiqueta: 'Convocatoria abierta',
-        titulo: 'Programa ejecutivo en California e Italia',
+        titulo: 'Becas de estudio en California e Italia',
         texto:
-          'Programa corto de IBS Americas en la California State University Northridge y en CUOA Business School, Italia. Los requisitos, el costo y el detalle de la beca están en el sitio de IBS.',
-        cierre: 'Inscripción hasta el 25 de octubre',
+          'Tres semanas de cursada presencial en la California State University Northridge o en CUOA Business School, Italia, con ediciones en enero y julio de 2027 y 2028. Lo organiza IBS Americas.',
+        cierre: 'Postulaciones hasta el 25 de octubre',
+        nota: 'El monto de la beca y el costo del programa se consultan a florencia.glusman@ibs-americas.com.',
         cta: {
           texto: 'Ver la convocatoria',
           url: 'https://lps.ibs-americas.com/es/afi-arg-csuncuoa?channel=afi-ar&camp=csun-cuoa10-2026',
         },
+        detalles: [
+        {
+          titulo: 'Requisitos',
+          items: [
+            'Ser mayor de 18 años.',
+            'Ser estudiante universitario o graduado.',
+            'Tener nivel de inglés intermedio o avanzado al momento de participar.',
+          ],
+        },
+          {
+            titulo: 'Cursos en California · CSUN',
+            items: [
+              'Artificial Intelligence and Business Strategy',
+              'Communication, Design & Innovation',
+              'Applied Design Thinking and Storytelling',
+              'Leadership in an Age of Disruption',
+              'Advanced Topics in PMO Governance, solo para estudiantes de posgrado y profesionales con formación de posgrado',
+            ],
+            texto: 'Los cursos en California incluyen un módulo de Business English.',
+          },
+          {
+            titulo: 'Cursos en Italia · CUOA Business School',
+            items: [
+              'Business Strategy & Marketing Management',
+              'Creativity, Innovation & Entrepreneurship',
+              'International Management & Leadership',
+              'Operations, Logistics & Lean Management',
+            ],
+          },
+        {
+          titulo: 'Cómo es el programa',
+          items: [
+            'Tres semanas presenciales, con ediciones en enero o julio de 2027 y 2028.',
+            'Se dictan durante el receso académico local, para que no choquen con la cursada.',
+            'Las clases son en inglés, con estudiantes de todo el mundo y docentes con experiencia ejecutiva.',
+          ],
+        },
+        ],
       },
       {
         etiqueta: 'Convocatoria abierta',
-        titulo: 'Programa ejecutivo en Londres y Nueva York',
+        titulo: 'Becas de estudio en Londres y Nueva York',
         texto:
-          'Programa corto de IBS Americas en Bayswater College London y en la State University of New York. Los requisitos, el costo y el detalle de la beca están en el sitio de IBS.',
-        cierre: 'Consultá la fecha de cierre en el sitio',
+          'Tres semanas de cursada presencial en Bayswater College London o en la University at Albany, SUNY, con ediciones en enero y julio de 2027 y 2028. Lo organiza IBS Americas.',
+        cierre: 'Postulaciones hasta el 1° de noviembre',
+        nota: 'El monto de la beca y el costo del programa se consultan a florencia.glusman@ibs-americas.com.',
         cta: {
           texto: 'Ver la convocatoria',
           url: 'https://lps.ibs-americas.com/es/afi-argbcl?channel=afi-ar&camp=suny',
         },
+        detalles: [
+        {
+          titulo: 'Requisitos',
+          items: [
+            'Ser mayor de 18 años.',
+            'Ser estudiante universitario o graduado.',
+            'Tener nivel de inglés intermedio o avanzado al momento de participar.',
+          ],
+        },
+          {
+            titulo: 'Cursos en Londres · Bayswater College',
+            items: ['Data Science', 'Liderazgo', 'Estrategia'],
+          },
+          {
+            titulo: 'Cursos en Nueva York · University at Albany, SUNY',
+            items: [
+              'Proyectos',
+              'Finanzas',
+              'Marketing',
+              'Estrategia',
+              'Innovación',
+              'Liderazgo',
+              'Sustentabilidad',
+              'Inglés',
+            ],
+          },
+        {
+          titulo: 'Cómo es el programa',
+          items: [
+            'Tres semanas presenciales, con ediciones en enero o julio de 2027 y 2028.',
+            'Se dictan durante el receso académico local, para que no choquen con la cursada.',
+            'Las clases son en inglés, con estudiantes de todo el mundo y docentes con experiencia ejecutiva.',
+            'Incluyen un módulo de Business English que otorga una certificación adicional, sin costo extra.',
+          ],
+        },
+        ],
       },
     ],
     listaTitulo: 'Programas y destinos',
