@@ -9,8 +9,8 @@ export type Actividad = {
   nombre: string;
   /** Área que la organiza, tal como se muestra en la etiqueta. */
   area: string;
-  /** Slug del área, para listarla en su página. */
-  areaSlug: string;
+  /** Slug del área, para listarla en su página. Vacío si es de la SAE en general. */
+  areaSlug?: string;
   /** Fecha en formato ISO, solo para ordenar. */
   fechaISO: string;
   subtitulo: string;
@@ -23,12 +23,17 @@ export type Actividad = {
   estado: 'abierta' | 'cerrada';
   destacadaEnHome?: boolean;
 
-  hero: { kicker: string; titulo: string; texto: string; pills: string[] };
+  hero: { kicker: string; titulo: string; texto: string; pills: string[]; imagen?: string };
   intro: string[];
   datosKicker?: string;
   datosTitulo?: string;
   datos?: { clave: string; valor: string }[];
-  disertante?: { nombre: string; texto: string; enlace?: { texto: string; url: string } };
+  disertante?: {
+    nombre: string;
+    texto: string;
+    foto?: string;
+    enlace?: { texto: string; url: string };
+  };
   /** Varias fechas, cada una con su inscripción. Reemplaza a `datos`. */
   jornadas?: {
     etiqueta: string;
@@ -50,6 +55,72 @@ export type Actividad = {
 };
 
 export const ACTIVIDADES: Actividad[] = [
+  {
+    slug: 'chernobil',
+    nombre: 'Accidente de Chernóbil',
+    area: 'SAE',
+    fechaISO: '2026-11-05',
+    subtitulo: 'Clase abierta · Reactores Nucleares',
+    resumen:
+      'A 40 años del accidente de 1986: qué pasó en el reactor 4 y qué cambió en la seguridad nuclear. No hace falta saber de física nuclear para seguirla.',
+    cuando: 'Jueves 5 de noviembre · 19 a 21 h',
+    donde: 'Aula Magna · Sede Medrano',
+    estado: 'abierta',
+    destacadaEnHome: true,
+
+    hero: {
+      kicker: 'A 40 años del accidente de 1986',
+      titulo: 'Accidente de Chernóbil',
+      texto:
+        'El Ing. Facundo Fraguas, docente de Reactores Nucleares en la UTN.BA y trabajador de Nucleoeléctrica Argentina, repasa qué pasó en el reactor 4 y qué cambió en la seguridad nuclear después de aquella madrugada.',
+      pills: ['Jueves 05/11 · 19 a 21 h', 'Abierta a la comunidad'],
+      imagen: 'https://res.cloudinary.com/pu6xe6eg/image/upload/q_auto,f_auto,w_1200/v1792706652/portada.jpg',
+    },
+
+    intro: [
+      'El jueves 5 de noviembre, de 19 a 21 h, abrimos una clase de la cátedra de Reactores Nucleares para toda la comunidad de la UTN.BA: un análisis del accidente nuclear de 1986, a 40 años.',
+      'La clase arranca con preguntas y respuestas para poner en común lo que ya sabemos del tema, y desde ahí avanza sobre las causas del accidente y los aprendizajes que dejó para el diseño y la operación de centrales nucleares en todo el mundo, incluida la Argentina.',
+      'No hace falta ser estudiante de Química ni saber de física nuclear para seguirla. Si te interesa la energía, la ingeniería de seguridad, o simplemente siempre quisiste entender qué pasó, es para vos.',
+    ],
+
+    datos: [
+      { clave: 'Fecha', valor: 'Jueves 5 de noviembre' },
+      { clave: 'Horario', valor: 'De 19 a 21 h' },
+      { clave: 'Lugar', valor: 'Aula Magna de la UTN.BA' },
+      { clave: 'Cupo', valor: 'Abierta a toda la comunidad, hasta agotar la sala' },
+    ],
+
+    disertante: {
+      nombre: 'Ing. Facundo Fraguas',
+      texto:
+        'Ingeniero Químico por la UTN.BA, especialista en Reactores Nucleares (UNSAM) y magíster en Energía (UBA). Trabaja desde 2015 en Nucleoeléctrica Argentina. En la UTN.BA es profesor adjunto de Reactores Nucleares, y dirige el posgrado en Energía Nuclear de la FIUBA.',
+      foto: 'https://res.cloudinary.com/pu6xe6eg/image/upload/c_fill,g_face,w_240,h_240,q_auto,f_auto/v1792707901/FACUNDO.jpg',
+    },
+
+    temarioTitulo: 'Lo que vamos a ver',
+    temario: [
+      {
+        titulo: 'Qué pasó el 26 de abril de 1986',
+        texto: 'La secuencia de hechos en el reactor 4 de la central.',
+      },
+      {
+        titulo: 'Las causas',
+        texto: 'Diseño del reactor, decisiones de operación y cultura de seguridad.',
+      },
+      {
+        titulo: 'Los aprendizajes',
+        texto:
+          'Qué cambió en la seguridad nuclear y cómo se aplica hoy en las centrales argentinas.',
+      },
+    ],
+
+    inscripcion: {
+      texto:
+        'Los lugares son limitados a la capacidad del Aula Magna. Completá el formulario y te confirmamos por mail.',
+      cta: 'Inscribirme',
+      url: 'https://forms.gle/3Ex1CVq1peRtSobd6',
+    },
+  },
   {
     slug: 'campana-donacion-sangre',
     nombre: 'Campaña de donación de sangre',
