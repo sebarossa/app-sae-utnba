@@ -380,12 +380,12 @@ export const ACTIVIDADES: Actividad[] = [
     nombre: 'Fotoeducación y prevención del cáncer de piel',
     area: 'Salud',
     areaSlug: 'salud',
-    fechaISO: '2026-10-22',
+    fechaISO: '2026-11-05',
     subtitulo: 'Salud · Charla abierta',
     resumen:
       'Cómo revisar tus lunares, cómo elegir un protector solar que de verdad te cubra, y qué puede —y qué no— la inteligencia artificial en dermatología.',
-    cuando: 'Jueves 22 de octubre · 18 h',
-    donde: 'Sede Medrano · Aula 506',
+    cuando: 'Jueves 5 de noviembre · 18 h',
+    donde: 'Sede Campus · Auditorio',
     estado: 'abierta',
     destacadaEnHome: true,
 
@@ -394,19 +394,20 @@ export const ACTIVIDADES: Actividad[] = [
       titulo: 'Cuidar la piel del sol, con datos y con tecnología.',
       texto:
         'Una charla sobre prevención y detección temprana del cáncer de piel, a cargo de la dermatóloga María Pía Pedalino. También vamos a ver qué puede hacer hoy la inteligencia artificial en dermatología y cuáles son sus límites.',
-      pills: ['Jueves 22/10 · 18 h', 'Sede Medrano · Aula 506'],
+      pills: ['Jueves 5/11 · 18 h', 'Sede Campus · Auditorio'],
     },
 
     intro: [
-      'Desde la Secretaría de Asuntos Estudiantiles te invitamos a la Jornada de Fotoeducación, Innovación Tecnológica y Prevención del Cáncer de Piel, una actividad de salud pensada para toda la comunidad de la UTN.BA.',
+      'Desde la Secretaría de Asuntos Estudiantiles te invitamos a la Jornada de Fotoeducación, Innovación Tecnológica y Prevención del Cáncer de Piel, una actividad de salud pensada para toda la comunidad de la UTN.BA. Esta vez se hace en la Sede Campus, así pueden aprovecharla quienes cursan allá.',
       'Pasamos muchas horas al sol entre la cursada, el viaje y el fin de semana, y casi nunca nos fijamos en lo que eso le hace a la piel. En la charla vas a aprender a revisar tus lunares con la regla del ABCDE, a elegir un protector solar que realmente te cubra y a reconocer cuándo conviene hacer una consulta.',
       'Para quienes estudian ingeniería hay un bloque especialmente interesante: cómo se entrenan los algoritmos de visión por computadora que analizan imágenes de la piel, qué sensores y wearables miden la radiación UV en tiempo real, y por qué ninguno de esos sistemas reemplaza el ojo de un especialista.',
     ],
 
+    datosTitulo: 'Te esperamos en Campus',
     datos: [
-      { clave: 'Fecha', valor: 'Jueves 22 de octubre' },
+      { clave: 'Fecha', valor: 'Jueves 5 de noviembre' },
       { clave: 'Horario', valor: '18 h' },
-      { clave: 'Lugar', valor: 'Sede Medrano, Aula 506' },
+      { clave: 'Lugar', valor: 'Sede Campus, Auditorio' },
       { clave: 'Inscripción', valor: 'Previa, con el formulario de esta página' },
     ],
 
@@ -443,7 +444,7 @@ export const ACTIVIDADES: Actividad[] = [
       texto:
         'Completá el formulario para que podamos organizar el aula. Si conocés a alguien a quien le pueda servir, pasale el dato.',
       cta: 'Inscribirme',
-      url: 'https://forms.gle/F1DhEicTcM7EWaEs5',
+      url: 'https://forms.gle/sYUuQEXgi1fqHRiV7',
     },
   },
 ];
