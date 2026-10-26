@@ -150,6 +150,11 @@ const actividades = actividadesDestacadas();
         {SAE.email}
       </a>
 
+      <a class="cierre__mailing" href="/contacto#mailing">
+        Sumate al mailing y enterate de todo
+        <Icon name="flecha" size={15} />
+      </a>
+
       <div class="cierre__redes">
         <a class="red" href={SAE.instagram.url} target="_blank" rel="noopener">
           <Icon name="instagram" size={18} />
@@ -553,6 +558,21 @@ const actividades = actividadesDestacadas();
     text-transform: none;
     letter-spacing: 0.01em;
     font-size: 14.5px;
+  }
+
+  .cierre__mailing {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 12px 20px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--rojo);
   }
 
   .cierre__redes {

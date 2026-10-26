@@ -104,6 +104,24 @@ const sedesPrincipales = [SEDES.medrano, SEDES.campus];
       </ul>
     </section>
 
+    <!-- ── MAILING ────────────────────────── -->
+    <section class="bloque" id="mailing">
+      <p class="kicker">Novedades</p>
+      <h2 class="bloque__titulo">Sumate al mailing</h2>
+      <p class="mailing__bajada">
+        Campañas de salud, actividades deportivas, becas, eventos y viajes. Dejanos tu mail
+        institucional y te llega todo lo que pasa en la SAE.
+      </p>
+      <div class="mailing">
+        <iframe
+          class="mailing__form"
+          src="https://app2.fromdoppler.com/Lists/FormProcessing/PublishedForm?IdForm=yyuhxADUVUCxxqFMOzNsjQ%3d%3d"
+          title="Formulario para sumarte al mailing de la SAE"
+          loading="lazy"
+        />
+      </div>
+    </section>
+
     <!-- ── SEDES ──────────────────────────── -->
     <section class="bloque">
       <p class="kicker">Cómo llegar</p>
@@ -299,6 +317,30 @@ const sedesPrincipales = [SEDES.medrano, SEDES.campus];
     color: var(--gris-2);
   }
 
+  .mailing__bajada {
+    margin: 10px 0 16px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .mailing {
+    border: 1px solid var(--linea);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--panel);
+  }
+
+  /* El formulario es de Doppler y no puede autoajustarse al alto desde
+     otro dominio, así que se fija por ancho de pantalla. Medido: 931 px
+     a 330, 892 a 390 y 841 a 600. */
+  .mailing__form {
+    display: block;
+    width: 100%;
+    height: 960px;
+    border: 0;
+  }
+
   .sedes {
     display: grid;
     gap: 8px;
@@ -341,6 +383,9 @@ const sedesPrincipales = [SEDES.medrano, SEDES.campus];
   }
 
   @media (min-width: 520px) {
+    .mailing__form {
+      height: 880px;
+    }
     .cabecera {
       padding: 48px 24px 42px;
     }
