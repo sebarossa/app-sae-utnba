@@ -1,4 +1,5 @@
 import type { IconName } from '../lib/icons';
+import { vigente } from '../lib/fechas';
 
 // Actividades puntuales de las áreas: charlas, jornadas, talleres, encuestas.
 // Para sumar una, agregá un objeto acá: su ficha y el destacado del inicio
@@ -13,6 +14,8 @@ export type Actividad = {
   areaSlug?: string;
   /** Fecha en formato ISO, solo para ordenar. */
   fechaISO: string;
+  /** Último día en que se muestra. Sin esto, no vence (una encuesta abierta). */
+  venceISO?: string;
   subtitulo: string;
   resumen: string;
   /** Una encuesta online no tiene fecha ni lugar: usa `resaltados`. */
@@ -60,6 +63,7 @@ export const ACTIVIDADES: Actividad[] = [
     nombre: 'Accidente de Chernóbil',
     area: 'SAE',
     fechaISO: '2026-11-05',
+    venceISO: '2026-11-05',
     subtitulo: 'Clase abierta · Reactores Nucleares',
     resumen:
       'A 40 años del accidente de 1986: qué pasó en el reactor 4 y qué cambió en la seguridad nuclear. No hace falta saber de física nuclear para seguirla.',
@@ -127,6 +131,7 @@ export const ACTIVIDADES: Actividad[] = [
     area: 'Salud',
     areaSlug: 'salud',
     fechaISO: '2026-11-02',
+    venceISO: '2026-11-24',
     subtitulo: 'Salud · Campaña',
     resumen:
       'Tres jornadas en noviembre, una en Medrano y dos en Campus, con la Fundación Hemocentro y el Hospital Gutiérrez. Cada una tiene su propia inscripción.',
@@ -318,6 +323,7 @@ export const ACTIVIDADES: Actividad[] = [
     area: 'Salud',
     areaSlug: 'salud',
     fechaISO: '2026-10-30',
+    venceISO: '2026-10-30',
     subtitulo: 'Salud · Charla abierta',
     resumen:
       'El recorrido completo de la sangre, desde que sale del donante hasta que llega al paciente. No hace falta saber nada del tema.',
@@ -381,6 +387,7 @@ export const ACTIVIDADES: Actividad[] = [
     area: 'Salud',
     areaSlug: 'salud',
     fechaISO: '2026-11-05',
+    venceISO: '2026-11-05',
     subtitulo: 'Salud · Charla abierta',
     resumen:
       'Cómo revisar tus lunares, cómo elegir un protector solar que de verdad te cubra, y qué puede —y qué no— la inteligencia artificial en dermatología.',
@@ -461,10 +468,13 @@ export const resaltadosDe = (a: Actividad) =>
 
 const porFecha = (a: Actividad, b: Actividad) => a.fechaISO.localeCompare(b.fechaISO);
 
-/** Abiertas y marcadas para el inicio, la más próxima primero. */
-export const actividadesDestacadas = () =>
-  ACTIVIDADES.filter((a) => a.destacadaEnHome && a.estado === 'abierta').sort(porFecha);
+/** Una actividad se muestra si está abierta y su fecha no pasó. */
+export const estaVigente = (a: Actividad) => a.estado === 'abierta' && vigente(a.venceISO);
 
-/** Abiertas de un área, para listarlas en su página. */
+/** Vigentes y marcadas para el inicio, la más próxima primero. */
+export const actividadesDestacadas = () =>
+  ACTIVIDADES.filter((a) => a.destacadaEnHome && estaVigente(a)).sort(porFecha);
+
+/** Vigentes de un área, para listarlas en su página. */
 export const actividadesDeArea = (areaSlug: string) =>
-  ACTIVIDADES.filter((a) => a.areaSlug === areaSlug && a.estado === 'abierta').sort(porFecha);
+  ACTIVIDADES.filter((a) => a.areaSlug === areaSlug && estaVigente(a)).sort(porFecha);

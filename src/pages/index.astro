@@ -2,13 +2,13 @@
 import Base from '../layouts/Base.astro';
 import AreaCard from '../components/AreaCard.astro';
 import Icon from '../components/Icon.astro';
-import { AREAS, SAE } from '../data/areas';
+import { AREAS, SAE, convocatoriasVigentes } from '../data/areas';
 import { viajeDestacado } from '../data/viajes';
 import { actividadesDestacadas, resaltadosDe } from '../data/actividades';
 
 // Cada convocatoria vigente se anuncia arriba de la grilla, con su área.
 const convocatorias = AREAS.flatMap((area) =>
-  (area.convocatorias ?? [])
+  convocatoriasVigentes(area)
     .filter((c) => c.enHome !== false)
     .map((c) => ({ area, convocatoria: c }))
 );

@@ -69,6 +69,21 @@ ficha en `/actividades/<slug>` y, con `estado: 'abierta'` y `destacadaEnHome: tr
 inicio entre el viaje destacado y los avisos de convocatoria. Al pasar la fecha, poné
 `estado: 'cerrada'` y desaparece sola.
 
+### Vencimiento automático
+
+Cada actividad y cada convocatoria puede llevar `venceISO`, el último día en que se muestra.
+Pasada esa fecha desaparecen solas del inicio y de la ficha de su área, sin tocar nada.
+
+La página de una actividad vencida **no se borra**: los mailings enlazan ahí. En su lugar avisa que
+ya pasó y deja de ofrecer la inscripción, para que nadie se anote a algo que no existe.
+
+Lo que no lleva `venceISO` no vence nunca — una encuesta abierta, por ejemplo. Y `estado: 'cerrada'`
+sigue sirviendo para bajar algo antes de tiempo.
+
+Como el sitio es estático, esto se evalúa al compilar. Cada push dispara un deploy, así que en la
+práctica se recalcula con cada cambio de contenido; si pasa mucho tiempo sin publicar, un Redeploy
+en Vercel lo depura.
+
 Si hay varias abiertas, se ordenan por `fechaISO`: primero la más próxima. Cada una también se
 lista sola en la página de su área, según `areaSlug`.
 

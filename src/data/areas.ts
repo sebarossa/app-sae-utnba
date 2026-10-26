@@ -1,4 +1,5 @@
 import type { IconName } from '../lib/icons';
+import { vigente } from '../lib/fechas';
 
 export type Red = { tipo: 'instagram' | 'facebook'; handle: string; url: string };
 
@@ -40,6 +41,8 @@ export type Convocatoria = {
   titulo: string;
   texto: string;
   cierre: string;
+  /** Último día en que se muestra. */
+  venceISO?: string;
   nota?: string;
   cta: { texto: string; url: string };
   detalles?: { titulo: string; texto?: string; items?: string[] }[];
@@ -297,6 +300,7 @@ export const AREAS: Area[] = [
       {
       etiqueta: 'Convocatoria abierta',
       titulo: 'Programa PILA Presencial 2027-1',
+      venceISO: '2026-10-27',
       texto:
         'Cursá el primer cuatrimestre de 2027 en una universidad de América Latina, con reconocimiento académico pleno de las materias al volver.',
       cierre: 'Postulaciones hasta el 27 de octubre',
@@ -348,6 +352,7 @@ export const AREAS: Area[] = [
       {
         etiqueta: 'Convocatoria abierta',
         titulo: 'Becas de estudio en California e Italia',
+        venceISO: '2026-10-25',
         texto:
           'Tres semanas de cursada presencial en la California State University Northridge o en CUOA Business School, Italia, con ediciones en enero y julio de 2027 y 2028. Lo organiza IBS Americas.',
         cierre: 'Postulaciones hasta el 25 de octubre',
@@ -398,6 +403,7 @@ export const AREAS: Area[] = [
       {
         etiqueta: 'Convocatoria abierta',
         titulo: 'Becas de estudio en Londres y Nueva York',
+        venceISO: '2026-11-01',
         texto:
           'Tres semanas de cursada presencial en Bayswater College London o en la University at Albany, SUNY, con ediciones en enero y julio de 2027 y 2028. Lo organiza IBS Americas.',
         cierre: 'Postulaciones hasta el 1° de noviembre',
@@ -741,5 +747,9 @@ export const SAE = {
   instagram: { handle: '@sae.utn.ba', url: 'https://www.instagram.com/sae.utn.ba' },
   facebook: { handle: '@saeutnba', url: 'https://facebook.com/saeutnba' },
 };
+
+/** Convocatorias de un área cuya fecha de cierre todavía no pasó. */
+export const convocatoriasVigentes = (area: Area) =>
+  (area.convocatorias ?? []).filter((c) => vigente(c.venceISO));
 
 export const getArea = (slug: string) => AREAS.find((a) => a.slug === slug);

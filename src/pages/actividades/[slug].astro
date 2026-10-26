@@ -2,13 +2,16 @@
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import Desplegables from '../../components/Desplegables.astro';
-import { ACTIVIDADES } from '../../data/actividades';
+import { ACTIVIDADES, estaVigente } from '../../data/actividades';
 
 export function getStaticPaths() {
   return ACTIVIDADES.map((actividad) => ({ params: { slug: actividad.slug }, props: { actividad } }));
 }
 
 const { actividad } = Astro.props;
+// La página sigue existiendo: los mailings enlazan acá. Pero si ya pasó,
+// lo dice y no ofrece inscripción.
+const vigente = estaVigente(actividad);
 ---
 
 <Base
@@ -35,12 +38,21 @@ const { actividad } = Astro.props;
 
   <div class="franja"></div>
 
+  {
+    !vigente && (
+      <p class="pasada">
+        <strong>Esta actividad ya pasó.</strong> La dejamos publicada como registro. Mirá el inicio
+        para ver qué hay abierto ahora.
+      </p>
+    )
+  }
+
   <!-- ── DE QUÉ SE TRATA ──────────────────── -->
   <div class="wrap seccion">
     {actividad.intro.map((parrafo) => <p class="intro">{parrafo}</p>)}
 
     {
-      actividad.inscripcion && (
+      vigente && actividad.inscripcion && (
         <a
           class="btn btn--primario btn--bloque inscribir"
           href={actividad.inscripcion.url}
@@ -93,10 +105,12 @@ const { actividad } = Astro.props;
                   </div>
                 ))}
               </dl>
-              <a class="jornada__btn" href={j.cta.url} target="_blank" rel="noopener">
-                {j.cta.texto}
-                <Icon name="flecha" size={15} />
-              </a>
+              {vigente && (
+                <a class="jornada__btn" href={j.cta.url} target="_blank" rel="noopener">
+                  {j.cta.texto}
+                  <Icon name="flecha" size={15} />
+                </a>
+              )}
             </article>
           ))}
         </div>
@@ -200,9 +214,9 @@ const { actividad } = Astro.props;
         {actividad.cierreKicker ?? [actividad.cuando, actividad.donde].filter(Boolean).join(' · ')}
       </p>
       <h2 class="cierre__titulo">{actividad.cierreTitulo ?? 'Reservá tu lugar'}</h2>
-      {actividad.inscripcion && <p class="cierre__bajada">{actividad.inscripcion.texto}</p>}
+      {vigente && actividad.inscripcion && <p class="cierre__bajada">{actividad.inscripcion.texto}</p>}
       {
-        actividad.inscripcion && (
+        vigente && actividad.inscripcion && (
           <a
             class="btn btn--primario btn--bloque"
             href={actividad.inscripcion.url}
@@ -274,6 +288,24 @@ const { actividad } = Astro.props;
     gap: 8px;
     margin-top: 20px;
     flex-wrap: wrap;
+  }
+
+  .pasada {
+    max-width: var(--ancho);
+    margin: 20px auto 0;
+    padding: 14px 16px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-left: 4px solid var(--gris-2);
+    border-radius: var(--r-md);
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--gris);
+    width: calc(100% - 40px);
+  }
+
+  .pasada strong {
+    color: var(--tinta);
   }
 
   .intro {
