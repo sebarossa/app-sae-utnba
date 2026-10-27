@@ -52,6 +52,16 @@ por día. `horario` es el texto que se muestra tal cual, así que puede describi
 (por ejemplo, martes y jueves con horarios distintos).
 
 
+## Página para empresas
+
+`/empresas` es la única página dirigida a empresas y no a estudiantes: cómo publicar búsquedas en
+la bolsa de trabajo y cómo formalizar un convenio de pasantías. Se llega desde la ficha de
+Desarrollo Profesional, no desde la barra inferior, que es para estudiantes.
+
+El contenido sale de `frba.utn.edu.ar/estudiantes/adp-empresas`. Los modelos de convenio se
+enlazan al archivo que publica la Facultad, así que si ahí suben una versión nueva **hay que
+actualizar la URL acá**: lleva la fecha en el nombre del archivo.
+
 ## Viajes y eventos
 
 `/viajes` es la categoría y `/viajes/<slug>` la ficha de cada viaje, generada desde

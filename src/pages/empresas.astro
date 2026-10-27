@@ -1,0 +1,471 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Desplegables from '../components/Desplegables.astro';
+
+// Única página dirigida a empresas, no a estudiantes.
+// Fuente: frba.utn.edu.ar/estudiantes/adp-empresas
+
+const TALENTIA = 'https://utnba.talentia.com/';
+const EVALUACION = 'https://forms.gle/tnPZTuFoysyRbdeq7';
+const MODELOS = 'https://frba.utn.edu.ar/wp-content/uploads/2026/07';
+
+const pasos = [
+  {
+    titulo: 'Convenio Marco',
+    texto:
+      'Es el acuerdo general entre la empresa y la Facultad. Si ya firmaron uno, verificá que siga vigente antes de avanzar.',
+    descarga: { texto: 'Descargar el modelo', url: `${MODELOS}/UTN-FRBA-Conv.MARCO-ROSSA-01-04-2026.docx` },
+    comoSigue: [
+      'Completá el archivo y mandalo a pasantias@frba.utn.edu.ar para que lo aprueben.',
+      'Una vez aprobado, imprimilo por duplicado en A4, con firma y sello originales en todas las hojas.',
+      'Entregalo en la oficina.',
+    ],
+    adjuntos: {
+      titulo: 'Además, por mail y en PDF',
+      items: [
+        'Estatuto de la empresa.',
+        'Convenio Colectivo de Trabajo. Si no tienen, una nota aclarando que se rigen por el salario mínimo, vital y móvil.',
+        'Comprobante de inscripción en AFIP.',
+      ],
+    },
+  },
+  {
+    titulo: 'Convenio Particular',
+    texto: 'Uno por cada pasante. La pasantía queda formalmente activa cuando están firmados los dos convenios.',
+    descarga: {
+      texto: 'Descargar el modelo',
+      url: `${MODELOS}/UTN-FRBA-Conv.PARTICULAR-de-PASANTIAS-ROSSA-01-04-2026.docx`,
+    },
+    comoSigue: [
+      'Completalo y mandalo a pasantias@frba.utn.edu.ar para su aprobación.',
+      'Aprobado, imprimilo por triplicado en A4: firma y sello de la empresa, y firma con aclaración del pasante, en todas las hojas.',
+      'Entregalo en la oficina.',
+    ],
+    adjuntos: {
+      titulo: 'Además, por mail y en PDF',
+      items: [
+        'Certificado de alumno regular. Lo pide el propio pasante desde el sistema Guaraní.',
+        'Certificado de obra social y seguro. Pueden incluirlo en la ART de la empresa dándole el Alta Temprana en ANSES con su CUIL, o contratar el seguro con cualquier compañía que cumpla la Ley 24.557.',
+      ],
+    },
+  },
+  {
+    titulo: 'Addenda, si hay cambios',
+    texto:
+      'Si hace falta modificar un Convenio Particular ya firmado, se presenta una addenda en lugar de rehacerlo.',
+    descarga: { texto: 'Descargar el modelo', url: `${MODELOS}/UTN-FRBA-Addenda-ROSSA-01-04-2026.docx` },
+    comoSigue: [
+      'Completala e imprimila por triplicado en A4, con las mismas firmas y sellos que el convenio original.',
+    ],
+  },
+  {
+    titulo: 'Tutoría y evaluación',
+    texto:
+      'Cumplido alrededor del 25 % del período de la pasantía, la persona tutora que designó la empresa completa el formulario de evaluación.',
+    enlace: { texto: 'Ir al formulario de evaluación', url: EVALUACION },
+  },
+  {
+    titulo: 'Facturación',
+    texto:
+      'Se factura de forma individual, una factura por pasante al inicio de cada período, según lo que establezca el Convenio Marco. El importe que la empresa le paga a la UTN.BA nunca puede descontarse de la asignación estímulo del pasante.',
+  },
+];
+---
+
+<Base
+  title="Empresas — SAE UTN.BA"
+  description="Publicá tus búsquedas de pasantías y empleo en la UTN.BA, y formalizá convenios de pasantía con la Facultad."
+  volverA="/"
+  volverTexto="Inicio"
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">Desarrollo Profesional · Empresas</p>
+    <h1 class="cabecera__titulo">Buscá talento UTN</h1>
+    <p class="cabecera__desc">
+      Publicá tus búsquedas de pasantías y empleo en nuestra bolsa de trabajo, y formalizá convenios
+      de pasantía con la Facultad. Acá está todo lo que necesitás.
+    </p>
+  </section>
+
+  <div class="franja"></div>
+
+  <!-- ── BOLSA DE TRABAJO ─────────────────── -->
+  <div class="wrap seccion">
+    <section class="bolsa">
+      <p class="kicker">Búsquedas laborales</p>
+      <h2 class="bolsa__titulo">Publicá en la bolsa de trabajo</h2>
+      <p class="bolsa__texto">
+        Nuestras búsquedas se gestionan en Talentia, la plataforma donde los estudiantes y graduados
+        de la UTN.BA se registran y postulan.
+      </p>
+      <a class="btn btn--primario btn--bloque bolsa__btn" href={TALENTIA} target="_blank" rel="noopener">
+        Entrar a la plataforma
+        <Icon name="flecha" size={16} />
+      </a>
+      <p class="bolsa__nota">
+        Responsable: Lic. Natalia D. Daneri ·
+        <a href="mailto:bolsa@frba.utn.edu.ar">bolsa@frba.utn.edu.ar</a>
+      </p>
+    </section>
+  </div>
+
+  <!-- ── PASANTÍAS ────────────────────────── -->
+  <section class="pasantias">
+    <div class="wrap">
+      <p class="kicker kicker--dorado">Formalización de pasantías</p>
+      <h2 class="pasantias__titulo">Cómo incorporar un pasante</h2>
+      <p class="pasantias__bajada">
+        Para tomar a un estudiante como pasante hacen falta dos convenios: uno marco, entre la
+        empresa y la Facultad, y uno particular por cada pasante. La pasantía queda activa cuando
+        los dos están firmados y presentados.
+      </p>
+
+      {
+        pasos.map((paso, i) => (
+          <article class="paso">
+            <h3 class="paso__titulo">
+              <span class="paso__num">{i + 1}</span>
+              {paso.titulo}
+            </h3>
+            <p class="paso__texto">{paso.texto}</p>
+
+            {paso.descarga && (
+              <a class="paso__btn" href={paso.descarga.url} target="_blank" rel="noopener">
+                <Icon name="documento" size={15} />
+                {paso.descarga.texto}
+              </a>
+            )}
+
+            {paso.enlace && (
+              <a class="paso__btn paso__btn--fuerte" href={paso.enlace.url} target="_blank" rel="noopener">
+                {paso.enlace.texto}
+                <Icon name="flecha" size={14} />
+              </a>
+            )}
+
+            {paso.comoSigue && (
+              <ol class="pasos-chicos">
+                {paso.comoSigue.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ol>
+            )}
+
+            {paso.adjuntos && (
+              <div class="adjuntos">
+                <Desplegables bloques={[{ titulo: paso.adjuntos.titulo, items: paso.adjuntos.items }]} />
+              </div>
+            )}
+          </article>
+        ))
+      }
+
+      <p class="aviso">
+        Los convenios se reciben completos y quedan a revisión del personal del ADP, que determina
+        si cumplen los requisitos para su aprobación.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── DÓNDE Y A QUIÉN ──────────────────── -->
+  <div class="wrap seccion">
+    <p class="kicker">Dónde entregar y a quién escribir</p>
+    <h2 class="titulo-seccion">Contacto</h2>
+    <ul class="contacto">
+      <li>
+        <div class="fila">
+          <span class="fila__icono"><Icon name="pin" size={18} /></span>
+          <span class="fila__texto">
+            <span class="fila__clave">Entrega de convenios firmados</span>
+            <span class="fila__valor">Av. Medrano 951, 3er piso, Of. 320</span>
+            <span class="fila__nota">Lunes a viernes, de 9 a 16 h</span>
+          </span>
+        </div>
+      </li>
+      <li>
+        <a class="fila" href="mailto:pasantias@frba.utn.edu.ar">
+          <span class="fila__icono"><Icon name="mail" size={18} /></span>
+          <span class="fila__texto">
+            <span class="fila__clave">Convenios y pasantías</span>
+            <span class="fila__valor">pasantias@frba.utn.edu.ar</span>
+          </span>
+          <Icon name="flecha" size={15} />
+        </a>
+      </li>
+      <li>
+        <a class="fila" href="mailto:bolsa@frba.utn.edu.ar">
+          <span class="fila__icono"><Icon name="mail" size={18} /></span>
+          <span class="fila__texto">
+            <span class="fila__clave">Bolsa de trabajo</span>
+            <span class="fila__valor">bolsa@frba.utn.edu.ar</span>
+          </span>
+          <Icon name="flecha" size={15} />
+        </a>
+      </li>
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 34px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+  }
+
+  .cabecera__desc {
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  /* ── Bolsa ── */
+  .bolsa {
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-radius: var(--r-lg);
+    padding: 20px 18px 22px;
+  }
+
+  .bolsa__titulo {
+    font-size: 21px;
+    font-weight: 900;
+  }
+
+  .bolsa__texto {
+    margin: 9px 0 16px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .bolsa__btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14.5px;
+  }
+
+  .bolsa__nota {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .bolsa__nota a {
+    color: var(--rojo);
+    font-weight: 600;
+  }
+
+  /* ── Pasantías ── */
+  .pasantias {
+    background: var(--tinta);
+    padding-block: 32px 36px;
+  }
+
+  .pasantias__titulo {
+    font-size: 25px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+  }
+
+  .pasantias__bajada {
+    margin: 11px 0 18px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .paso {
+    background: #fff;
+    border-radius: var(--r-md);
+    border-left: 4px solid var(--rojo);
+    padding: 18px 16px 20px;
+    margin-bottom: 12px;
+  }
+
+  .paso__titulo {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 11px;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .paso__num {
+    display: grid;
+    place-items: center;
+    width: 27px;
+    height: 27px;
+    border-radius: 50%;
+    background: var(--rojo);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .paso__texto {
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .paso__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding: 11px 18px;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--linea);
+    background: var(--panel);
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--tinta);
+  }
+
+  .paso__btn :global(svg) {
+    color: var(--rojo);
+    flex: none;
+  }
+
+  .paso__btn--fuerte {
+    background: var(--rojo);
+    border-color: var(--rojo);
+    color: #fff;
+    font-weight: 800;
+  }
+
+  .paso__btn--fuerte :global(svg) {
+    color: #fff;
+  }
+
+  .pasos-chicos {
+    margin: 14px 0 0;
+    padding-left: 20px;
+    display: grid;
+    gap: 7px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--tinta-2);
+  }
+
+  .pasos-chicos li::marker {
+    color: var(--rojo);
+    font-weight: 700;
+  }
+
+  .adjuntos {
+    margin-top: 14px;
+  }
+
+  .aviso {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.07);
+    border-left: 3px solid var(--dorado);
+    border-radius: var(--r-sm);
+    font-size: 13px;
+    line-height: 1.65;
+    color: #c9cfe0;
+  }
+
+  /* ── Contacto ── */
+  .contacto {
+    display: grid;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .fila {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 13px;
+    padding: 14px;
+    border: 1px solid var(--linea);
+    border-radius: var(--r-md);
+    background: var(--blanco);
+    color: var(--gris-2);
+  }
+
+  .fila__icono {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    background: var(--rojo-tenue);
+    color: var(--rojo);
+    flex: none;
+  }
+
+  .fila__texto {
+    min-width: 0;
+  }
+
+  .fila__clave {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gris-2);
+  }
+
+  .fila__valor {
+    display: block;
+    margin-top: 2px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--tinta);
+    line-height: 1.4;
+    word-break: break-word;
+  }
+
+  .fila__nota {
+    display: block;
+    margin-top: 2px;
+    font-size: 12.5px;
+    color: var(--gris);
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 42px;
+    }
+    .bolsa__btn {
+      display: inline-flex;
+      width: auto;
+    }
+  }
+</style>

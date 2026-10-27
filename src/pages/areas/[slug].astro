@@ -142,6 +142,23 @@ const actividades = actividadesDeArea(area.slug);
     }
 
     <Contacto contacto={area.contacto} />
+
+    {
+      area.slug === 'desarrollo-profesional' && (
+        <a class="empresas" href="/empresas">
+          <span class="empresas__kicker">¿Sos una empresa?</span>
+          <span class="empresas__titulo">Publicá tus búsquedas</span>
+          <span class="empresas__texto">
+            Cómo cargar pasantías y empleos en la bolsa de trabajo, y cómo formalizar un convenio de
+            pasantías con la Facultad.
+          </span>
+          <span class="empresas__ir">
+            Ver la información para empresas
+            <Icon name="flecha" size={15} />
+          </span>
+        </a>
+      )
+    }
   </div>
 
   <section class="volver">
@@ -355,6 +372,59 @@ const actividades = actividadesDeArea(area.slug);
     font-weight: 600;
     color: var(--tinta);
     line-height: 1.45;
+  }
+
+  .empresas {
+    display: block;
+    margin-top: 30px;
+    padding: 20px 18px 22px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-left: 4px solid var(--dorado);
+    border-radius: var(--r-lg);
+  }
+
+  .empresas__kicker {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dorado);
+  }
+
+  .empresas__titulo {
+    display: block;
+    margin-top: 9px;
+    font-family: var(--titulo);
+    font-size: 19px;
+    font-weight: 900;
+    color: var(--tinta);
+    letter-spacing: -0.02em;
+  }
+
+  .empresas__texto {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .empresas__ir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
+    padding: 11px 20px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
   }
 
   .volver {
