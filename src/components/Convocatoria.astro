@@ -11,7 +11,7 @@ interface Props {
 const { convocatoria: c, acento = 'rojo' } = Astro.props;
 ---
 
-<section class:list={['conv', `conv--${acento}`]}>
+<section class:list={['conv', `conv--${acento}`]} data-vence={c.venceISO}>
   <p class="conv__etiqueta">
     <span class="conv__punto" aria-hidden="true"></span>
     {c.etiqueta}

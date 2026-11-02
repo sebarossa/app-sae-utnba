@@ -77,9 +77,9 @@ const actividades = actividadesDestacadas();
   <!-- ── ACTIVIDAD DESTACADA ──────────────── -->
   {
     actividades.length > 0 && (
-      <section class="wrap">
+      <section class="wrap" data-vacia>
         {actividades.map((actividad) => (
-        <a class="actividad" href={`/actividades/${actividad.slug}`}>
+        <a class="actividad" href={`/actividades/${actividad.slug}`} data-vence={actividad.venceISO}>
           <span class="actividad__etiqueta">{actividad.subtitulo}</span>
           <span class="actividad__nombre">{actividad.nombre}</span>
           <span class="actividad__resumen">{actividad.resumen}</span>
@@ -105,9 +105,9 @@ const actividades = actividadesDestacadas();
 
   {
     convocatorias.length > 0 && (
-      <section class="wrap avisos">
+      <section class="wrap avisos" data-vacia>
         {convocatorias.map(({ area, convocatoria }) => (
-          <a class="aviso" href={`/areas/${area.slug}`}>
+          <a class="aviso" href={`/areas/${area.slug}`} data-vence={convocatoria.venceISO}>
             <span class="aviso__texto">
               <span class="aviso__etiqueta">
                 <span class="aviso__punto" aria-hidden="true" />

@@ -131,6 +131,36 @@ const nav = [
       }
     </nav>
 
+    <!--
+      El sitio es estático: lo vencido se filtra al compilar. Esto lo
+      vuelve a chequear en el navegador, con la fecha de quien mira, para
+      que algo que venció después del último deploy no quede a la vista.
+    -->
+    <script is:inline>
+      (function () {
+        var hoy = new Date().toLocaleDateString('en-CA', {
+          timeZone: 'America/Argentina/Buenos_Aires',
+        });
+        var vencio = function (el, attr) {
+          var f = el.getAttribute(attr);
+          return f && f < hoy;
+        };
+
+        document.querySelectorAll('[data-vence]').forEach(function (el) {
+          if (vencio(el, 'data-vence')) el.remove();
+        });
+
+        document.querySelectorAll('[data-mostrar-si-vencio]').forEach(function (el) {
+          if (vencio(el, 'data-mostrar-si-vencio')) el.hidden = false;
+        });
+
+        // Contenedores que no tienen sentido vacíos.
+        document.querySelectorAll('[data-vacia]').forEach(function (el) {
+          if (el.childElementCount === 0) el.remove();
+        });
+      })();
+    </script>
+
     <style>
       .saltar {
         position: absolute;

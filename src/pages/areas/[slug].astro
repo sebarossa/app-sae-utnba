@@ -43,9 +43,9 @@ const actividades = actividadesDeArea(area.slug);
       actividades.length > 0 && (
         <section class="actividades">
           <p class="kicker">{actividades.length === 1 ? 'Actividad abierta' : 'Actividades abiertas'}</p>
-          <ul class="actividades__lista">
+          <ul class="actividades__lista" data-vacia>
             {actividades.map((act) => (
-              <li>
+              <li data-vence={act.venceISO}>
                 <a class="act" href={`/actividades/${act.slug}`}>
                   <span class="act__nombre">{act.nombre}</span>
                   <span class="act__cuando">

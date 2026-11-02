@@ -94,11 +94,15 @@ Una campaña de varias fechas lleva `venceISO` también en cada jornada: las que
 y la campaña sigue en pie con las que quedan. El resumen de la tarjeta y las píldoras del
 encabezado se calculan sobre las jornadas vivas, así nunca anuncian una fecha que ya pasó.
 
-Como el sitio es estático, esto se evalúa al compilar. Para que no dependa de que alguien publique
-un cambio, `.github/workflows/refrescar.yml` vuelve a desplegar el sitio todos los días a las 3:10
-de la madrugada. **Requiere un secreto**: creá un Deploy Hook en Vercel (Settings → Git → Deploy
-Hooks) y guardá su URL en el repositorio como `VERCEL_DEPLOY_HOOK`. Sin ese secreto el workflow
-falla avisando, y todo lo demás sigue funcionando igual.
+El filtrado ocurre dos veces, y por eso no hace falta ningún cron ni deploy programado:
+
+1. **Al compilar.** Lo vencido no llega al HTML.
+2. **En el navegador.** Un script de veinte líneas en `Base.astro` vuelve a chequear las fechas con
+   el reloj de quien está mirando, y quita lo que venció después del último deploy. Cada elemento
+   que puede vencer lleva su fecha en `data-vence`; los contenedores que no tienen sentido vacíos
+   llevan `data-vacia` y se van con el último hijo.
+
+Gracias al segundo paso el sitio se mantiene al día solo, aunque pasen semanas sin publicar.
 
 Si hay varias abiertas, se ordenan por `fechaISO`: primero la más próxima. Cada una también se
 lista sola en la página de su área, según `areaSlug`.

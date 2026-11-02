@@ -42,14 +42,10 @@ const jornadas = jornadasVigentes(actividad);
 
   <div class="franja"></div>
 
-  {
-    !vigente && (
-      <p class="pasada">
-        <strong>Esta actividad ya pasó.</strong> La dejamos publicada como registro. Mirá el inicio
-        para ver qué hay abierto ahora.
-      </p>
-    )
-  }
+  <p class="pasada" hidden={vigente} data-mostrar-si-vencio={actividad.venceISO}>
+    <strong>Esta actividad ya pasó.</strong> La dejamos publicada como registro. Mirá el inicio para
+    ver qué hay abierto ahora.
+  </p>
 
   <!-- ── DE QUÉ SE TRATA ──────────────────── -->
   <div class="wrap seccion">
@@ -62,6 +58,7 @@ const jornadas = jornadasVigentes(actividad);
           href={actividad.inscripcion.url}
           target="_blank"
           rel="noopener"
+          data-vence={actividad.venceISO}
         >
           {actividad.inscripcion.cta}
           <Icon name="flecha" size={16} />
@@ -98,7 +95,7 @@ const jornadas = jornadasVigentes(actividad);
           <p class="kicker kicker--dorado">Las jornadas</p>
           <h2 class="agenda__titulo">Elegí la que te quede mejor</h2>
           {jornadas.map((j) => (
-            <article class="jornada">
+            <article class="jornada" data-vence={j.venceISO}>
               <p class="jornada__etiqueta">{j.etiqueta}</p>
               <h3 class="jornada__sede">{j.sede}</h3>
               <dl class="datos datos--jornada">
@@ -226,6 +223,7 @@ const jornadas = jornadasVigentes(actividad);
             href={actividad.inscripcion.url}
             target="_blank"
             rel="noopener"
+            data-vence={actividad.venceISO}
           >
             {actividad.inscripcion.cta}
             <Icon name="flecha" size={16} />
@@ -240,7 +238,13 @@ const jornadas = jornadasVigentes(actividad);
               donar, pasale el dato.
             </p>
             {jornadas.map((j) => (
-              <a class="btn btn--primario btn--bloque" href={j.cta.url} target="_blank" rel="noopener">
+              <a
+                class="btn btn--primario btn--bloque"
+                href={j.cta.url}
+                target="_blank"
+                rel="noopener"
+                data-vence={j.venceISO}
+              >
                 {j.cta.texto}
                 <Icon name="flecha" size={16} />
               </a>
