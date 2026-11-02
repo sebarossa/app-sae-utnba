@@ -90,9 +90,15 @@ ya pasó y deja de ofrecer la inscripción, para que nadie se anote a algo que n
 Lo que no lleva `venceISO` no vence nunca — una encuesta abierta, por ejemplo. Y `estado: 'cerrada'`
 sigue sirviendo para bajar algo antes de tiempo.
 
-Como el sitio es estático, esto se evalúa al compilar. Cada push dispara un deploy, así que en la
-práctica se recalcula con cada cambio de contenido; si pasa mucho tiempo sin publicar, un Redeploy
-en Vercel lo depura.
+Una campaña de varias fechas lleva `venceISO` también en cada jornada: las que pasan se caen solas
+y la campaña sigue en pie con las que quedan. El resumen de la tarjeta y las píldoras del
+encabezado se calculan sobre las jornadas vivas, así nunca anuncian una fecha que ya pasó.
+
+Como el sitio es estático, esto se evalúa al compilar. Para que no dependa de que alguien publique
+un cambio, `.github/workflows/refrescar.yml` vuelve a desplegar el sitio todos los días a las 3:10
+de la madrugada. **Requiere un secreto**: creá un Deploy Hook en Vercel (Settings → Git → Deploy
+Hooks) y guardá su URL en el repositorio como `VERCEL_DEPLOY_HOOK`. Sin ese secreto el workflow
+falla avisando, y todo lo demás sigue funcionando igual.
 
 Si hay varias abiertas, se ordenan por `fechaISO`: primero la más próxima. Cada una también se
 lista sola en la página de su área, según `areaSlug`.

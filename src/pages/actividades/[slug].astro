@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import Desplegables from '../../components/Desplegables.astro';
-import { ACTIVIDADES, estaVigente } from '../../data/actividades';
+import { ACTIVIDADES, estaVigente, jornadasVigentes } from '../../data/actividades';
 
 export function getStaticPaths() {
   return ACTIVIDADES.map((actividad) => ({ params: { slug: actividad.slug }, props: { actividad } }));
@@ -12,6 +12,7 @@ const { actividad } = Astro.props;
 // La página sigue existiendo: los mailings enlazan acá. Pero si ya pasó,
 // lo dice y no ofrece inscripción.
 const vigente = estaVigente(actividad);
+const jornadas = jornadasVigentes(actividad);
 ---
 
 <Base
@@ -29,7 +30,10 @@ const vigente = estaVigente(actividad);
     <p class="cabecera__desc">{actividad.hero.texto}</p>
     <div class="cabecera__pills">
       {
-        actividad.hero.pills.map((p, i) => (
+        (actividad.hero.pills.length > 0
+          ? actividad.hero.pills
+          : jornadas.map((j) => j.corto ?? j.sede)
+        ).map((p, i) => (
           <span class:list={['pill', i === 0 ? 'pill--rojo' : 'pill--dorado']}>{p}</span>
         ))
       }
@@ -88,12 +92,12 @@ const vigente = estaVigente(actividad);
 
   <!-- ── JORNADAS ─────────────────────────── -->
   {
-    actividad.jornadas && (
+    jornadas.length > 0 && (
       <section class="agenda">
         <div class="wrap">
           <p class="kicker kicker--dorado">Las jornadas</p>
           <h2 class="agenda__titulo">Elegí la que te quede mejor</h2>
-          {actividad.jornadas.map((j) => (
+          {jornadas.map((j) => (
             <article class="jornada">
               <p class="jornada__etiqueta">{j.etiqueta}</p>
               <h3 class="jornada__sede">{j.sede}</h3>
@@ -235,7 +239,7 @@ const vigente = estaVigente(actividad);
               Cada jornada tiene su propia inscripción. Si conocés a alguien de la facu que pueda
               donar, pasale el dato.
             </p>
-            {actividad.jornadas.map((j) => (
+            {jornadas.map((j) => (
               <a class="btn btn--primario btn--bloque" href={j.cta.url} target="_blank" rel="noopener">
                 {j.cta.texto}
                 <Icon name="flecha" size={16} />

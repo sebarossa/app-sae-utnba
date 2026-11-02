@@ -41,6 +41,10 @@ export type Actividad = {
   jornadas?: {
     etiqueta: string;
     sede: string;
+    /** Último día en que se muestra esta jornada. */
+    venceISO?: string;
+    /** Versión breve para píldoras y tarjetas. */
+    corto?: string;
     datos: { clave: string; valor: string }[];
     cta: { texto: string; url: string };
   }[];
@@ -134,41 +138,29 @@ export const ACTIVIDADES: Actividad[] = [
     venceISO: '2026-11-24',
     subtitulo: 'Salud · Campaña',
     resumen:
-      'Tres jornadas en noviembre, una en Medrano y dos en Campus, con la Fundación Hemocentro y el Hospital Gutiérrez. Cada una tiene su propia inscripción.',
-    resaltados: [
-      { icono: 'reloj', texto: '2, 5 y 24 de noviembre' },
-      { icono: 'pin', texto: 'Sede Medrano y Sede Campus' },
-    ],
+      'Jornadas en noviembre con la Fundación Hemocentro y el Hospital Gutiérrez, en la Facultad. Cada una tiene su propia inscripción.',
     estado: 'abierta',
     destacadaEnHome: true,
 
     hero: {
       kicker: 'Donación de sangre',
-      titulo: 'Tres jornadas para donar sin salir de la facu',
+      titulo: 'Donar sin salir de la facu',
       texto:
-        'En noviembre los equipos de la Fundación Hemocentro Buenos Aires y del Hospital de Niños Ricardo Gutiérrez vienen a nuestras dos sedes. Elegí la fecha que te quede más cómoda y anotate.',
-      pills: ['Lunes 2/11 · Medrano', 'Jueves 5/11 · Campus', 'Martes 24/11 · Campus'],
+        'En noviembre los equipos de la Fundación Hemocentro Buenos Aires y del Hospital de Niños Ricardo Gutiérrez vienen a la Facultad. Elegí la fecha que te quede más cómoda y anotate.',
+      pills: [],
     },
 
     intro: [
       'Una donación lleva menos de una hora entre la entrevista, el chequeo y la extracción, y con ese medio litro de sangre se puede ayudar a más de un paciente.',
-      'Son tres jornadas, una en Medrano y dos en Campus, cada una con su propia inscripción. Abajo están los datos de cada una, los requisitos para donar y qué hacer antes y después.',
+      'Cada jornada tiene su propia inscripción. Abajo están los datos de las que siguen abiertas, los requisitos para donar y qué hacer antes y después.',
     ],
 
     jornadas: [
       {
-        etiqueta: 'Jornada 1 · Fundación Hemocentro Buenos Aires',
-        sede: 'Sede Medrano',
-        datos: [
-          { clave: 'Fecha', valor: 'Lunes 2 de noviembre' },
-          { clave: 'Horario', valor: 'Elegís tu turno al inscribirte' },
-          { clave: 'Lugar', valor: 'Sede Medrano. El aula se confirma antes de la jornada' },
-        ],
-        cta: { texto: 'Sacar turno en Medrano', url: 'https://v2.soloturnos.com/agenda/utn--sede-medrano' },
-      },
-      {
-        etiqueta: 'Jornada 2 · Hospital de Niños Ricardo Gutiérrez',
+        etiqueta: 'Hospital de Niños Ricardo Gutiérrez',
         sede: 'Sede Campus',
+        venceISO: '2026-11-05',
+        corto: 'Jueves 5/11 · Campus',
         datos: [
           { clave: 'Fecha', valor: 'Jueves 5 de noviembre' },
           { clave: 'Horario', valor: 'De 8 a 12 h' },
@@ -177,8 +169,10 @@ export const ACTIVIDADES: Actividad[] = [
         cta: { texto: 'Inscribirme para el 5/11', url: 'https://forms.gle/sPgjDaxsYcTkspMc9' },
       },
       {
-        etiqueta: 'Jornada 3 · Fundación Hemocentro Buenos Aires',
+        etiqueta: 'Fundación Hemocentro Buenos Aires',
         sede: 'Sede Campus',
+        venceISO: '2026-11-24',
+        corto: 'Martes 24/11 · Campus',
         datos: [
           { clave: 'Fecha', valor: 'Martes 24 de noviembre' },
           { clave: 'Horario', valor: 'De 9 a 12:30 h. Elegís tu turno al inscribirte' },
@@ -458,13 +452,36 @@ export const ACTIVIDADES: Actividad[] = [
 
 export const getActividad = (slug: string) => ACTIVIDADES.find((a) => a.slug === slug);
 
-/** Par de datos para las tarjetas: los propios, o fecha y lugar. */
-export const resaltadosDe = (a: Actividad) =>
-  a.resaltados ??
-  [
+/** Las jornadas de una campaña cuya fecha todavía no pasó. */
+export const jornadasVigentes = (a: Actividad) =>
+  (a.jornadas ?? []).filter((j) => vigente(j.venceISO));
+
+/**
+ * Par de datos para las tarjetas. En una campaña de varias fechas se
+ * calcula sobre las jornadas que siguen en pie, así no queda anunciando
+ * una fecha que ya pasó.
+ */
+export const resaltadosDe = (a: Actividad): { icono: IconName; texto: string }[] => {
+  if (a.resaltados) return a.resaltados;
+
+  const jornadas = jornadasVigentes(a);
+  if (jornadas.length > 0) {
+    const cuando =
+      jornadas.length === 1
+        ? (jornadas[0].corto ?? 'Una jornada')
+        : `${jornadas.length} jornadas por delante`;
+    const sedes = [...new Set(jornadas.map((j) => j.sede))].join(' y ');
+    return [
+      { icono: 'reloj', texto: cuando },
+      { icono: 'pin', texto: sedes },
+    ];
+  }
+
+  return [
     { icono: 'reloj' as IconName, texto: a.cuando },
     { icono: 'pin' as IconName, texto: a.donde },
   ].filter((r): r is { icono: IconName; texto: string } => Boolean(r.texto));
+};
 
 const porFecha = (a: Actividad, b: Actividad) => a.fechaISO.localeCompare(b.fechaISO);
 
