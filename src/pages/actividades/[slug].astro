@@ -92,8 +92,10 @@ const jornadas = jornadasVigentes(actividad);
     jornadas.length > 0 && (
       <section class="agenda">
         <div class="wrap">
-          <p class="kicker kicker--dorado">Las jornadas</p>
-          <h2 class="agenda__titulo">Elegí la que te quede mejor</h2>
+          <p class="kicker kicker--dorado">{jornadas.length === 1 ? 'La jornada' : 'Las jornadas'}</p>
+          <h2 class="agenda__titulo">
+            {jornadas.length === 1 ? 'Anotate y vení' : 'Elegí la que te quede mejor'}
+          </h2>
           {jornadas.map((j) => (
             <article class="jornada" data-vence={j.venceISO}>
               <p class="jornada__etiqueta">{j.etiqueta}</p>
@@ -234,8 +236,9 @@ const jornadas = jornadasVigentes(actividad);
         actividad.jornadas && (
           <div class="cierre__jornadas">
             <p class="cierre__bajada">
-              Cada jornada tiene su propia inscripción. Si conocés a alguien de la facu que pueda
-              donar, pasale el dato.
+              {jornadas.length === 1
+                ? 'Si conocés a alguien de la facu que pueda donar, pasale el dato.'
+                : 'Cada jornada tiene su propia inscripción. Si conocés a alguien de la facu que pueda donar, pasale el dato.'}
             </p>
             {jornadas.map((j) => (
               <a
