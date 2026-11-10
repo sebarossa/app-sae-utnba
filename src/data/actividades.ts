@@ -31,12 +31,17 @@ export type Actividad = {
   datosKicker?: string;
   datosTitulo?: string;
   datos?: { clave: string; valor: string }[];
+  disertanteKicker?: string;
   disertante?: {
     nombre: string;
     texto: string;
     foto?: string;
+    /** El bloque va sobre fondo oscuro, para logos blancos. */
+    oscuro?: boolean;
     enlace?: { texto: string; url: string };
   };
+  /** Un número grande que vale la pena destacar. */
+  dato?: { numero: string; texto: string };
   /** Varias fechas, cada una con su inscripción. Reemplaza a `datos`. */
   jornadas?: {
     etiqueta: string;
@@ -62,6 +67,85 @@ export type Actividad = {
 };
 
 export const ACTIVIDADES: Actividad[] = [
+  {
+    slug: 'cancer-de-mama',
+    nombre: 'Prevención del cáncer de mama',
+    area: 'Salud',
+    areaSlug: 'salud',
+    fechaISO: '2026-11-11',
+    venceISO: '2026-11-11',
+    subtitulo: 'Salud · Charla abierta',
+    resumen:
+      'Cuándo hacerse un control, cómo es el autoexamen y cómo acompañar a alguien que atraviesa la enfermedad. Junto a MACMA.',
+    cuando: 'Miércoles 11 de noviembre · 16:30 h',
+    donde: 'Sede Medrano · Aula 509',
+    estado: 'abierta',
+    destacadaEnHome: true,
+
+    hero: {
+      kicker: 'Concientización · #RosaTodoElAño',
+      titulo: 'Detectado a tiempo, el cáncer de mama se cura.',
+      texto:
+        'Una charla abierta sobre prevención, detección temprana y acompañamiento, junto a MACMA, la asociación civil formada por mujeres que atravesaron la enfermedad.',
+      pills: ['Miércoles 11/11 · 16:30 h', 'Sede Medrano · Aula 509'],
+    },
+
+    intro: [
+      'Desde el Área de Salud de la Secretaría de Asuntos Estudiantiles te invitamos a la Charla abierta de Concientización y Prevención del Cáncer de Mama, que organizamos junto a MACMA, el Movimiento Ayuda Cáncer de Mama.',
+      'Octubre ya pasó, pero el cuidado no tiene fecha. Casi siempre pensamos que es un tema que no nos toca y, sin embargo, la mayoría de las personas diagnosticadas no tiene antecedentes familiares, y también puede aparecer en hombres. Saber cuándo hacerse un control y cómo hacer el autoexamen marca la diferencia.',
+      'La charla también tiene un bloque sobre algo de lo que se habla poco: cómo acompañar a una amiga, una compañera o alguien de la familia que está atravesando la enfermedad.',
+    ],
+
+    dato: { numero: '9 de cada 10', texto: 'casos detectados a tiempo son curables' },
+
+    datos: [
+      { clave: 'Fecha', valor: 'Miércoles 11 de noviembre' },
+      { clave: 'Horario', valor: '16:30 h' },
+      { clave: 'Lugar', valor: 'Sede Medrano, Aula 509' },
+      { clave: 'Para', valor: 'Estudiantes, docentes, nodocentes, graduados y comunidad en general' },
+      { clave: 'Inscripción', valor: 'Libre y gratuita, con inscripción previa' },
+    ],
+
+    disertanteKicker: 'Junto a',
+    disertante: {
+      nombre: 'MACMA',
+      texto:
+        'El Movimiento Ayuda Cáncer de Mama es una asociación civil sin fines de lucro integrada por mujeres que transitaron la enfermedad. Hace 29 años acompaña a pacientes y a sus familias, y lleva realizadas más de 3.500 mamografías gratuitas y más de 38 campañas de concientización.',
+      foto: 'https://res.cloudinary.com/pu6xe6eg/image/upload/q_auto,f_auto,h_180/v1794244725/logo_macma_rosa.png',
+      oscuro: true,
+      enlace: { texto: '@macma.ong', url: 'https://www.instagram.com/macma.ong' },
+    },
+
+    temario: [
+      {
+        titulo: 'Detección temprana',
+        texto:
+          'Por qué los controles periódicos, mamografía y ecografía mamaria, salvan vidas; qué señales conviene mirar y cómo hacer el autoexamen.',
+      },
+      {
+        titulo: 'Mitos y factores de riesgo',
+        texto:
+          'La mayoría de las personas diagnosticadas no tiene antecedentes familiares conocidos, y cerca del 1 % de los casos se da en hombres. Qué es mito y qué no.',
+      },
+      {
+        titulo: 'Acompañar y contener',
+        texto:
+          'Cómo escuchar y acompañar a alguien que atraviesa la enfermedad, en la familia, el trabajo o la facultad, desde la empatía y la validación.',
+      },
+      {
+        titulo: '#RosaTodoElAño',
+        texto:
+          'Por qué la prevención y el cuidado no pueden quedar solo en octubre. Al final hay un espacio para preguntas.',
+      },
+    ],
+
+    inscripcion: {
+      texto:
+        'La actividad es libre y gratuita. Completá el formulario para que podamos organizar el aula, y si conocés a alguien a quien le pueda servir, pasale el dato.',
+      cta: 'Inscribirme',
+      url: 'https://forms.gle/WBPwtFC3ktEk6Lxs6',
+    },
+  },
   {
     slug: 'chernobil',
     nombre: 'Accidente de Chernóbil',

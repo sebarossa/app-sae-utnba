@@ -67,6 +67,16 @@ const jornadas = jornadasVigentes(actividad);
     }
   </div>
 
+  <!-- ── DATO DESTACADO ───────────────────── -->
+  {
+    actividad.dato && (
+      <section class="dato">
+        <p class="dato__numero">{actividad.dato.numero}</p>
+        <p class="dato__texto">{actividad.dato.texto}</p>
+      </section>
+    )
+  }
+
   <!-- ── CUÁNDO Y DÓNDE ───────────────────── -->
   {
     actividad.datos && (
@@ -125,9 +135,15 @@ const jornadas = jornadasVigentes(actividad);
   {
     actividad.disertante && (
       <div class="wrap seccion">
-        <p class="kicker">Disertante</p>
+        <p class="kicker">{actividad.disertanteKicker ?? 'Disertante'}</p>
         <h2 class="titulo-seccion">{actividad.disertante.nombre}</h2>
-        <div class:list={['disertante', actividad.disertante.foto && 'disertante--foto']}>
+        <div
+          class:list={[
+            'disertante',
+            actividad.disertante.foto && 'disertante--foto',
+            actividad.disertante.oscuro && 'disertante--oscuro',
+          ]}
+        >
           {actividad.disertante.foto && (
             <img
               class="disertante__foto"
@@ -139,19 +155,21 @@ const jornadas = jornadasVigentes(actividad);
               decoding="async"
             />
           )}
-          <p class="disertante__texto">{actividad.disertante.texto}</p>
+          <div>
+            <p class="disertante__texto">{actividad.disertante.texto}</p>
+            {actividad.disertante.enlace && (
+              <a
+                class="disertante__enlace"
+                href={actividad.disertante.enlace.url}
+                target="_blank"
+                rel="noopener"
+              >
+                {actividad.disertante.enlace.texto}
+                <Icon name="flecha" size={14} />
+              </a>
+            )}
+          </div>
         </div>
-        {actividad.disertante.enlace && (
-          <a
-            class="disertante__enlace"
-            href={actividad.disertante.enlace.url}
-            target="_blank"
-            rel="noopener"
-          >
-            {actividad.disertante.enlace.texto}
-            <Icon name="flecha" size={14} />
-          </a>
-        )}
       </div>
     )
   }
@@ -547,6 +565,58 @@ const jornadas = jornadasVigentes(actividad);
     object-fit: cover;
     border: 3px solid var(--dorado);
     flex: none;
+  }
+
+  /* Para logos blancos, que sobre fondo claro desaparecen. */
+  .disertante--oscuro {
+    background: var(--tinta);
+    border-left-color: var(--dorado);
+  }
+
+  .disertante--oscuro .disertante__texto {
+    color: #c9cfe0;
+  }
+
+  .disertante--oscuro .disertante__foto {
+    width: 76px;
+    height: 56px;
+    border: 0;
+    border-radius: 0;
+    object-fit: contain;
+  }
+
+  .disertante--oscuro .disertante__enlace {
+    margin-top: 12px;
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--dorado);
+  }
+
+  /* ── Dato destacado ── */
+  .dato {
+    background: var(--rojo);
+    color: #fff;
+    text-align: center;
+    padding: 30px 20px 32px;
+  }
+
+  .dato__numero {
+    font-family: var(--titulo);
+    font-size: 40px;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .dato__texto {
+    margin-top: 8px;
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #ffe3e8;
+    line-height: 1.5;
   }
 
   .disertante__texto {
