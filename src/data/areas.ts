@@ -289,6 +289,22 @@ export const AREAS: Area[] = [
     },
   },
   {
+    slug: 'convenios-y-beneficios',
+    nombre: 'Convenios y Beneficios',
+    icono: 'beneficios',
+    acento: 'dorado',
+    resumen: 'Descuentos y convenios para la comunidad UTN.BA.',
+    descripcion:
+      'Acuerdos con comercios e instituciones que te dejan acceder a mejores precios por ser parte de la comunidad de la UTN.BA.',
+    enlaceInterno: '/beneficios',
+    contacto: {
+      emails: ['sae@frba.utn.edu.ar'],
+      oficina: 'Of. 323',
+      ubicacion: 'Sede Medrano · Of. 323',
+      sedes: ['medrano'],
+    },
+  },
+  {
     slug: 'intercambios',
     nombre: 'Intercambios',
     icono: 'intercambios',

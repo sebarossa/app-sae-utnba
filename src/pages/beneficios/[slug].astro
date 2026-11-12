@@ -1,0 +1,511 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { BENEFICIOS } from '../../data/beneficios';
+
+export function getStaticPaths() {
+  return BENEFICIOS.map((beneficio) => ({ params: { slug: beneficio.slug }, props: { beneficio } }));
+}
+
+const { beneficio: b } = Astro.props;
+---
+
+<Base title={`${b.nombre} — Beneficios SAE UTN.BA`} description={b.resumen} volverA="/beneficios" volverTexto="Beneficios">
+  <section class="cabecera">
+    {
+      b.logo && (
+        <img
+          class:list={['cabecera__logo', b.logo.sobreOscuro && 'cabecera__logo--claro']}
+          src={b.logo.url}
+          alt={b.nombre}
+          height="120"
+          decoding="async"
+        />
+      )
+    }
+    <p class="cabecera__kicker">{b.hero.kicker}</p>
+    <h1 class="cabecera__titulo">{b.hero.titulo}</h1>
+    <p class="cabecera__desc">{b.hero.texto}</p>
+    <div class="cabecera__quien">
+      {b.paraQuien.map((q) => <span class="pill pill--dorado">{q}</span>)}
+    </div>
+  </section>
+
+  <div class="franja"></div>
+
+  {b.foto && <img class="foto" src={b.foto} alt={`Instalaciones de ${b.nombre}`} loading="lazy" decoding="async" />}
+
+  <!-- ── PRECIO ───────────────────────────── -->
+  {
+    b.precio && (
+      <section class="precio">
+        <div class="wrap">
+          <p class="kicker kicker--dorado">El precio</p>
+          <p class="precio__monto">{b.precio.monto}</p>
+          <p class="precio__periodo">
+            {b.precio.periodo}
+            {b.precio.deLista && <span class="precio__lista">{b.precio.deLista}</span>}
+          </p>
+          <a class="precio__btn" href={b.cta.url} target="_blank" rel="noopener">
+            {b.cta.texto}
+            <Icon name="flecha" size={16} />
+          </a>
+          {b.precio.nota && <p class="precio__nota">{b.precio.nota}</p>}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── QUÉ INCLUYE ──────────────────────── -->
+  {
+    b.incluye && (
+      <div class="wrap seccion">
+        <p class="kicker">Qué incluye</p>
+        <h2 class="titulo-seccion">Un solo plan</h2>
+        <ol class="incluye">
+          {b.incluye.map((i, n) => (
+            <li class="item">
+              <span class="item__num" aria-hidden="true">
+                {String(n + 1).padStart(2, '0')}
+              </span>
+              <span>
+                <span class="item__titulo">{i.titulo}</span>
+                <span class="item__texto">{i.texto}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    )
+  }
+
+  <!-- ── CÓMO SUMARTE ─────────────────────── -->
+  {
+    b.pasos && (
+      <section class="sumarte">
+        <div class="wrap">
+          <p class="kicker kicker--dorado">Cómo sumarte</p>
+          <h2 class="sumarte__titulo">Son tres pasos</h2>
+          <ol class="pasos">
+            {b.pasos.map((p, n) => (
+              <li class="paso">
+                <span class="paso__num" aria-hidden="true">
+                  {n + 1}
+                </span>
+                <span>{p.texto}</span>
+              </li>
+            ))}
+          </ol>
+          <a class="btn btn--primario btn--bloque sumarte__btn" href={b.cta.url} target="_blank" rel="noopener">
+            {b.cta.texto}
+            <Icon name="flecha" size={16} />
+          </a>
+          {b.cta.nota && <p class="sumarte__nota">{b.cta.nota}</p>}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ── GRILLA ───────────────────────────── -->
+  {
+    b.grilla && (
+      <div class="wrap seccion">
+        <p class="kicker">Las clases</p>
+        <h2 class="titulo-seccion">Grilla semanal</h2>
+        <ul class="grilla">
+          {b.grilla.map((c) => (
+            <li class="clase">
+              <span class="clase__titulo">{c.titulo}</span>
+              <span class="clase__horarios">
+                {c.horarios.map((h) => (
+                  <span class="clase__chip">{h}</span>
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+        {b.grillaNota && <p class="grilla__nota">{b.grillaNota}</p>}
+      </div>
+    )
+  }
+
+  <!-- ── EXTRA ────────────────────────────── -->
+  {
+    b.extra && (
+      <div class="wrap">
+        <section class="extra">
+          <p class="extra__kicker">{b.extra.kicker}</p>
+          <h2 class="extra__titulo">{b.extra.titulo}</h2>
+          <p class="extra__texto">{b.extra.texto}</p>
+          <div class="extra__enlaces">
+            {b.extra.enlaces.map((e) => (
+              <a class="extra__btn" href={e.url} target="_blank" rel="noopener">
+                {e.texto}
+                <Icon name="flecha" size={14} />
+              </a>
+            ))}
+          </div>
+        </section>
+      </div>
+    )
+  }
+
+  <!-- ── DÓNDE ────────────────────────────── -->
+  <div class="wrap seccion">
+    <p class="kicker">Dónde queda</p>
+    <h2 class="titulo-seccion">{b.nombre}</h2>
+    <p class="donde">{b.donde}</p>
+    {
+      b.enlaces && (
+        <div class="enlaces">
+          {b.enlaces.map((e) => (
+            <a class="enlace" href={e.url} target="_blank" rel="noopener">
+              {e.texto}
+              <Icon name="flecha" size={14} />
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 32px 20px 32px;
+  }
+
+  .cabecera__logo {
+    height: 34px;
+    width: auto;
+    margin-bottom: 20px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 13px;
+  }
+
+  .cabecera__titulo {
+    font-size: 31px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.14;
+  }
+
+  .cabecera__desc {
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .cabecera__quien {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 20px;
+  }
+
+  .foto {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ── Precio ── */
+  .precio {
+    background: var(--rojo);
+    color: #fff;
+    text-align: center;
+    padding-block: 32px 34px;
+  }
+
+  .precio .kicker {
+    color: #ffd9e0;
+  }
+
+  .precio__monto {
+    font-family: var(--titulo);
+    font-size: 44px;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+
+  .precio__periodo {
+    margin-top: 10px;
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffe3e8;
+  }
+
+  .precio__lista {
+    margin-left: 8px;
+    text-decoration: line-through;
+    color: #f3b8c2;
+  }
+
+  .precio__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 15px 26px;
+    border-radius: var(--r-sm);
+    background: var(--tinta);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+  }
+
+  .precio__nota {
+    margin-top: 16px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #ffd9e0;
+  }
+
+  /* ── Incluye ── */
+  .incluye {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px;
+    align-items: start;
+    padding: 18px 0;
+    border-top: 1px solid var(--linea);
+  }
+
+  .item:last-child {
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .item__num {
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: var(--dorado);
+    padding-top: 3px;
+  }
+
+  .item__titulo {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--tinta);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+
+  .item__texto {
+    display: block;
+    margin-top: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  /* ── Cómo sumarte ── */
+  .sumarte {
+    background: var(--tinta);
+    padding-block: 32px 36px;
+  }
+
+  .sumarte__titulo {
+    font-size: 25px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 18px;
+  }
+
+  .pasos {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+
+  .paso {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 13px;
+    align-items: start;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #c9cfe0;
+  }
+
+  .paso__num {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .sumarte__btn {
+    text-transform: none;
+    letter-spacing: 0.01em;
+    font-size: 14.5px;
+  }
+
+  .sumarte__nota {
+    margin-top: 12px;
+    font-size: 12.5px;
+    color: #8a93a8;
+    text-align: center;
+  }
+
+  /* ── Grilla ── */
+  .grilla {
+    display: grid;
+    margin-top: 18px;
+  }
+
+  .clase {
+    padding: 15px 0;
+    border-top: 1px solid var(--linea);
+  }
+
+  .clase:last-child {
+    border-bottom: 1px solid var(--linea);
+  }
+
+  .clase__titulo {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--tinta);
+    letter-spacing: -0.01em;
+  }
+
+  .clase__horarios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 8px;
+  }
+
+  .clase__chip {
+    border-radius: var(--r-full);
+    padding: 6px 12px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--tinta-2);
+  }
+
+  .grilla__nota {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  /* ── Extra ── */
+  .extra {
+    margin-top: 10px;
+    padding: 20px 18px 22px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    border-left: 4px solid var(--dorado);
+    border-radius: var(--r-lg);
+  }
+
+  .extra__kicker {
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--dorado);
+  }
+
+  .extra__titulo {
+    margin-top: 8px;
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  .extra__texto {
+    margin-top: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .extra__enlaces,
+  .enlaces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .extra__btn,
+  .enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 16px;
+    border-radius: var(--r-full);
+    border: 1px solid var(--linea);
+    background: var(--blanco);
+    font-family: var(--titulo);
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--rojo);
+  }
+
+  .donde {
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--tinta-2);
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 44px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 38px;
+    }
+    .sumarte__btn {
+      display: inline-flex;
+      width: auto;
+    }
+  }
+</style>

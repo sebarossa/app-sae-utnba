@@ -20,6 +20,8 @@ export const ICONS = {
     '<rect x="3.4" y="3.4" width="17.2" height="17.2" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.1" cy="6.9" r="1.1" fill="currentColor" stroke="none"/>',
   facebook:
     '<path d="M14.6 21.4v-8h2.7l.5-3.4h-3.2V7.8c0-1 .3-1.7 1.7-1.7h1.6V3.1c-.8-.1-1.7-.2-2.6-.2-2.6 0-4.4 1.6-4.4 4.5V10H8.1v3.4h2.8v8h3.7Z"/>',
+  beneficios:
+    '<path d="M20.5 11.6v7.5a1.8 1.8 0 0 1-1.8 1.8H5.3a1.8 1.8 0 0 1-1.8-1.8v-7.5"/><rect x="2.4" y="7.3" width="19.2" height="4.3" rx="1.2"/><path d="M12 20.9V7.3"/><path d="M12 7.3H7.9a2.2 2.2 0 1 1 2.2-2.2v2.2Zm0 0h4.1a2.2 2.2 0 1 0-2.2-2.2v2.2Z"/>',
   candado:
     '<rect x="4.4" y="10.3" width="15.2" height="10.3" rx="2.2"/><path d="M8.1 10.3V7.6a3.9 3.9 0 0 1 7.8 0v2.7"/><circle cx="12" cy="15.4" r="1.3" fill="currentColor" stroke="none"/>',
   viajes:

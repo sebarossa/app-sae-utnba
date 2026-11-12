@@ -62,6 +62,16 @@ El contenido sale de `frba.utn.edu.ar/estudiantes/adp-empresas`. Los modelos de 
 enlazan al archivo que publica la Facultad, así que si ahí suben una versión nueva **hay que
 actualizar la URL acá**: lleva la fecha en el nombre del archivo.
 
+## Convenios y beneficios
+
+`/beneficios` es la categoría y `/beneficios/<slug>` la ficha de cada convenio, generadas desde
+`src/data/beneficios.ts`. Sumar uno es agregar un objeto: aparece en la categoría, se le arma la
+ficha y, con `destacadoEnHome`, se anuncia en el inicio.
+
+Los precios envejecen. El campo `precio.nota` existe para aclarar qué es lo que se mantiene: en el
+convenio con BEAST el 15 % es permanente, pero el importe es el de hoy. Si un convenio se da de
+baja, `venceISO` lo saca solo.
+
 ## Viajes y eventos
 
 `/viajes` es la categoría y `/viajes/<slug>` la ficha de cada viaje, generada desde

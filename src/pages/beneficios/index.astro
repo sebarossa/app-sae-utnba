@@ -1,0 +1,218 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { BENEFICIOS } from '../../data/beneficios';
+import { SAE } from '../../data/areas';
+---
+
+<Base
+  title="Convenios y Beneficios — SAE UTN.BA"
+  description="Descuentos y convenios para estudiantes, docentes, graduados y nodocentes de la UTN.BA."
+  volverA="/"
+  volverTexto="Áreas"
+>
+  <section class="cabecera">
+    <p class="cabecera__kicker">Secretaría de Asuntos Estudiantiles</p>
+    <h1 class="cabecera__titulo">Convenios y Beneficios</h1>
+    <p class="cabecera__desc">
+      Acuerdos con comercios e instituciones que te dan mejores precios por ser parte de la
+      comunidad de la UTN.BA. Alcanza con acreditar que estudiás o trabajás acá.
+    </p>
+  </section>
+
+  <div class="franja"></div>
+
+  <div class="wrap seccion">
+    <ul class="beneficios">
+      {
+        BENEFICIOS.map((b) => (
+          <li>
+            <a class="beneficio" href={`/beneficios/${b.slug}`} data-vence={b.venceISO}>
+              <span class="beneficio__cab">
+                <span class="beneficio__gancho">{b.gancho}</span>
+                <span class="beneficio__rubro">{b.rubro}</span>
+              </span>
+              <span class="beneficio__nombre">{b.nombre}</span>
+              <span class="beneficio__resumen">{b.resumen}</span>
+              <span class="beneficio__quien">
+                {b.paraQuien.map((q) => (
+                  <span class="beneficio__chip">{q}</span>
+                ))}
+              </span>
+              <span class="beneficio__ir">
+                Ver el beneficio
+                <Icon name="flecha" size={15} />
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="proximos">
+      Se vienen más. Si tenés un comercio o conocés uno que quiera sumarse, escribinos a
+      <a href={`mailto:${SAE.email}`}>{SAE.email}</a>.
+    </p>
+  </div>
+</Base>
+
+<style>
+  .cabecera {
+    background: var(--tinta);
+    color: #fff;
+    padding: 36px 20px 32px;
+  }
+
+  .cabecera__kicker {
+    font-family: var(--titulo);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    margin-bottom: 14px;
+  }
+
+  .cabecera__titulo {
+    font-size: 32px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -0.03em;
+    line-height: 1.12;
+  }
+
+  .cabecera__desc {
+    margin-top: 13px;
+    font-size: 15px;
+    line-height: 1.7;
+    color: #c9cfe0;
+  }
+
+  .beneficios {
+    display: grid;
+    gap: 14px;
+  }
+
+  .beneficio {
+    display: block;
+    border: 1px solid var(--linea);
+    border-left: 4px solid var(--dorado);
+    border-radius: var(--r-lg);
+    background: var(--blanco);
+    box-shadow: var(--sombra-sm);
+    padding: 20px 18px 22px;
+    transition: box-shadow 0.16s ease, transform 0.16s ease;
+  }
+
+  .beneficio:active {
+    transform: scale(0.99);
+  }
+
+  @media (hover: hover) {
+    .beneficio:hover {
+      box-shadow: var(--sombra-md);
+    }
+  }
+
+  .beneficio__cab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .beneficio__gancho {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  .beneficio__rubro {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--gris);
+  }
+
+  .beneficio__nombre {
+    display: block;
+    margin-top: 13px;
+    font-family: var(--titulo);
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--tinta);
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+  }
+
+  .beneficio__resumen {
+    display: block;
+    margin-top: 8px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .beneficio__quien {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--linea);
+  }
+
+  .beneficio__chip {
+    border-radius: var(--r-full);
+    padding: 5px 11px;
+    background: var(--panel);
+    border: 1px solid var(--linea);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gris);
+  }
+
+  .beneficio__ir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 12px 22px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  .proximos {
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--linea);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--gris);
+  }
+
+  .proximos a {
+    color: var(--rojo);
+    font-weight: 600;
+    word-break: break-word;
+  }
+
+  @media (min-width: 520px) {
+    .cabecera {
+      padding: 48px 24px 42px;
+    }
+    .cabecera__titulo {
+      font-size: 40px;
+    }
+  }
+</style>

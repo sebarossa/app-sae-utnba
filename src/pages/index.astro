@@ -5,6 +5,7 @@ import Icon from '../components/Icon.astro';
 import { AREAS, SAE, convocatoriasVigentes } from '../data/areas';
 import { viajeDestacado } from '../data/viajes';
 import { actividadesDestacadas, resaltadosDe } from '../data/actividades';
+import { beneficiosDestacados } from '../data/beneficios';
 
 // Cada convocatoria vigente se anuncia arriba de la grilla, con su área.
 const convocatorias = AREAS.flatMap((area) =>
@@ -16,6 +17,7 @@ const convocatorias = AREAS.flatMap((area) =>
 // El viaje con inscripción abierta va primero, más grande que los avisos.
 const viaje = viajeDestacado();
 const actividades = actividadesDestacadas();
+const beneficios = beneficiosDestacados();
 ---
 
 <Base title="SAE UTN.BA — Servicios para estudiantes">
@@ -96,6 +98,28 @@ const actividades = actividadesDestacadas();
             <Icon name="flecha" size={15} />
           </span>
         </a>
+        ))}
+      </section>
+    )
+  }
+
+  <!-- ── BENEFICIOS ───────────────────────── -->
+  {
+    beneficios.length > 0 && (
+      <section class="wrap" data-vacia>
+        {beneficios.map((b) => (
+          <a class="beneficio" href={`/beneficios/${b.slug}`} data-vence={b.venceISO}>
+            <span class="beneficio__etiqueta">Convenio · {b.rubro}</span>
+            <span class="beneficio__fila">
+              <span class="beneficio__gancho">{b.gancho}</span>
+              <span class="beneficio__nombre">{b.nombre}</span>
+            </span>
+            <span class="beneficio__resumen">{b.resumen}</span>
+            <span class="beneficio__ir">
+              Ver el beneficio
+              <Icon name="flecha" size={15} />
+            </span>
+          </a>
         ))}
       </section>
     )
@@ -422,6 +446,90 @@ const actividades = actividadesDestacadas();
     align-items: center;
     gap: 8px;
     margin-top: 16px;
+    padding: 12px 22px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  /* ── Beneficio destacado ── */
+  .beneficio {
+    display: block;
+    margin-top: 12px;
+    padding: 18px 16px 20px;
+    background: var(--blanco);
+    border: 1px solid var(--linea);
+    border-left: 4px solid var(--dorado);
+    border-radius: var(--r-lg);
+    box-shadow: var(--sombra-sm);
+    transition: box-shadow 0.16s ease, transform 0.16s ease;
+  }
+
+  .beneficio:active {
+    transform: scale(0.99);
+  }
+
+  @media (hover: hover) {
+    .beneficio:hover {
+      box-shadow: var(--sombra-md);
+    }
+  }
+
+  .beneficio__etiqueta {
+    display: block;
+    font-family: var(--titulo);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dorado);
+  }
+
+  .beneficio__fila {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-top: 11px;
+    flex-wrap: wrap;
+  }
+
+  .beneficio__gancho {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: var(--r-sm);
+    background: var(--rojo);
+    color: #fff;
+    font-family: var(--titulo);
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: -0.01em;
+  }
+
+  .beneficio__nombre {
+    font-family: var(--titulo);
+    font-size: 21px;
+    font-weight: 900;
+    color: var(--tinta);
+    letter-spacing: -0.025em;
+  }
+
+  .beneficio__resumen {
+    display: block;
+    margin-top: 9px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--gris);
+  }
+
+  .beneficio__ir {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 15px;
     padding: 12px 22px;
     border-radius: var(--r-sm);
     background: var(--rojo);
