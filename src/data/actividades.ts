@@ -59,8 +59,15 @@ export type Actividad = {
   temarioNota?: string;
   /** Contenido plegable, como las recomendaciones de una campaña. */
   desplegables?: { titulo: string; texto?: string; items?: string[] }[];
-  /** Enlace a otra pieza relacionada. */
-  enlace?: { kicker: string; titulo: string; texto: string; cta: string; url: string };
+  /** Enlace a otra pieza relacionada. Con `venceISO` desaparece solo. */
+  enlace?: {
+    kicker: string;
+    titulo: string;
+    texto: string;
+    cta: string;
+    url: string;
+    venceISO?: string;
+  };
   inscripcion?: { texto: string; cta: string; url: string };
   cierreKicker?: string;
   cierreTitulo?: string;
@@ -323,14 +330,6 @@ export const ACTIVIDADES: Actividad[] = [
       },
     ],
 
-    enlace: {
-      kicker: 'Antes de las jornadas',
-      titulo: '¿Qué ingeniería hay detrás de una donación?',
-      texto:
-        'El viernes 30 de octubre, a las 14 h en Medrano, el Tec. Fernando M. Couto cuenta el recorrido de la sangre desde el donante hasta el paciente. No hace falta saber nada del tema.',
-      cta: 'Ver la charla',
-      url: '/actividades/donacion-sangre',
-    },
   },
   {
     slug: 'encuesta-salud-mental',
@@ -346,7 +345,7 @@ export const ACTIVIDADES: Actividad[] = [
       { icono: 'candado', texto: '100% anónima' },
     ],
     estado: 'abierta',
-    destacadaEnHome: true,
+    destacadaEnHome: false,
 
     hero: {
       kicker: '10 de octubre · Día Mundial de la Salud Mental',

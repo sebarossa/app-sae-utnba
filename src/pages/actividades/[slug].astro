@@ -215,7 +215,7 @@ const jornadas = jornadasVigentes(actividad);
   {
     actividad.enlace && (
       <div class="wrap">
-        <a class="relacionado" href={actividad.enlace.url}>
+        <a class="relacionado" href={actividad.enlace.url} data-vence={actividad.enlace.venceISO}>
           <span class="relacionado__kicker">{actividad.enlace.kicker}</span>
           <span class="relacionado__titulo">{actividad.enlace.titulo}</span>
           <span class="relacionado__texto">{actividad.enlace.texto}</span>
